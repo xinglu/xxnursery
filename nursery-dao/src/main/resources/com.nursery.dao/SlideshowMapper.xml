@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nursery.dao.SlideshowMapper">
+    <resultMap id="slideMap" type="com.nursery.beans.SlideshowDO">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="classify" property="classify" jdbcType="VARCHAR"/>
+        <result column="slideName" property="name" jdbcType="VARCHAR"/>
+        <result column="slidePath" property="path" jdbcType="VARCHAR"/>
+        <result column="slideWidth" property="width" jdbcType="VARCHAR"/>
+        <result column="slideheight" property="height" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="slideList" resultMap="slideMap" parameterType="string">
+      SELECT * FROM tb_slideshow WHERE classify = #{classify}
+    </select>
+
+
+    <insert id="insert" parameterType="com.nursery.beans.SlideshowDO">
+        INSERT INTO tb_slideshow (id,classify,slideName,slidePath,slideWidth,slideheight)
+        values (#{id},#{classify},#{name},#{path},#{width},#{height})
+    </insert>
+</mapper>

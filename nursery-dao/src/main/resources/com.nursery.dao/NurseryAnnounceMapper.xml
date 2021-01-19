@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nursery.dao.NurseryAnnouncefMapper">
+    <resultMap id="announceMap" type="com.nursery.beans.NurseryAnnounceDO">
+        <id column="ANNOUNCEID" jdbcType="INTEGER" property="id"/>
+        <result column="ANNOUNCETABLE" property="table" jdbcType="VARCHAR"/>
+        <result column="ANNOUNCETDATE" property="date" jdbcType="VARCHAR"/>
+        <result column="ANNOUNCETAUTHOR" property="author" jdbcType="VARCHAR"/>
+        <result column="ANNOUNCETCOMPILER" property="etcompiler" jdbcType="VARCHAR"/>
+        <result column="ANNOUNCETTIME" property="time" jdbcType="VARCHAR"/>
+        <result column="ANNOUNCETSIZE" property="size" jdbcType="VARCHAR"/>
+        <result column="ANNOUNCETPATH" property="path" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="announceeList" resultMap="announceMap" parameterType="com.nursery.beans.DBDataParam" useCache="true">
+        SELECT * FROM ${table_flag}  ORDER BY ANNOUNCEID DESC
+    </select>
+
+    <insert id="insert" parameterType="com.nursery.beans.NurseryAnnounceDO">
+        INSERT INTO ${tableflag} (
+        ANNOUNCETABLE,
+        ANNOUNCETDATE,
+        ANNOUNCETAUTHOR,
+        ANNOUNCETCOMPILER,
+        ANNOUNCETTIME,
+        ANNOUNCETSIZE,
+        ANNOUNCETPATH)
+        values (#{table},#{date},#{author},#{etcompiler},#{time},#{size},#{path})
+    </insert>
+
+    <update id="update" parameterType="com.nursery.beans.NurseryAnnounceDO">
+
+    </update>
+
+    <delete id="delete" parameterType="com.nursery.beans.NurseryAnnounceDO">
+
+    </delete>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nursery.dao.NurseryRecruitmentMapper">
+    <resultMap id="recruitment" type="com.nursery.beans.RecruitmentDO">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="recruittablename" property="recruittablename" jdbcType="VARCHAR"/>
+        <result column="recruitclassify" property="classify" jdbcType="VARCHAR"/>
+        <result column="recruitpay" property="pay" jdbcType="VARCHAR"/>
+        <result column="recruitstarttime" property="starttime" jdbcType="VARCHAR"/>
+        <result column="recruitendtime" property="endtime" jdbcType="VARCHAR"/>
+        <result column="recruitplace" property="place" jdbcType="VARCHAR"/>
+        <result column="recruitrequire_experience" property="requireExperience" jdbcType="VARCHAR"/>
+        <result column="recruitrequire_edubg" property="requireEduDB" jdbcType="VARCHAR"/>
+        <result column="recruitnumbers" property="manNumbers" jdbcType="VARCHAR"/>
+        <result column="companyresume" property="companyresume" jdbcType="VARCHAR"/>
+        <result column="jobdesciption" property="jobdesciption" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="recruitsql">
+        id,recruittablename,recruitclassify,recruitclassify,recruitpay,recruitstarttime,recruitendtime,
+        recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers,companyresume,jobdesciption
+    </sql>
+
+
+    <select id="selectByclassify" resultMap="recruitment" parameterType="string">
+        SELECT * FROM tb_nursery_recruitinfo WHERE recruitclassify = #{classify}
+    </select>
+
+    <select id="selectByrecruittablename" resultMap="recruitment" parameterType="string">
+        SELECT * FROM tb_nursery_recruitinfo WHERE recruittablename = #{recruittablename}
+    </select>
+
+    <select id="selectByid" resultMap="recruitment" parameterType="string">
+        SELECT * FROM tb_nursery_recruitinfo WHERE id = #{id}
+    </select>
+
+
+    <select id="selectByclassAndName" resultMap="recruitment" parameterType="com.nursery.beans.DBDataParam">
+        SELECT id,recruittablename,recruitclassify,recruitpay,recruitstarttime,recruitendtime,recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers FROM tb_nursery_recruitinfo WHERE 1 = 1
+        <if test="param1 != null and param1 != ''">
+            AND recruitclassify = #{param1}
+        </if>
+        <if test="param2 != null and param2 != ''">
+            AND recruittablename like #{param2}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.nursery.beans.RecruitmentDO">
+        insert into tb_nursery_recruitinfo (
+            id,recruittablename,recruitclassify,recruitpay,recruitstarttime,recruitendtime,
+            recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers,
+            companyresume,jobdesciption
+        ) values (
+            #{id},#{recruittablename},#{classify},#{pay},#{starttime},#{endtime},#{place},#{recruitrequire_experience},
+            #{requireEduDB},#{manNumbers},#{companyresume},#{jobdesciption}
+        );
+    </insert>
+
+    <delete id="delete" parameterType="string">
+      DELETE from tb_nursery_recruitinfo where id = #{id}
+    </delete>
+
+
+    <update id="update" parameterType="com.nursery.beans.RecruitmentDO">
+
+    </update>
+</mapper>
