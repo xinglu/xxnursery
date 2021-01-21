@@ -11,6 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Create with IDEA
  * author:MeiShiQiang
@@ -62,6 +66,20 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
 
     @Override
     public void insertConsumer(DomesticConsumerDO consumerDO) throws Exception {
+        //注册前判断
+        DomesticConsumerDO checkDConsumerDo = new DomesticConsumerDO();
+        String checkEmail = consumerDO.getConsumerEmail();
+        String checkCellPhone = consumerDO.getConsumerCellPhone();
+        if (StringUtils.isNotBlank(checkEmail)){
+            checkDConsumerDo.setConsumerEmail(checkEmail);
+        }
+        if (StringUtils.isNotBlank(checkCellPhone)){
+            checkDConsumerDo.setConsumerCellPhone(checkCellPhone);
+        }
+        List<DomesticConsumerDO> resultList = mapper.checkConsumerToRegister(checkDConsumerDo);
+        if (!resultList.isEmpty()){
+            return;
+        }
         try {
             SendEmailUtils sendEmailUtils = null;
             mapper.insert(consumerDO);
@@ -93,16 +111,24 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
 
     //校验邮箱
     private boolean checkEmail(String consumerEmail){
-        boolean flag = false;
-
-        return flag;
+        if (null==consumerEmail || "".equals(consumerEmail)){
+            return false;
+        }
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p = Pattern.compile(regEx1);
+        Matcher m = p.matcher(consumerEmail);
+        if(m.matches()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){
         boolean flag = false;
 
-        return flag;
+        return true;
     }
 
 }

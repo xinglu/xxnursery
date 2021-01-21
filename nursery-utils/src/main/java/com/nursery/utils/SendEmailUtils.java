@@ -2,6 +2,7 @@ package com.nursery.utils;
 
 import com.alibaba.druid.util.StringUtils;
 import com.nursery.beans.vo.MailVo;
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -28,6 +29,10 @@ public class SendEmailUtils {
         if (sendEmailUtils ==null){
             sendEmailUtils = new SendEmailUtils();
         }
+    }
+
+    public static String sendCheckEmail(String email) {
+        return null;
     }
 
     public MailVo sendSimpleEmail(MailVo mailVo) {
@@ -114,6 +119,38 @@ public class SendEmailUtils {
     //获取邮件发信人
     public String getMailSendFrom() {
         return javaMailSender.getJavaMailProperties().getProperty("from");
+    }
+
+
+    /**
+     * 163邮箱
+     * @param emailAddress
+     * @param code
+     * @return
+     */
+    public static boolean sendEmail(String emailAddress,String code){
+        try {
+            HtmlEmail email = new HtmlEmail();//不用更改
+            email.setHostName("smtp.163.com");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+            email.setCharset("UTF-8");//设置发送的字符类型
+            email.addTo(emailAddress);//设置收件人
+
+            email.setFrom("13243038531@163.com", "xxNursery");//此处填邮箱地址和用户名,用户名可以任意填写
+            email.setAuthentication("13243038531@163.com", "KCEDIYIXHVEQQUNW");//此处填写邮箱地址和客户端授权码
+            email.setSubject("注册验证码");//此处填写邮件名，邮件名可任意填写
+            email.setMsg("尊敬的用户您好,您本次注册的验证码是:\n" + code);//此处填写邮件内容
+            //  email.setSSLOnConnect(false);
+            //启用ssl加密
+            email.setSSLOnConnect(true);
+            //使用465端口(不设置也可，ssl默认为465)
+            email.setSslSmtpPort("465");
+            email.send();
+            return true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

@@ -3,6 +3,8 @@ package com.nursery.dao;
 import com.nursery.beans.DomesticConsumerDO;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * 用户表操作
  * consumer_id VARCHAR(32) PRIMARY KEY,
@@ -41,8 +43,8 @@ public interface DomesticConsumerMapper {
      */
     //保存
     @Insert("insert into tb_consumer (consumer_id,consumer_address,consumer_cellphone,consumer_name,consumer_password," +
-            "consumer_qianming,consumer_email,consumer_sex,consumer_nickname,consumer_age,consumer_status,consumer_educationBg" +
-            "consumer_URL,consumer_birthDay,consumer_joinDay) " +
+            "consumer_qianming,consumer_email,consumer_sex,consumer_nickname,consumer_age" +
+            ",consumer_status,consumer_educationBg,consumer_URL,consumer_birthDay,consumer_joinDay) " +
             "values " +
             "(#{consumerID},#{consumerAddress},#{consumerCellPhone},#{consumerName},#{consumerPass}" +
             ",#{consumerSignature},#{consumerEmail},#{consumerSex},#{consumerNickname},#{consumerAge}" +
@@ -94,4 +96,7 @@ public interface DomesticConsumerMapper {
     @Update("update tb_consumer set consumer_password = #{param2}  where consumer_id = #{param1}")
     Integer updatePassword(String consumerID, String password) throws Exception;
 
+    @Select("select * from tb_consumer where consumer_email = #{consumerEmail} or consumer_cellphone = #{consumerCellPhone}")
+    @ResultMap("domesticConsumer")
+    List<DomesticConsumerDO> checkConsumerToRegister(DomesticConsumerDO checkDConsumerDo);
 }

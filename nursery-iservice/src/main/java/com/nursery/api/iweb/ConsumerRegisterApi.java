@@ -23,8 +23,8 @@ public interface ConsumerRegisterApi {
     void registersuccess();
 
     @ApiOperation("邮箱校验")
-    public Map<String,String> sendCheckEmail();
+    public Map<String,String> sendCheckEmail(String email);
 
     @ApiOperation("手机号校验")
-    public Map<String,String> sendCheckCellPhone();
+    public Map<String,String> sendCheckCellPhone(String cellPhone);
 }

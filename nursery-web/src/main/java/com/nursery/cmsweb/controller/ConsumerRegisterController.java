@@ -8,6 +8,8 @@ import com.nursery.beans.DomesticConsumerDO;
 import com.nursery.common.web.BaseController;
 import com.nursery.utils.CommonUtil;
 import com.nursery.utils.DateUtils;
+import com.nursery.utils.SendCellUtils;
+import com.nursery.utils.SendEmailUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,26 +37,26 @@ public class ConsumerRegisterController extends BaseController implements Consum
      * 注册
      * @param consumerDO
      */
-    @PostMapping
+    @PostMapping("/register")
     @Override
     @SuppressWarnings("all")
     public void register(DomesticConsumerDO consumerDO) {
         Map logoMap = new HashMap<String, String>();
-        String consumerID = "";
-        String consumerName = "";    //名字
-        String consumerXing = "";    //姓
-        String consumerSex = "";     //性别
-        String consumerAddress = ""; //地址
-        String consumerCellPhone = "";
-        String consumerEmail = "";
-        String consumerPass = "";
-        String consumerNickname = "";//昵称
-        String consumerAge = "";//根据出生日期得出
-        String consumerEducationBg = "";//教学背景
-        String consumerStatus = "";//省份
-        String consumerURL = "";//头像
-        String consumerBirthday = "";//生日
-        String consumerJoinDay = "";//加入时间
+        String consumerID = consumerDO.getConsumerID();
+        String consumerName = consumerDO.getConsumerName();    //名字
+        String consumerXing = consumerDO.getConsumerXing();    //姓
+        String consumerSex = consumerDO.getConsumerSex();     //性别
+        String consumerAddress = consumerDO.getConsumerAddress(); //地址
+        String consumerCellPhone = consumerDO.getConsumerCellPhone();
+        String consumerEmail = consumerDO.getConsumerEmail();
+        String consumerPass = consumerDO.getConsumerPass();
+        String consumerNickname = consumerDO.getConsumerNickname();//昵称
+        String consumerAge = consumerDO.getConsumerAge();//根据出生日期得出
+        String consumerEducationBg = consumerDO.getConsumerEducationBg();//教学背景
+        String consumerStatus = consumerDO.getConsumerStatus();//省份
+        String consumerURL = consumerDO.getConsumerURL();//头像
+        String consumerBirthday = consumerDO.getConsumerBirthday();//生日
+        String consumerJoinDay = consumerDO.getConsumerJoinDay();//加入时间
 
         try {
             String uuid = CommonUtil.getUUID();
@@ -66,8 +68,8 @@ public class ConsumerRegisterController extends BaseController implements Consum
                 request.setAttribute("returnCode", "服务器报错，请重新注册 '\n' 感谢你支持");
                 return;
             }
-            if (StringUtils.isEmpty(consumerName) || StringUtils.isEmpty(consumerCellPhone)
-                    || StringUtils.isEmpty(consumerEmail) || StringUtils.isEmpty(consumerPass)) {
+            if (StringUtils.isEmpty(consumerName) || (StringUtils.isEmpty(consumerCellPhone)
+                    && StringUtils.isEmpty(consumerEmail)) || StringUtils.isEmpty(consumerPass)) {
                 System.out.println("参数错误");
                 request.setAttribute("returnCode", "参数错误");
                 return;
@@ -93,13 +95,19 @@ public class ConsumerRegisterController extends BaseController implements Consum
             }
             logoMap.put("edcationbg", consumerEducationBg);
             logoMap.put("status", consumerStatus);
-            logoMap.put("consumerurl", consumerURL);
-            String nowDay = DateUtils.YYYYMMDDHHMMSS;
-            if (nowDay == null || StringUtils.isEmpty(nowDay)) {
-                consumerJoinDay = nowDay;
+            if (StringUtils.isEmpty(consumerURL)) {
+                //  后期从数据库中获取   YLY_ZP_IMAGE_HEAR_URL
+                consumerURL="image1";
+                logoMap.put("consumerurl", consumerURL);
             }
-            logoMap.put("joinday", consumerJoinDay);
-            consumerDO.setConsumerJoinDay(consumerJoinDay);
+            consumerDO.setConsumerURL(consumerURL);
+            String consumerDayStr = consumerJoinDay;
+            if (consumerDayStr == null || StringUtils.isEmpty(consumerDayStr)) {
+                String nowDay = DateUtils.getNowDate(DateUtils.YYYYMMDDHHMMSS);
+                consumerDayStr = nowDay;
+            }
+            logoMap.put("joinday", consumerDayStr);
+            consumerDO.setConsumerJoinDay(consumerDayStr);
             logger.info("consumerid: "+uuid+"register注册参数："+JSON.toJSONString(consumerDO));
             domesticConsumerSV.insertConsumer(consumerDO);
 
@@ -121,14 +129,16 @@ public class ConsumerRegisterController extends BaseController implements Consum
     }
 
     @Override
-    public Map<String,String> sendCheckEmail() {
+    public Map<String,String> sendCheckEmail(String email) {
         Map map = new HashMap<String,String>();
+        String authCode = SendEmailUtils.sendCheckEmail(email);
         return map;
     }
 
     @Override
-    public Map<String,String> sendCheckCellPhone() {
+    public Map<String,String> sendCheckCellPhone(String cellPhone) {
         Map map = new HashMap<String,String>();
+        String authCode = SendCellUtils.sendCheckCellPhone(cellPhone);
         return map;
     }
 
