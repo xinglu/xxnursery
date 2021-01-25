@@ -4,7 +4,7 @@ import com.nursery.api.iservice.IDomesticConsumerSV;
 import com.nursery.beans.DomesticConsumerDO;
 import com.nursery.beans.vo.MailVo;
 import com.nursery.dao.DomesticConsumerMapper;
-import com.nursery.utils.SendEmailUtils;
+import com.nursery.utils.EmailUtils;
 import org.junit.platform.commons.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Create with IDEA
@@ -81,14 +79,15 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
             return;
         }
         try {
-            SendEmailUtils sendEmailUtils = null;
+            EmailUtils sendEmailUtils = null;
             mapper.insert(consumerDO);
             String consumerEmail = consumerDO.getConsumerEmail();
             String consumerCellPhone = consumerDO.getConsumerCellPhone();
             // 邮件功能
-            if (StringUtils.isNotBlank(consumerEmail) && checkEmail(consumerEmail)) {
+
+            if (StringUtils.isNotBlank(consumerEmail) && EmailUtils.checkEmail(consumerEmail)) {
                 logger.info("发送邮件consumerEmail：" + consumerEmail);
-                sendEmailUtils = new SendEmailUtils();
+                sendEmailUtils = new EmailUtils();
                 MailVo mailVo = new MailVo();
                 mailVo.setTo(consumerEmail);
                 mailVo.setSubject("发送邮件标题");
@@ -109,20 +108,6 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
         }
     }
 
-    //校验邮箱
-    private boolean checkEmail(String consumerEmail){
-        if (null==consumerEmail || "".equals(consumerEmail)){
-            return false;
-        }
-        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-        Pattern p = Pattern.compile(regEx1);
-        Matcher m = p.matcher(consumerEmail);
-        if(m.matches()){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){

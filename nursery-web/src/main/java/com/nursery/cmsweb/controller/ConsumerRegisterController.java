@@ -8,11 +8,12 @@ import com.nursery.beans.DomesticConsumerDO;
 import com.nursery.common.web.BaseController;
 import com.nursery.utils.CommonUtil;
 import com.nursery.utils.DateUtils;
-import com.nursery.utils.SendCellUtils;
-import com.nursery.utils.SendEmailUtils;
+import com.nursery.utils.CellUtils;
+import com.nursery.utils.EmailUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -128,17 +129,20 @@ public class ConsumerRegisterController extends BaseController implements Consum
 
     }
 
+    @GetMapping("/sendCheckEmail")
     @Override
     public Map<String,String> sendCheckEmail(String email) {
         Map map = new HashMap<String,String>();
-        String authCode = SendEmailUtils.sendCheckEmail(email);
+        String code = "";
+        boolean authCode = EmailUtils.sendEmail(email,code);
         return map;
     }
 
+    @GetMapping("/sendCheckCellPhone")
     @Override
     public Map<String,String> sendCheckCellPhone(String cellPhone) {
         Map map = new HashMap<String,String>();
-        String authCode = SendCellUtils.sendCheckCellPhone(cellPhone);
+        String authCode = CellUtils.sendCheckCellPhone(cellPhone);
         return map;
     }
 
