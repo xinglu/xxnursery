@@ -16,23 +16,27 @@ import java.util.Date;
  * 邮件工具类
  */
 @Component
-public class SendEmailUtils {
+public class EmailUtils {
     @Autowired
     private JavaMailSenderImpl javaMailSender;
 
     @Value("${spring.mail.username}")
     private String from;
 
-    public static SendEmailUtils sendEmailUtils = new SendEmailUtils();
+    public static EmailUtils sendEmailUtils = new EmailUtils();
 
-    public SendEmailUtils() {
+    public EmailUtils() {
         if (sendEmailUtils ==null){
-            sendEmailUtils = new SendEmailUtils();
+            sendEmailUtils = new EmailUtils();
         }
     }
 
     public static String sendCheckEmail(String email) {
         return null;
+    }
+
+    public static boolean checkEmail(String consumerEmail) {
+        return false;
     }
 
     public MailVo sendSimpleEmail(MailVo mailVo) {
