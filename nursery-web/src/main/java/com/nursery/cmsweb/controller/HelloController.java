@@ -1,23 +1,28 @@
 package com.nursery.cmsweb.controller;
 
+import com.nursery.common.web.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * Create with IDEA
- * author:MeiShiQiang
- * Date:2021/1/20
- * Time:17:31
- */
-@Controller
-public class HelloController {
+import java.io.IOException;
 
-    @RequestMapping("/test")
-    public String hello(){
-        return "index";
+@Controller
+public class HelloController extends BaseController {
+
+    @RequestMapping(value = {"/register","/register/","/register.html","/nursery/register","/nursery/register/","/nursery/register.html"})
+    public String register(){
+        return "consumerRegisterPage";
     }
-    @RequestMapping("/test2")
-    public String hello2(){
-        return "main";
+    @RequestMapping(value = {"/login","/login.html","/login/","/nursery/login","/nursery/login/","/nursery/login.html"})
+    public String login(){
+        return "consumerLoginPage";
+    }
+    @RequestMapping(value = {"/index","/index.html","/index/","/nursery/main","/nursery/main/","/nursery/main.html"})
+    public void index_main(){
+        try {
+            response.sendRedirect("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

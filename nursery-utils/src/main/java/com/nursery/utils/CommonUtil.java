@@ -7,4 +7,8 @@ public class CommonUtil {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         return uuid;
     }
+
+    public static String getVerifyCode(int i) {
+        return null;
+    }
 }

@@ -36,6 +36,7 @@ public class ConsumerRegisterController extends BaseController implements Consum
 
     /**
      * 注册
+     *
      * @param consumerDO
      */
     @PostMapping("/register")
@@ -63,7 +64,6 @@ public class ConsumerRegisterController extends BaseController implements Consum
             String uuid = CommonUtil.getUUID();
             if (uuid != null && uuid.length() == 32) {
                 consumerDO.setConsumerID(uuid);
-                logoMap.put("id", consumerID);
             } else {
                 System.out.println("获取id错误");
                 request.setAttribute("returnCode", "服务器报错，请重新注册 '\n' 感谢你支持");
@@ -75,13 +75,14 @@ public class ConsumerRegisterController extends BaseController implements Consum
                 request.setAttribute("returnCode", "参数错误");
                 return;
             }
-            if (!StringUtils.isEmpty(consumerName)) {
-                if (consumerName.length() <= 3) consumerXing = consumerName.substring(0, 1);
-                else consumerXing = "";
-                logoMap.put("name", consumerName);
-                consumerDO.setConsumerXing(consumerXing);
-                logoMap.put("xing", consumerXing);
-            }
+            if (consumerName.length() <= 3) consumerXing = consumerName.substring(0, 1);
+            else consumerXing = "";
+            consumerDO.setConsumerName(consumerName);
+            consumerDO.setConsumerXing(consumerXing);
+
+            logoMap.put("name", consumerName);
+            logoMap.put("xing", consumerXing);
+            logoMap.put("id", consumerID);
             logoMap.put("sex", consumerSex);
             logoMap.put("address", consumerAddress);
             logoMap.put("cellphone", consumerCellPhone);
@@ -89,19 +90,20 @@ public class ConsumerRegisterController extends BaseController implements Consum
             logoMap.put("pass", consumerPass);
             logoMap.put("nickname", consumerNickname);
             if (!StringUtils.isEmpty(consumerBirthday)) {
-                logoMap.put("birthday", consumerBirthday);
                 consumerAge = DateUtils.getAge(consumerBirthday);
+                consumerDO.setConsumerBirthday(consumerBirthday);
                 consumerDO.setConsumerAge(consumerAge);
-                logoMap.put("age", consumerAge);
             }
+            logoMap.put("age", consumerAge);
+            logoMap.put("birthday", consumerBirthday);
             logoMap.put("edcationbg", consumerEducationBg);
             logoMap.put("status", consumerStatus);
             if (StringUtils.isEmpty(consumerURL)) {
                 //  后期从数据库中获取   YLY_ZP_IMAGE_HEAR_URL
-                consumerURL="image1";
-                logoMap.put("consumerurl", consumerURL);
+                consumerURL = "image1";
+                consumerDO.setConsumerURL(consumerURL);
             }
-            consumerDO.setConsumerURL(consumerURL);
+            logoMap.put("consumerurl", consumerURL);
             String consumerDayStr = consumerJoinDay;
             if (consumerDayStr == null || StringUtils.isEmpty(consumerDayStr)) {
                 String nowDay = DateUtils.getNowDate(DateUtils.YYYYMMDDHHMMSS);
@@ -109,7 +111,7 @@ public class ConsumerRegisterController extends BaseController implements Consum
             }
             logoMap.put("joinday", consumerDayStr);
             consumerDO.setConsumerJoinDay(consumerDayStr);
-            logger.info("consumerid: "+uuid+"register注册参数："+JSON.toJSONString(consumerDO));
+            logger.info("consumerid: " + uuid + "register注册参数：" + JSON.toJSONString(consumerDO));
             domesticConsumerSV.insertConsumer(consumerDO);
 
             //重定向
@@ -131,17 +133,17 @@ public class ConsumerRegisterController extends BaseController implements Consum
 
     @GetMapping("/sendCheckEmail")
     @Override
-    public Map<String,String> sendCheckEmail(String email) {
-        Map map = new HashMap<String,String>();
+    public Map<String, String> sendCheckEmail(String email) {
+        Map map = new HashMap<String, String>();
         String code = "";
-        boolean authCode = EmailUtils.sendEmail(email,code);
+        boolean authCode = EmailUtils.sendEmail(email, code);
         return map;
     }
 
     @GetMapping("/sendCheckCellPhone")
     @Override
-    public Map<String,String> sendCheckCellPhone(String cellPhone) {
-        Map map = new HashMap<String,String>();
+    public Map<String, String> sendCheckCellPhone(String cellPhone) {
+        Map map = new HashMap<String, String>();
         String authCode = CellUtils.sendCheckCellPhone(cellPhone);
         return map;
     }
