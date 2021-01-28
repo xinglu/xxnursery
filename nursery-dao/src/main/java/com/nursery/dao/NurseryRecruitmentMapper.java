@@ -23,8 +23,11 @@ public interface NurseryRecruitmentMapper {
     //根据名称模糊查询
     public void selectByrecruittablename(String tablename)throws SQLException;
     //根据id查询
-    public void selectByid(String id)throws SQLException;
+    public RecruitmentDO selectByid(String id)throws SQLException;
     //根据 类型和名称(模糊查询)
     List<RecruitmentDO> selectByclassAndName(DBDataParam dbDataParam)throws SQLException;
+//---------------
+    //根据id查询
+    public List<RecruitmentDO> selectRecruitmentDOsByRecruiterID(String recruiterID)throws SQLException;
 
 }

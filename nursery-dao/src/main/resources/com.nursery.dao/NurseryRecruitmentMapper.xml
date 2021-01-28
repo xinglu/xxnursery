@@ -36,6 +36,9 @@
         SELECT * FROM tb_nursery_recruitinfo WHERE id = #{id}
     </select>
 
+    <select id="selectRecruitmentDOsByRecruiterID" resultMap="recruitment" parameterType="string">
+        SELECT * FROM tb_nursery_recruitinfo WHERE id IN (SELECT infoid FROM tb_middle_recruiter_info WHERE RECRUITERID = #{recruiterID})
+    </select>
 
     <select id="selectByclassAndName" resultMap="recruitment" parameterType="com.nursery.beans.DBDataParam">
         SELECT id,recruittablename,recruitclassify,recruitpay,recruitstarttime,recruitendtime,recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers FROM tb_nursery_recruitinfo WHERE 1 = 1

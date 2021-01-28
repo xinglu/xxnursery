@@ -1,7 +1,8 @@
 <%--
   auth: meishiqiang
-  Date: 2021/1/26  16:20
-  新星幼儿园后台管理系统- index
+  Date: 2021/1/27  11:30
+  新星幼儿园后台管理系统- recruitManage_page
+  招聘信息管理 一级目录 recruit-manage
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -9,12 +10,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="幼儿园招聘后台管理-发布、招聘进度">
+    <meta name="description" content="招聘信息管理">
     <meta name="author" content="meishiqiang">
-<%--    <meta name="keyword" content="教师, 新星幼儿园, 新星, 幼儿园, 招聘管理, manage">--%>
+    <%--    <meta name="keyword" content="教师, 新星幼儿园, 新星, 幼儿园, 招聘管理, manage">--%>
     <link rel="shortcut icon" href="img/ico/favicon32.ico">
 
-    <title>Manage-新星幼儿园</title>
+    <title>新星-招聘信息管理</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -307,10 +308,10 @@
                         <span>recruit-manage</span>
                     </a>
                     <ul class="sub">
-                        <li><a  href="">招聘管理</a></li>
+                        <li><a  href="boxed_page.html">招聘管理</a></li>
                         <li><a  href="horizontal_menu.html">留言管理</a></li>
                         <li><a  href="header-color.html">简历管理</a></li>
-                   </ul>
+                    </ul>
                 </li>
 
                 <li class="sub-menu">

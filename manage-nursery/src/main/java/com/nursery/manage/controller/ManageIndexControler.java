@@ -1,6 +1,5 @@
 package com.nursery.manage.controller;
 
-import com.nursery.common.model.response.QueryResponseResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ManageIndexControler {
 
     @GetMapping("/index")
-    public QueryResponseResult index(){
-
-        return null;
+    public String index(){
+        return "index";
     }
 }

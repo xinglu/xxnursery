@@ -19,4 +19,11 @@ public interface INurseryRecruitInfoSV {
      * @throws SQLException
      */
     List<RecruitmentDO> recruitList(DBDataParam dbDataParam) throws NullPointerException,SQLException;
+
+    /**
+     * 根据 id获取招聘信息
+     * @param userId 招聘部门人员id
+     * @return
+     */
+    List<RecruitmentDO> selectRecruitinfoByerid(String userId) throws SQLException;
 }
