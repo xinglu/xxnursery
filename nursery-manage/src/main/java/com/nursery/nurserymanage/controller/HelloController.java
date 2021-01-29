@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HelloController extends BaseController {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HelloController.class);
 /*
     @RequestMapping(value = {"/register","/register/","/register.html","/nursery/register","/nursery/register/","/nursery/register.html"})
     public String register(){

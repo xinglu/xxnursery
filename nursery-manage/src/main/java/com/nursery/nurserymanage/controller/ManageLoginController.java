@@ -12,7 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
@@ -21,6 +22,8 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/manage")
 public class ManageLoginController extends BaseController /*implements ConsumerLoginApi*/ {
+    private static final Logger log = LoggerFactory.getLogger(ManageLoginController.class);
+
     /**
      * 登录-发送验证码
      * @param accountNum    账号

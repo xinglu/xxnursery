@@ -31,7 +31,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/manage/recruit")
 public class SecondeLevelRecruitManageController extends BaseController implements SecondeLevelRecruitManageApi {
-    private static final Logger logger = LoggerFactory.getLogger(RSAUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecondeLevelRecruitManageController.class);
 
     @Autowired
     private INurseryRecruitInfoSV nurseryRecruitInfoSV;
