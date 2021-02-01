@@ -109,6 +109,43 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
         }
     }
 
+    //2021-01-21 16:32:53
+    @Override
+    public List<DomesticConsumerDO> selectByMonth(String date) {
+        String dateMonth = date.substring(0,7);
+        return mapper.selectByMonth(dateMonth+"%");
+    }
+
+    @Override
+    public List<DomesticConsumerDO> selectByQuarter(String date) {
+        String month = date.substring(5,7);
+        String year = date.substring(0,5);
+        int num = Integer.parseInt(month);
+        String startMonth = "";
+        String endMonth = "";
+        if (1<=num && num<4){
+            startMonth = "01";
+            endMonth="04";
+        }else if (4<=num && num<7){
+            startMonth = "04";
+            endMonth="07";
+        }else if (7<=num && num<10){
+            startMonth = "07";
+            endMonth="10";
+        }else {
+            startMonth = "10";
+            endMonth="01";
+        }
+        startMonth = year+startMonth+"%";
+        endMonth = year+endMonth+"%";
+        return mapper.selectByQuarter(startMonth,endMonth);
+    }
+
+    @Override
+    public List<DomesticConsumerDO> selectByYear(String date) {
+        return mapper.selectByYear(date.substring(0,4)+"%");
+    }
+
 
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){
@@ -116,5 +153,4 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
 
         return true;
     }
-
 }

@@ -15,6 +15,7 @@
         <module>nursery-utils</module>
         <module>nursery-web</module>
         <module>nursery-common</module>
+        <module>nursery-manage2</module>
     </modules>
 
     <packaging>pom</packaging>

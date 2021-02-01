@@ -7,40 +7,9 @@ import java.util.List;
 
 /**
  * 用户表操作
- * consumer_id VARCHAR(32) PRIMARY KEY,
- * 	consumer_address VARCHAR(64) NOT NULL,
- * 	consumer_cellphone VARCHAR(11) NOT NULL,
- * 	consumer_name VARCHAR(32) NOT NULL,
- * 	consumer_password VARCHAR(32) NOT NULL,
- * 	consumer_qianming VARCHAR(64) NOT NULL
  */
 public interface DomesticConsumerMapper {
 
-    /**
-     `consumer_id` varchar(32) NOT NULL,
-     `consumer_address` varchar(64) NOT NULL,
-     `consumer_cellphone` varchar(11) NOT NULL,
-     `consumer_name` varchar(32) NOT NULL,
-     `consumer_password` varchar(32) NOT NULL,
-     `consumer_qianming` varchar(64) NOT NULL,
-     `consumer_email` varchar(64) NOT NULL,
-     `consumer_sex` char(2) DEFAULT NULL,
-     `consumer_nickname` varchar(32) DEFAULT NULL,
-     `consumer_age` char(3) DEFAULT NULL,
-     `consumer_status` varchar(32) DEFAULT NULL,
-     `consumer_educationBg` varchar(32) DEFAULT NULL,
-     `consumer_URL` varchar(32) NOT NULL,
-     `consumer_birthday` varchar(11) DEFAULT NULL,
-     `consumer_joinDay` varchar(11) DEFAULT NULL,
-     `resumeISNOT` int(1) NOT NULL DEFAULT '0',
-     PRIMARY KEY (`consumer_id`),
-     KEY `consumer_URL` (`consumer_URL`),
-     CONSTRAINT `tb_consumer_ibfk_1` FOREIGN KEY (`consumer_URL`) REFERENCES `tb_consumerimage` (`image_id`)
-     ) ENGINE=InnoDB DEFAULT CHARSET=utf8
-
-     * @param domesticConsumerDO
-     * @throws Exception
-     */
     //保存
     @Insert("insert into tb_consumer (consumer_id,consumer_address,consumer_cellphone,consumer_name,consumer_password," +
             "consumer_qianming,consumer_email,consumer_sex,consumer_nickname,consumer_age" +
@@ -89,14 +58,32 @@ public interface DomesticConsumerMapper {
     @ResultMap("domesticConsumer")
     DomesticConsumerDO selectByCellphone(String consumerCellPhone)throws Exception;
 
+    //查询个人信息
     @Select("select * from tb_consumer where consumer_id = #{consumerID}")
     @ResultMap("domesticConsumer")
     DomesticConsumerDO selectByID(String consumerID)throws Exception;
 
+    //修改密码
     @Update("update tb_consumer set consumer_password = #{param2}  where consumer_id = #{param1}")
     Integer updatePassword(String consumerID, String password) throws Exception;
 
+    //校验用户是否存在 to 注册
     @Select("select * from tb_consumer where consumer_email = #{consumerEmail} or consumer_cellphone = #{consumerCellPhone}")
     @ResultMap("domesticConsumer")
     List<DomesticConsumerDO> checkConsumerToRegister(DomesticConsumerDO checkDConsumerDo);
+
+    //查询当前月份新增用户，
+    @Select("select * from tb_consumer where consumer_joinDay like #{date} ")
+    @ResultMap("domesticConsumer")
+    List<DomesticConsumerDO> selectByMonth(String date);
+
+    //查询当前季度份新增用户，
+    @Select("select * from tb_consumer where consumer_joinDay between #{param1} AND #{param2}")
+    @ResultMap("domesticConsumer")
+    List<DomesticConsumerDO> selectByQuarter(String param1, String param2);
+
+    //查询今年份新增用户，
+    @Select("select * from tb_consumer where consumer_joinDay  like '#{date}' ")
+    @ResultMap("domesticConsumer")
+    List<DomesticConsumerDO> selectByYear(String date);
 }

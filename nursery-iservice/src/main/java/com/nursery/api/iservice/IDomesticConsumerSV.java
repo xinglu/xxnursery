@@ -2,6 +2,8 @@ package com.nursery.api.iservice;
 
 import com.nursery.beans.DomesticConsumerDO;
 
+import java.util.List;
+
 /**
  * DomesticConsumerMapper
  */
@@ -20,4 +22,13 @@ public interface IDomesticConsumerSV {
      */
     void insertConsumer(DomesticConsumerDO domesticConsumerDO) throws Exception;
 
+
+    //查询当前月份新增用户，
+    List<DomesticConsumerDO> selectByMonth(String date);
+
+    //查询当前季度份新增用户，
+    List<DomesticConsumerDO> selectByQuarter(String date);
+
+    //查询今年份新增用户，
+    List<DomesticConsumerDO> selectByYear(String date);
 }
