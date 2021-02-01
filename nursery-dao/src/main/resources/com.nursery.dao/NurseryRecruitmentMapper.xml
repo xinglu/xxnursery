@@ -32,12 +32,13 @@
         SELECT * FROM tb_nursery_recruitinfo WHERE recruittablename = #{recruittablename}
     </select>
 
-    <select id="selectByid" resultMap="recruitment" parameterType="string">
-        SELECT * FROM tb_nursery_recruitinfo WHERE id = #{id}
-    </select>
 
     <select id="selectRecruitmentDOsByRecruiterID" resultMap="recruitment" parameterType="string">
         SELECT * FROM tb_nursery_recruitinfo WHERE id IN (SELECT infoid FROM tb_middle_recruiter_info WHERE RECRUITERID = #{recruiterID})
+    </select>
+
+    <select id="selectRecruitmentDOs" resultMap="recruitment">
+        SELECT * FROM tb_nursery_recruitinfo
     </select>
 
     <select id="selectByclassAndName" resultMap="recruitment" parameterType="com.nursery.beans.DBDataParam">
@@ -48,6 +49,10 @@
         <if test="param2 != null and param2 != ''">
             AND recruittablename like #{param2}
         </if>
+    </select>
+
+    <select id="selectRecruitInfoByrecruitid" resultMap="recruitment" >
+        SELECT * FROM tb_nursery_recruitinfo WHERE id = #{id}
     </select>
 
     <insert id="insert" parameterType="com.nursery.beans.RecruitmentDO">

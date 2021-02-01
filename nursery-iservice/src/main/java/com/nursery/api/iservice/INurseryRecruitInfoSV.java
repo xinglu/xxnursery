@@ -26,4 +26,11 @@ public interface INurseryRecruitInfoSV {
      * @return
      */
     List<RecruitmentDO> selectRecruitinfoByerid(String userId) throws SQLException;
+
+    //获取招聘信息
+    List<RecruitmentDO> selectRecruitinfoByerid() throws SQLException;
+
+
+    //根究id 查询招聘信息
+    RecruitmentDO selectRecruitInfoByrecruitid(String recruitid) throws SQLException;
 }

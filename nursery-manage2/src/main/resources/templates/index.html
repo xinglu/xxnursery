@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="幼儿园招聘后台管理-发布、招聘进度">
     <meta name="author" content="meishiqiang">
-    <%--    <meta name="keyword" content="教师, 新星幼儿园, 新星, 幼儿园, 招聘管理, manage">--%>
-    <link rel="shortcut icon" href="/img/ico/favicon32.ico">
-
+    <link rel="shortcut icon" href="/img/ico/favicon32.ico" th:href="@{/img/ico/favicon32.ico}">
     <title>Manage-新星幼儿园</title>
 
     <!-- Bootstrap core CSS -->
@@ -301,8 +299,8 @@
                         <span>recruit-manage</span>
                     </a>
                     <ul class="sub">
-                        <li><a  href="">招聘管理</a></li>
-                        <li><a  href="horizontal_menu.html">留言管理</a></li>
+                        <li><a  th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
+                        <li><a href="" th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
                         <li><a  href="header-color.html">简历管理</a></li>
                     </ul>
                 </li>
@@ -358,7 +356,7 @@
         <section class="wrapper">
             <!--gai start-->
             <div class="row state-overview">
-                <%--新增用户--%>
+                <!--新增用户-->
                 <div class="col-lg-3 col-sm-6">
                     <section class="panel">
                         <div class="symbol terques">
@@ -372,7 +370,7 @@
                         </div>
                     </section>
                 </div>
-                <%--新增招聘信息--%>
+                <!--新增招聘信息-->
                 <div class="col-lg-3 col-sm-6">
                     <section class="panel">
                         <div class="symbol red">
@@ -386,7 +384,7 @@
                         </div>
                     </section>
                 </div>
-                <%--简历投递信息--%>
+                <!--简历投递信息-->
                 <div class="col-lg-3 col-sm-6">
                     <section class="panel">
                         <div class="symbol yellow">
@@ -400,7 +398,7 @@
                         </div>
                     </section>
                 </div>
-                <%--空白-待补--%>
+                <!--空白-待补-->
                 <div class="col-lg-3 col-sm-6">
                     <section class="panel">
                         <div class="symbol blue">

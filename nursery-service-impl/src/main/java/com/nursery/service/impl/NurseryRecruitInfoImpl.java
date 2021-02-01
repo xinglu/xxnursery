@@ -4,7 +4,6 @@ import com.nursery.api.iservice.INurseryRecruitInfoSV;
 import com.nursery.beans.DBDataParam;
 import com.nursery.beans.RecruitmentDO;
 import com.nursery.dao.NurseryRecruitmentMapper;
-import com.nursery.dao.RecruiterMiddleInformentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,6 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
     @Autowired
     @SuppressWarnings("all")
     NurseryRecruitmentMapper mapper;
-
-    @Autowired
-    @SuppressWarnings("all")
-    RecruiterMiddleInformentMapper middleInformentMapper;
 
     @Override
     public List<RecruitmentDO> recruitList(DBDataParam dbDataParam) throws NullPointerException, SQLException {
@@ -59,5 +54,15 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
             }
         }*/
         return mapper.selectRecruitmentDOsByRecruiterID(userId);
+    }
+
+    @Override
+    public List<RecruitmentDO> selectRecruitinfoByerid() throws SQLException {
+        return mapper.selectRecruitmentDOs();
+    }
+
+    @Override
+    public RecruitmentDO selectRecruitInfoByrecruitid(String recruitid) throws SQLException {
+        return mapper.selectRecruitInfoByrecruitid(recruitid);
     }
 }

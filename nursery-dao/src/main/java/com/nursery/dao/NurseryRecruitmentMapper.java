@@ -8,26 +8,36 @@ import java.util.List;
 
 /**
  * 幼儿园
- *  招聘信息
+ * 招聘信息
  */
 public interface NurseryRecruitmentMapper {
 
     //保存
-    public void insert(RecruitmentDO recruitmentDO)throws SQLException;
+    public void insert(RecruitmentDO recruitmentDO) throws SQLException;
+
     //更新
-    public void update(RecruitmentDO recruitmentDO)throws SQLException;
+    public void update(RecruitmentDO recruitmentDO) throws SQLException;
+
     //删除
-    public void delete(String id)throws SQLException;
+    public void delete(String id) throws SQLException;
+
     //根据类查询
-    public void selectByclassify(String classify)throws SQLException;
+    public void selectByclassify(String classify) throws SQLException;
+
     //根据名称模糊查询
-    public void selectByrecruittablename(String tablename)throws SQLException;
-    //根据id查询
-    public RecruitmentDO selectByid(String id)throws SQLException;
+    public void selectByrecruittablename(String tablename) throws SQLException;
+
     //根据 类型和名称(模糊查询)
-    List<RecruitmentDO> selectByclassAndName(DBDataParam dbDataParam)throws SQLException;
-//---------------
+    List<RecruitmentDO> selectByclassAndName(DBDataParam dbDataParam) throws SQLException;
+
+    //查询所有招聘信息
+    List<RecruitmentDO> selectRecruitmentDOs() throws SQLException;
+
     //根据id查询
-    public List<RecruitmentDO> selectRecruitmentDOsByRecruiterID(String recruiterID)throws SQLException;
+    RecruitmentDO selectRecruitInfoByrecruitid(String recruitid) throws SQLException;
+
+    //---------------
+    //根据招聘管理者id查询 招聘信息
+    List<RecruitmentDO> selectRecruitmentDOsByRecruiterID(String recruiterID) throws SQLException;
 
 }
