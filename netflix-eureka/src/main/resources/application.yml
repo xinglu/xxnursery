@@ -1,0 +1,14 @@
+server:
+  port: ${PORT:32220}
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #http://localhost:32220/eureka/
+      defaultZone: ${EUREKA_SERVER:http://localhost:32210/eureka/}
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 60000
+  instance:
+    hostname: ${EUREKA_DOMAIN:localhost}
