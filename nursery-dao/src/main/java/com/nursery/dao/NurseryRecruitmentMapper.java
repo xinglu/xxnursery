@@ -15,9 +15,6 @@ public interface NurseryRecruitmentMapper {
     //保存
     public void insert(RecruitmentDO recruitmentDO) throws SQLException;
 
-    //更新
-    public void update(RecruitmentDO recruitmentDO) throws SQLException;
-
     //删除
     public void delete(String id) throws SQLException;
 
@@ -36,8 +33,9 @@ public interface NurseryRecruitmentMapper {
     //根据id查询
     RecruitmentDO selectRecruitInfoByrecruitid(String recruitid) throws SQLException;
 
-    //---------------
     //根据招聘管理者id查询 招聘信息
     List<RecruitmentDO> selectRecruitmentDOsByRecruiterID(String recruiterID) throws SQLException;
 
+    //更新
+    int updateRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException;
 }

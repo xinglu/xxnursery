@@ -10,22 +10,6 @@ import java.util.Date;
 
 /**
  * 招聘内容
- *
- * CREATE TABLE `tb_nursery_recruitinfo` (
- *   `id` varchar(32) NOT NULL,
- *   `recruittablename` varchar(128) DEFAULT NULL COMMENT '招聘标题',
- *   `recruitclassify` varchar(4) DEFAULT NULL COMMENT '招聘分类信息',
- *   `recruitpay` varchar(12) DEFAULT NULL COMMENT '招聘待遇--薪资',
- *   `recruitstarttime` varchar(16) DEFAULT NULL COMMENT '招聘开始时间',
- *   `recruitendtime` varchar(16) DEFAULT NULL COMMENT '招聘结束时间',
- *   `recruitplace` varchar(64) DEFAULT NULL COMMENT '招聘地点',
- *   `recruitrequire_experience` varchar(16) DEFAULT NULL COMMENT'招聘要求--工作经验',
- *   `recruitrequire_edubg` varchar(4) DEFAULT NULL COMMENT '招聘要求--学历',
- *   `recruitnumbers` varchar(2) DEFAULT NULL COMMENT '招聘人数',
- *   `companyresume` varchar(255) DEFAULT NULL COMMENT '公司简历',
- *   `jobdesciption` varchar(255) DEFAULT NULL COMMENT '职位描述',
- *   PRIMARY KEY (`id`)
- * ) ENGINE=InnoDB DEFAULT CHARSET=utf8
  */
 @ToString
 @NoArgsConstructor

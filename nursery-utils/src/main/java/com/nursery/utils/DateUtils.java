@@ -7,9 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * 日期相关工具类
- */
+//date日期工具类
 public class DateUtils {
     private static SimpleDateFormat sdf = null;
     private static String YYYYMMDD = "yyyyMMdd";

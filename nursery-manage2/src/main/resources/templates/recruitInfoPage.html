@@ -8,20 +8,20 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="/img/favicon.png">
 
-    <title>Project details</title>
+    <title>招聘详情页面</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 
     <!--right slidebar-->
     <link href="/css/slidebars.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style-responsive.css" rel="stylesheet" />
+    <link href="/css/style-responsive.css" rel="stylesheet"/>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -295,7 +295,7 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="active">
                         <i class="fa fa-laptop"></i>
                         <span>recruit-manage</span>
                     </a>
@@ -352,67 +352,70 @@
         </div>
     </aside>
     <!--侧边栏 end-->
-    <!--main content start-->
+    <!--主体内容 start-->
     <section id="main-content">
         <section class="wrapper site-min-height">
-            <!-- page start-->
             <section class="panel">
                 <header class="panel-heading">
-                    Projects Details
+                    <th:block th:text="${data.queryResult.object.recruittablename}"></th:block>
                     <span class="pull-right">
-                          <button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> Refresh</button>
-                      </span>
+                          <a type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> 删除</a>
+                    </span>
                 </header>
-
             </section>
             <div class="row">
+                <!--中间主题内容 start-->
                 <div class="col-md-8">
                     <section class="panel">
                         <div class="bio-graph-heading project-heading">
-                            <strong> [ New Dashboard BS3 ] </strong>
+                            <strong> 招聘详细信息-页 </strong>
                         </div>
                         <div class="panel-body bio-graph-info">
                             <!--<h1>New Dashboard BS3 </h1>-->
                             <div class="row p-details">
                                 <div class="bio-row">
-                                    <p><span class="bold">Created by </span>: Jonathan Smith</p>
+                                    <p><span class="bold">发布者 </span>: <span> 梅士强</span></p>
                                 </div>
-                                <div class="bio-row">
-                                    <p><span class="bold">Status </span>: <span class="label label-primary">Active</span></p>
-                                </div>
-                                <div class="bio-row">
-                                    <p><span class="bold">Created </span>: 13.05.2014 10:16:23</p>
-                                </div>
-                                <div class="bio-row">
-                                    <p><span class="bold">Last Updated</span>: 22.08.2014 03:11:45</p>
-                                </div>
-                                <div class="bio-row">
-                                    <p><span class="bold">Client </span>: <a href="#">Themeforest</a></p>
-                                </div>
-                                <div class="bio-row">
-                                    <p><span class="bold">Version </span>: v.2.3</p>
-                                </div>
-                                <div class="bio-row">
-                                    <p><span class="bold">Participants </span>:
-                                        <span class="p-team">
-                                          <a href="#"><img alt="image" class="" src="/img/chat-avatar.jpg"></a>
-                                          <a href="#"><img alt="image" class="" src="/img/chat-avatar2.jpg"></a>
-                                          <a href="#"><img alt="image" class="" src="/img/pro-ac-1.png"></a>
-                                      </span>
-                                    </p>
-                                </div>
+                                <th:block th:object="${data.queryResult.object}">
+                                    <div class="bio-row">
+                                        <p><span class="bold">类型 </span>: <span
+                                                th:text="*{classify}"
+                                                class="label label-primary">Active</span></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span class="bold">创建时间 </span>: <span
+                                                th:text="*{starttime}"></span></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span class="bold">结束时间</span>: <span
+                                                th:text="*{#dates.format(endtime,'yyyy年MM月dd日 HH:mm')}"></span></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span class="bold">人数 </span>: <span
+                                                th:text="*{manNumbers}"></span></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span class="bold">标签 </span>: <span
+                                                th:text="*{requireExperience}"></span></p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span class="bold">地址 </span>: <span
+                                                th:text="*{place}"></span></p>
+                                    </div>
 
-                                <div class="col-lg-12">
-                                    <dl class="dl-horizontal mtop20 p-progress">
-                                        <dt>Project Completed:</dt>
-                                        <dd>
-                                            <div class="progress progress-striped active ">
-                                                <div style="width: 80%;" class="progress-bar progress-bar-success"></div>
-                                            </div>
-                                            <small>Project completed in <strong>80%</strong>. Remaining close the project, sign a contract and invoice.</small>
-                                        </dd>
-                                    </dl>
-                                </div>
+                                    <div class="col-lg-12">
+                                        <dl class="dl-horizontal mtop20 p-progress">
+                                            <dt>完成度:</dt>
+                                            <dd>
+                                                <div class="progress progress-striped active ">
+                                                    <div style="width: 80%;"
+                                                         class="progress-bar progress-bar-success"></div>
+                                                </div>
+                                                <small>招聘已经进行 <strong>80%</strong>. </small>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </th:block>
                             </div>
 
                         </div>
@@ -446,7 +449,8 @@
                                         28/11/2014 12:23:03
                                     </td>
                                     <td>
-                                        Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as opposed to using
+                                        Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as
+                                        opposed to using
                                     </td>
                                     <td>
                                         <span class="label label-info">Completed</span>
@@ -463,7 +467,8 @@
                                         22/11/2014 12:23:03
                                     </td>
                                     <td>
-                                        Tawseef Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as opposed to using
+                                        Tawseef Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a
+                                        as opposed to using
                                     </td>
                                     <td>
                                         <span class="label label-info">Reported</span>
@@ -480,7 +485,8 @@
                                         28/11/2014 12:23:03
                                     </td>
                                     <td>
-                                        Dism Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as opposed to using
+                                        Dism Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as
+                                        opposed to using
                                     </td>
                                     <td>
                                         <span class="label label-info">Accepted</span>
@@ -497,7 +503,8 @@
                                         28/11/2014 12:23:03
                                     </td>
                                     <td>
-                                        Cosm Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as opposed to using
+                                        Cosm Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as
+                                        opposed to using
                                     </td>
                                     <td>
                                         <span class="label label-info">Completed</span>
@@ -514,7 +521,8 @@
                                         28/11/2014 12:23:03
                                     </td>
                                     <td>
-                                        Hello that it has a as opposed to using Lorem Ipsum is that it has a as opposed to using
+                                        Hello that it has a as opposed to using Lorem Ipsum is that it has a as opposed
+                                        to using
                                     </td>
                                     <td>
                                         <span class="label label-info">Sent</span>
@@ -531,7 +539,8 @@
                                         28/11/2014 12:23:03
                                     </td>
                                     <td>
-                                        Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as opposed to using
+                                        Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as
+                                        opposed to using
                                     </td>
                                     <td>
                                         <span class="label label-info">Completed</span>
@@ -548,7 +557,8 @@
                                         28/11/2014 12:23:03
                                     </td>
                                     <td>
-                                        Orem psum is that it has a as opposed to using Lorem Ipsum is that it has a as opposed to using
+                                        Orem psum is that it has a as opposed to using Lorem Ipsum is that it has a as
+                                        opposed to using
                                     </td>
                                     <td>
                                         <span class="label label-info">Completed</span>
@@ -558,25 +568,20 @@
                             </table>
                         </div>
                     </section>
-
                 </div>
+                <!--中间主题内容 end-->
+                <!--右侧边栏内容 start-->
                 <div class="col-md-4">
                     <section class="panel">
                         <header class="panel-heading">
-                            Projects Description
+                            招聘详细要求
                         </header>
 
                         <div class="panel-body">
-                            <a href="#"><img src="/img/email-img/vector-lab.jpg" alt=""/></a>
+                            <a href="#"><img src="/img/XINXING.png" alt="新星幼儿园"/></a>
 
-                            <p>
-                                Sometimes the simplest things are the hardest to find. I imagined a line of my favorite pieces, the things i would live in every day, all year round. So I stopped looking and started designing. Sometimes the simplest things are the hardest to find. Sometimes the simplest things are the hardest to find. I imagined a line of my favorite pieces, the things i would live in every day, all year round. So I stopped looking and started designing. Sometimes the simplest things are the hardest to find.
-                            </p>
+                            <p th:text="${data.queryResult.object.jobdesciption}"></p>
                             <br/>
-                            <h5 class="bold">Priority</h5>
-                            <ul class="nav nav-pills nav-stacked labels-info ">
-                                <li><i class=" fa fa-circle text-danger"></i> High Priority</p></li>
-                            </ul>
 
                             <br/>
                             <h5 class="bold">Project files</h5>
@@ -608,8 +613,8 @@
 
                     </section>
                 </div>
+                <!--右侧边栏内容 end-->
             </div>
-            <!-- page end-->
         </section>
     </section>
     <!--main content end-->
@@ -693,7 +698,8 @@
                         <div class="percent">40%</div>
                     </div>
                     <div class="progress progress-striped">
-                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
+                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40"
+                             role="progressbar" class="progress-bar progress-bar-success">
                             <span class="sr-only">40% Complete (success)</span>
                         </div>
                     </div>
@@ -706,7 +712,8 @@
                         <div class="percent">60%</div>
                     </div>
                     <div class="progress progress-striped">
-                        <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-warning">
+                        <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60"
+                             role="progressbar" class="progress-bar progress-bar-warning">
                             <span class="sr-only">60% Complete (warning)</span>
                         </div>
                     </div>
@@ -719,7 +726,8 @@
                         <div class="percent">87%</div>
                     </div>
                     <div class="progress progress-striped">
-                        <div style="width: 87%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar progress-bar-info">
+                        <div style="width: 87%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20"
+                             role="progressbar" class="progress-bar progress-bar-info">
                             <span class="sr-only">87% Complete</span>
                         </div>
                     </div>
@@ -732,7 +740,8 @@
                         <div class="percent">33%</div>
                     </div>
                     <div class="progress progress-striped">
-                        <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" role="progressbar" class="progress-bar progress-bar-danger">
+                        <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80"
+                             role="progressbar" class="progress-bar progress-bar-danger">
                             <span class="sr-only">33% Complete (danger)</span>
                         </div>
                     </div>
@@ -745,7 +754,8 @@
                         <div class="percent">45%</div>
                     </div>
                     <div class="progress progress-striped active">
-                        <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar">
+                        <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45"
+                             role="progressbar" class="progress-bar">
                             <span class="sr-only">45% Complete</span>
                         </div>
                     </div>
@@ -762,7 +772,7 @@
     <!--footer start-->
     <footer class="site-footer">
         <div class="text-center">
-            2013 &copy; FlatLab by VectorLab.
+            2021 &copy; FlatLab by VectorLab.
             <a href="#" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>
@@ -778,7 +788,7 @@
 <script src="/js/jquery.scrollTo.min.js"></script>
 <script src="/js/slidebars.min.js"></script>
 <script src="/js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="/js/respond.min.js" ></script>
+<script src="/js/respond.min.js"></script>
 
 <!--common script for all pages-->
 <script src="/js/common-scripts.js"></script>

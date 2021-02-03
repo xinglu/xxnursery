@@ -970,7 +970,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     -webkit-border-radius: 4px 4px 0px 0px;
     border-radius: 4px 4px 0px 0px;
 }
-
+.panel-body > a > img {
+    width: 50%;
+}
 
 /*personal task*/
 

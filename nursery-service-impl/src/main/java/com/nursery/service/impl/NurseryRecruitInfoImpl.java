@@ -17,6 +17,7 @@ import java.util.List;
  */
 @Service
 public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
+
     private static Logger logger = LoggerFactory.getLogger(NurseryRecruitInfoImpl.class);
 
     @Autowired
@@ -42,17 +43,6 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
 
     @Override
     public List<RecruitmentDO> selectRecruitinfoByerid(String userId) throws SQLException {
-        /*List<String> recruitIds = middleInformentMapper.selectRecruitIdsByerid(userId);
-        List<RecruitmentDO> recruitmentDOList = new ArrayList<>();
-        if (recruitIds != null && !recruitIds.isEmpty()) {
-            RecruitmentDO recruitmentDO = null;
-            for (String recruitId : recruitIds) {
-                recruitmentDO = mapper.selectByid(recruitId);
-                if (recruitmentDO!=null){
-                    recruitmentDOList.add(recruitmentDO);
-                }
-            }
-        }*/
         return mapper.selectRecruitmentDOsByRecruiterID(userId);
     }
 
@@ -64,5 +54,10 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
     @Override
     public RecruitmentDO selectRecruitInfoByrecruitid(String recruitid) throws SQLException {
         return mapper.selectRecruitInfoByrecruitid(recruitid);
+    }
+
+    @Override
+    public int updateRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException {
+        return mapper.updateRecruitInfo(recruitmentDO);
     }
 }

@@ -23,7 +23,6 @@
         recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers,companyresume,jobdesciption
     </sql>
 
-
     <select id="selectByclassify" resultMap="recruitment" parameterType="string">
         SELECT * FROM tb_nursery_recruitinfo WHERE recruitclassify = #{classify}
     </select>
@@ -70,8 +69,21 @@
       DELETE from tb_nursery_recruitinfo where id = #{id}
     </delete>
 
-
-    <update id="update" parameterType="com.nursery.beans.RecruitmentDO">
-
+    <update id="updateRecruitInfo" parameterType="com.nursery.beans.RecruitmentDO">
+        update tb_nursery_recruitinfo set
+            recruittablename = #{recruittablename},
+            recruitclassify = #{classify},
+            recruitpay = #{pay},
+            recruitstarttime = #{starttime},
+            recruitendtime = #{endtime},
+            recruitplace = #{place},
+            recruitrequire_experience = #{recruitrequire_experience},
+            recruitrequire_edubg = #{requireEduDB},
+            recruitnumbers = #{manNumbers},
+            companyresume = #{companyresume},
+            jobdesciption = #{jobdesciption}
+        WHERE
+            id = #{id}
     </update>
+
 </mapper>

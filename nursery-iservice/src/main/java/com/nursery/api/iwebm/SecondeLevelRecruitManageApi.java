@@ -1,5 +1,7 @@
 package com.nursery.api.iwebm;
 
+import com.nursery.beans.bo.RecruitBO;
+import com.nursery.common.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,4 +21,7 @@ public interface SecondeLevelRecruitManageApi {
 
     @ApiOperation("获取单个详细招聘信息")
     public ModelAndView getRecruitInfoByrecruitid(String recruitid);
+
+    @ApiOperation(value = "更新招聘信息",httpMethod = "PUT",response = ModelAndView.class )
+    public ResponseResult putRecruitInfo(RecruitBO recruitBO);
 }

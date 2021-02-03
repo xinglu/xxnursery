@@ -24,13 +24,31 @@ public interface INurseryRecruitInfoSV {
      * 根据 id获取招聘信息
      * @param userId 招聘部门人员id
      * @return
+     * @throws SQLException
      */
     List<RecruitmentDO> selectRecruitinfoByerid(String userId) throws SQLException;
 
-    //获取招聘信息
+    /**
+     * 获取招聘信息
+     * @return
+     * @throws SQLException
+     */
     List<RecruitmentDO> selectRecruitinfoByerid() throws SQLException;
 
 
-    //根究id 查询招聘信息
+    /**
+     * 根究id 查询招聘信息
+     * @param recruitid
+     * @return
+     * @throws SQLException
+     */
     RecruitmentDO selectRecruitInfoByrecruitid(String recruitid) throws SQLException;
+
+    /**
+     * 更新招聘信息
+     * @param recruitmentDO
+     * @return 返回受影响的行数
+     * @throws SQLException
+     */
+    int updateRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException;
 }
