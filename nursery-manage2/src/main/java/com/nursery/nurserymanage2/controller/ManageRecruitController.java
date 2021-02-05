@@ -3,7 +3,7 @@ package com.nursery.nurserymanage2.controller;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.nursery.api.iservice.INurseryRecruitInfoSV;
-import com.nursery.api.iwebm.SecondeLevelRecruitManageApi;
+import com.nursery.api.iwebm.ManageRecruitApi;
 import com.nursery.beans.RecruitmentDO;
 import com.nursery.beans.bo.RecruitBO;
 import com.nursery.beans.code.RecruitCode;
@@ -14,10 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -29,8 +26,8 @@ import java.net.InetAddress;
  */
 @Controller
 @RequestMapping("/manage/recruit")
-public class SecondeLevelRecruitManageController extends BaseController implements SecondeLevelRecruitManageApi {
-    private static final Logger logger = LoggerFactory.getLogger(SecondeLevelRecruitManageController.class);
+public class ManageRecruitController extends BaseController implements ManageRecruitApi {
+    private static final Logger logger = LoggerFactory.getLogger(ManageRecruitController.class);
 
     @Autowired
     private INurseryRecruitInfoSV nurseryRecruitInfoSV;
@@ -62,7 +59,8 @@ public class SecondeLevelRecruitManageController extends BaseController implemen
      * @param recruitBO 招聘内容
      * @return 提示信息
      */
-    @PutMapping("/recruitInfo")
+//    @PutMapping("")
+    @RequestMapping(value = "/recruitInfo",method = RequestMethod.POST)
     @ResponseBody
     @Override
     public ResponseResult putRecruitInfo(RecruitBO recruitBO) {
@@ -78,6 +76,7 @@ public class SecondeLevelRecruitManageController extends BaseController implemen
         String workPlace = recruitBO.getWorkPlace();
         String type = recruitBO.getType();
         String pay = recruitBO.getPay();
+        logger.info("putRecruitInfo：RecruitBO==> "+recruitBO);
         //判断是否参数有误
         if (StringUtils.isEmpty(recruitBO.getId())) {
             logger.warn("参数不对，没有id值");
@@ -86,6 +85,7 @@ public class SecondeLevelRecruitManageController extends BaseController implemen
         }
         try {
             RecruitmentDO recruitmentDO = new RecruitmentDO();
+            recruitmentDO.setId(recruitBO.getId());
             recruitmentDO.setClassify(type);
             recruitmentDO.setId(recruitBO.getId());
             recruitmentDO.setCompanyresume(companyProfile);
@@ -97,16 +97,18 @@ public class SecondeLevelRecruitManageController extends BaseController implemen
             recruitmentDO.setRequireExperience(label);
             recruitmentDO.setPlace(workPlace);
             recruitmentDO.setPay(pay);
+            logger.warn("putRecruitInfo: RecruitmentDO==>"+JSON.toJSONString(recruitmentDO));
             int i = nurseryRecruitInfoSV.updateRecruitInfo(recruitmentDO);
             //判断更新是否成功
             if (i > 0) {
-                logger.warn(JSON.toJSONString(recruitmentDO));
+                logger.error("putRecruitInfo： 更新成功,影响行数"+i);
                 responseResult.setCommonCode(RecruitCode.RECRUIT_SQL_SUCCEED);
                 return responseResult;
             }
         } catch (Exception e) {
-            logger.error("sql操作错误");
+            logger.error("putRecruitInfo： 更新失败");
             responseResult.setCommonCode(RecruitCode.RECRUIT_SQL_FAIL);
+            return responseResult;
         }
         return responseResult;
     }

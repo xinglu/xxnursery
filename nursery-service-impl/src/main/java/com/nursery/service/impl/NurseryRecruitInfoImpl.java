@@ -57,7 +57,14 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
     }
 
     @Override
-    public int updateRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException {
-        return mapper.updateRecruitInfo(recruitmentDO);
+    public int updateRecruitInfo(RecruitmentDO recruitmentDO){
+        int i = 0;
+        try {
+            i = mapper.updateRecruitInfo(recruitmentDO);
+        } catch (SQLException throwables) {
+            logger.error("NurseryRecruitInfoImpl ==> updateRecruitInfo ： mapper" +
+                    " sql语句有问题");
+        }
+        return i;
     }
 }

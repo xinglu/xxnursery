@@ -42,6 +42,4 @@ public enum CommonCode implements ResultCode{
     public String message() {
         return message;
     }
-
-
 }

@@ -8,6 +8,11 @@ import java.util.Arrays;
 class NurseryManage2ApplicationTests {
 
     @Test
+    public void test0888(){
+        System.out.println("职位描述<br><ul><li>热爱婴幼儿教育事业，富有爱心、耐心、责任心，身体素质好，表达能力和沟通能力强；</li><li>思想素质好，遵纪守法，品行端正，事业心和责任感强；</li><li>年龄在40周岁以下的在职教师和优秀的应届或往届毕业生(有意向长时间在学校做编外教师的优先)；</li><li>具有相应专业专科及以上学历，达到所申报学科普通话水平并具有合格证书、具有全国计算机等级考试一级以上(含一级)或相应水平资格证书具有相应的教师资格证书；</li><li><span>幼师学校毕业或有相关工作经验者优先录取。</span></li></ul>".length());
+    }
+
+    @Test
     void test01() {
         /*int length = reverse(1534236863);
         System.out.println(length);*/

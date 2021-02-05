@@ -9,6 +9,7 @@ import com.nursery.common.model.response.CommonCode;
 import com.nursery.common.model.response.QueryResponseResult;
 import com.nursery.common.model.response.QueryResult;
 import com.nursery.common.web.BaseController;
+import com.nursery.utils.DateUtils;
 import com.nursery.utils.RSAUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +67,7 @@ public class VisitRecruitController extends BaseController implements VisitRecru
         }
         queryResponseResult.setCommonCode(CommonCode.SUCCESS);
         modelAndView.addObject("data", queryResponseResult);
-        modelAndView.setViewName("recruitManagePage");
+        modelAndView.setViewName("recruitManagePages");
         logger.info(JSON.toJSONString(queryResponseResult));
         return modelAndView;
     }
@@ -78,12 +81,27 @@ public class VisitRecruitController extends BaseController implements VisitRecru
     @GetMapping("/manage/recruit/getRecruitInfo/{recruitid}")
     @ResponseBody
     public ModelAndView getRecruitInfoByrecruitid(@PathVariable("recruitid") String recruitid) {
+        //定义返回值
         QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
         QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.FAIL, queryResult);
         ModelAndView modelAndView = new ModelAndView();
         try {
+            //sv层
             RecruitmentDO recruitmentDO = nurseryRecruitInfoSV.selectRecruitInfoByrecruitid(recruitid);
+            //如果不为空
             if (!ObjectUtils.isEmpty(recruitmentDO)) {
+                String classify = recruitmentDO.getClassify();//获取类型
+                String requireExperience = recruitmentDO.getRequireExperience();
+                if(!StringUtils.isEmpty(classify)){
+                    classify = classify.trim();
+                    String[] types = classify.split(",");
+                    recruitmentDO.setTypes(types);
+                }
+                if(!StringUtils.isEmpty(requireExperience)){
+                    requireExperience = requireExperience.trim();
+                    String[] labels = requireExperience.split(",");
+                    recruitmentDO.setLabels(labels);
+                }
                 queryResult.setObject(recruitmentDO);
                 queryResponseResult.setCommonCode(CommonCode.SUCCESS);
             }
@@ -141,4 +159,47 @@ public class VisitRecruitController extends BaseController implements VisitRecru
         return modelAndView;
     }
 
+
+    /**
+     * 根据内容id 获取招聘的详细信息
+     *
+     * @param recruitid 招聘内容id
+     * @return 招聘详情页面、招聘更新页面
+     */
+    @GetMapping("/manage/recruit/modify/page/{recruitid}")
+    @ResponseBody
+    public ModelAndView getRecruitInfoByid(@PathVariable("recruitid") String recruitid) {
+        QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
+        QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.FAIL, queryResult);
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            RecruitmentDO recruitmentDO = nurseryRecruitInfoSV.selectRecruitInfoByrecruitid(recruitid);
+            if (!ObjectUtils.isEmpty(recruitmentDO)) {
+                //转换时间格式
+                recruitmentDO.setStartTime(DateUtils.parseYYYYMMDDHHMM(recruitmentDO.getStarttime()));
+                queryResult.setObject(recruitmentDO);
+                queryResponseResult.setCommonCode(CommonCode.SUCCESS);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        modelAndView.addObject("data", queryResponseResult);
+        modelAndView.setViewName("recruitModifyPage");
+        logger.info("getRecruitInfoByid"+JSON.toJSONString(queryResponseResult));
+        return modelAndView;
+    }
+
+    /**
+     * 访问招聘详情页面
+     * @param paramId
+     * @return
+     */
+    @GetMapping("/details/page/{paramId}")
+    public ModelAndView getRecruitDetails(@PathVariable("paramId") String paramId,ModelAndView modelAndView) {
+//        modelAndView.addObject("data", queryResponseResult);
+        modelAndView.setViewName("recruitDetailsPage");
+        return modelAndView;
+    }
 }

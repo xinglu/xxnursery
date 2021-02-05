@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Date:2021/1/27 | Time:11:42
  */
 @Api(value = "/manage/recruit",description = "招聘管理")
-public interface SecondeLevelRecruitManageApi {
+public interface ManageRecruitApi {
 
     @ApiOperation(value = "更新招聘信息",httpMethod = "PUT",response = ModelAndView.class )
     public ResponseResult putRecruitInfo(RecruitBO recruitBO);

@@ -122,18 +122,8 @@ $('.timepicker-24').timepicker({
 
 //timepicker end
 
-//colorpicker start
-
-$('.colorpicker-default').colorpicker({
-    format: 'hex'
-});
-$('.colorpicker-rgba').colorpicker();
-
-//colorpicker end
 
 //multiselect start
-
-
     $('#my_multi_select1').multiSelect();
     $('#my_multi_select2').multiSelect({
         selectableOptgroup: true
@@ -174,8 +164,6 @@ $('.colorpicker-rgba').colorpicker();
             this.qs2.cache();
         }
     });
-
-
 //multiselect end
 
 

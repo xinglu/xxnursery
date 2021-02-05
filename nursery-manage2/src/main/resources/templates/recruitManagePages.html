@@ -148,7 +148,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <span class="photo"><img alt="avatar" src="./img/avatar-mini.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="/img/avatar-mini.jpg"></span>
                                 <span class="subject">
                                     <span class="from">Jonathan Smith</span>
                                     <span class="time">Just now</span>
@@ -160,7 +160,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <span class="photo"><img alt="avatar" src="./img/avatar-mini2.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="/img/avatar-mini2.jpg"></span>
                                 <span class="subject">
                                     <span class="from">Jhon Doe</span>
                                     <span class="time">10 mins</span>
@@ -172,7 +172,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <span class="photo"><img alt="avatar" src="./img/avatar-mini3.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="/img/avatar-mini3.jpg"></span>
                                 <span class="subject">
                                     <span class="from">Jason Stathum</span>
                                     <span class="time">3 hrs</span>
@@ -184,7 +184,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <span class="photo"><img alt="avatar" src="./img/avatar-mini4.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="/img/avatar-mini4.jpg"></span>
                                 <span class="subject">
                                     <span class="from">Jondi Rose</span>
                                     <span class="time">Just now</span>
@@ -305,8 +305,8 @@
                     </a>
                     <ul class="sub">
                         <li><a th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
-                        <li class="active"><a  class="active" th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
-                        <li><a href="header-color.html">简历管理</a></li>
+                        <li class="active"><a th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
+                        <li><a th:href="@{/manage/recruit/details/page/1}">招聘详情</a></li>
                     </ul>
                 </li>
 
@@ -387,7 +387,7 @@
                                     <tr class="gradeX" th:each="demo,stat:${data.queryResult.list}">
                                         <td th:text="${demo.recruittablename}"></td>
                                         <td th:text="${demo.requireEduDB}"></td>
-                                        <td th:text="${#dates.format(demo.endtime,'yyyy年MM月dd日 HH:mm')}"></td>
+                                        <td th:text="${#dates.format(demo.endTime,'yyyy年MM月dd日 HH:mm')}"></td>
                                         <td th:text="${demo.manNumbers}"></td>
                                         <td th:text="${demo.place}"></td>
                                         <td th:text="(${demo.isNotStaleDated} == 'true')? '过期' : '可投递'"></td>

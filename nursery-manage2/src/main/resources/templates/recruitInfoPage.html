@@ -144,7 +144,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <span class="photo"><img alt="avatar" src="./img/avatar-mini.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="/img/avatar-mini.jpg"></span>
                                 <span class="subject">
                                     <span class="from">Jonathan Smith</span>
                                     <span class="time">Just now</span>
@@ -156,7 +156,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <span class="photo"><img alt="avatar" src="./img/avatar-mini2.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="/img/avatar-mini2.jpg"></span>
                                 <span class="subject">
                                     <span class="from">Jhon Doe</span>
                                     <span class="time">10 mins</span>
@@ -168,7 +168,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <span class="photo"><img alt="avatar" src="./img/avatar-mini3.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="/img/avatar-mini3.jpg"></span>
                                 <span class="subject">
                                     <span class="from">Jason Stathum</span>
                                     <span class="time">3 hrs</span>
@@ -180,7 +180,7 @@
                         </li>
                         <li>
                             <a href="#">
-                                <span class="photo"><img alt="avatar" src="./img/avatar-mini4.jpg"></span>
+                                <span class="photo"><img alt="avatar" src="/img/avatar-mini4.jpg"></span>
                                 <span class="subject">
                                     <span class="from">Jondi Rose</span>
                                     <span class="time">Just now</span>
@@ -378,26 +378,46 @@
                                 </div>
                                 <th:block th:object="${data.queryResult.object}">
                                     <div class="bio-row">
-                                        <p><span class="bold">类型 </span>: <span
-                                                th:text="*{classify}"
-                                                class="label label-primary">Active</span></p>
+                                        <th:block th:if="*{types == null}">
+                                            <p><span class="bold">类型 </span>: <span
+                                                    th:text="*{classify}"
+                                                    class="label label-primary label-block"></span></p>
+                                        </th:block>
+                                        <th:block th:if="*{types !=null}">
+                                            <p><span class="bold">类型 </span>:
+                                                <span th:each="type:*{types}"
+                                                      th:text="${type}"
+                                                      class="label label-primary label-block"></span></p>
+                                        </th:block>
                                     </div>
+
                                     <div class="bio-row">
                                         <p><span class="bold">创建时间 </span>: <span
                                                 th:text="*{starttime}"></span></p>
                                     </div>
                                     <div class="bio-row">
                                         <p><span class="bold">结束时间</span>: <span
-                                                th:text="*{#dates.format(endtime,'yyyy年MM月dd日 HH:mm')}"></span></p>
+                                                th:text="*{#dates.format(endTime,'yyyy年MM月dd日 HH:mm')}"></span></p>
                                     </div>
                                     <div class="bio-row">
                                         <p><span class="bold">人数 </span>: <span
                                                 th:text="*{manNumbers}"></span></p>
                                     </div>
+
                                     <div class="bio-row">
-                                        <p><span class="bold">标签 </span>: <span
-                                                th:text="*{requireExperience}"></span></p>
+                                        <th:block th:if="*{labels == null}">
+                                            <p><span class="bold">标签 </span>: <span
+                                                    th:text="*{requireExperience}"></span></p>
+                                        </th:block>
+                                        <th:block th:if="*{labels !=null}">
+                                            <p><span class="bold">标签 </span>:
+                                                <span class="label label-primary label-block"
+                                                    th:each="label:*{labels}"
+                                                    th:text="${label}"></span></p>
+                                        </th:block>
                                     </div>
+
+
                                     <div class="bio-row">
                                         <p><span class="bold">地址 </span>: <span
                                                 th:text="*{place}"></span></p>
@@ -580,7 +600,7 @@
                         <div class="panel-body">
                             <a href="#"><img src="/img/XINXING.png" alt="新星幼儿园"/></a>
 
-                            <p th:text="${data.queryResult.object.jobdesciption}"></p>
+                            <p th:utext="${data.queryResult.object.jobdesciption}"></p>
                             <br/>
 
                             <br/>
