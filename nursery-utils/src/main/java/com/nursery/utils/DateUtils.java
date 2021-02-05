@@ -15,6 +15,7 @@ public class DateUtils {
     public static final String HH = "HH";
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
     public static final String YYYYMMDDHHMMSS = "yyyy-MM-dd HH:mm:ss";
+    public static final String YYYYMMDDHHMM1 = "yyyy年MM月dd日 HH:mm";
     public static final DateTimeFormatter FORMATTER_HH = DateTimeFormatter.ofPattern(HH);
     public static final DateTimeFormatter FORMATTER_YYYY_MM_DD = DateTimeFormatter.ofPattern(YYYY_MM_DD);
     public static final DateTimeFormatter FORMATTER_YYYYMMDD = DateTimeFormatter.ofPattern(YYYYMMDD);
@@ -66,5 +67,11 @@ public class DateUtils {
         ageStr = age+"";
         return ageStr;
     }
+
+    public static Date parseYYYYMMDDHHMM(String date) throws ParseException {
+        sdf = new SimpleDateFormat(YYYYMMDDHHMM1);
+        return sdf.parse(date);
+    }
+
 
 }

@@ -20,7 +20,9 @@ public class RecruitmentDO {
     private String classify;//招聘分类信息
     private String pay;//招聘待遇--薪资
     private String starttime;//招聘开始时间
-    private Date endtime;//招聘结束时间
+    private Date startTime;//招聘开始时间
+    private String endtime;//招聘结束时间
+    private Date endTime;//招聘结束时间
     private String place;//招聘地点
     private String requireExperience;//招聘要求--工作经验
     private String requireEduDB;//招聘要求--学历
@@ -28,6 +30,54 @@ public class RecruitmentDO {
     private String companyresume;//公司简历
     private String jobdesciption;//职位描述
     private String isNotStaleDated;//时间是否过期
+    private String[] types;
+    private String[] labels;
+
+    public String[] getTypes() {
+        return types;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
+    }
+
+    public String[] getLabels() {
+        return labels;
+    }
+
+    public void setLabels(String[] labels) {
+        this.labels = labels;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endtime) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        Date parse = null;
+        try {
+            parse = simpleDateFormat.parse(endtime);
+        } catch (ParseException e) {
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            try {
+                parse = simpleDateFormat.parse(endtime);
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
+            }
+        }
+        this.endTime = parse;
+        setIsNotStaleDated(parse);
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+        setEndTime(endtime);
+    }
 
     public String getIsNotStaleDated() {
         return isNotStaleDated;
@@ -43,6 +93,15 @@ public class RecruitmentDO {
                 this.isNotStaleDated = "false";//没有过期
             }
         }
+    }
+
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     public String getId() {
@@ -83,22 +142,6 @@ public class RecruitmentDO {
 
     public void setStarttime(String starttime) {
         this.starttime = starttime;
-    }
-
-    public Date getEndtime() {
-        return endtime;
-    }
-
-    public void setEndtime(String endtime) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-        Date parse = null;
-        try {
-            parse = simpleDateFormat.parse(endtime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        this.endtime = parse;
-        setIsNotStaleDated(parse);
     }
 
     public String getPlace() {
