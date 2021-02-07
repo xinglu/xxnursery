@@ -8,7 +8,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="/img/favicon.png">
 
-    <title>所有招聘</title>
+    <title>用户管理</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -126,7 +126,6 @@
                                         <span class="sr-only">45% Complete</span>
                                     </div>
                                 </div>
-
                             </a>
                         </li>
                         <li class="external">
@@ -304,9 +303,9 @@
                         <span>recruit-manage</span>
                     </a>
                     <ul class="sub">
-                        <li><a th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
-                        <li class="active"><a th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
-                        <li><a th:href="@{/manage/recruit/details/page/1}">招聘详情</a></li>
+                        <li class="active"><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
+                        <li><a href="" th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
+                        <li><a href="recruitInfoPage.html">招聘详情</a></li>
                     </ul>
                 </li>
 
@@ -381,17 +380,25 @@
                                         <th>招聘人数</th>
                                         <th>地点</th>
                                         <th>是否过期</th>
+                                        <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX" th:each="demo,stat:${data.queryResult.list}">
-                                        <td th:text="${demo.recruittablename}"></td>
-                                        <td th:text="${demo.requireEduDB}"></td>
-                                        <td th:text="${#dates.format(demo.endTime,'yyyy年MM月dd日 HH:mm')}"></td>
-                                        <td th:text="${demo.manNumbers}"></td>
-                                        <td th:text="${demo.place}"></td>
-                                        <td th:text="(${demo.isNotStaleDated} == 'true')? '过期' : '可投递'"></td>
-                                    </tr>
+                                        <tr class="gradeX" th:each="demo,stat:${data.queryResult.list}">
+                                            <td th:text="${demo.recruittablename}"></td>
+                                            <td th:text="${demo.requireEduDB}"></td>
+                                            <td th:text="${#dates.format(demo.endTime,'yyyy年MM月dd日 HH:mm')}"></td>
+                                            <td th:text="${demo.manNumbers}"></td>
+                                            <td th:text="${demo.place}"></td>
+                                            <td th:text="(${demo.isNotStaleDated} == 'true')? '过期' : '可投递'"></td>
+                                            <td>
+                                                <div class="pull-left hidden-phone">
+                                                    <a th:href="'/manage/recruit/getRecruitInfo/' + ${demo.id}" class="btn btn-success btn-xs"><i class=" fa fa-check"></i></a>
+                                                    <a th:href="'/manage/recruit/modify/page/' + ${demo.id}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                                    <a class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                     <tfoot>
                                     <tr>
@@ -401,6 +408,7 @@
                                         <th>招聘人数</th>
                                         <th>地点</th>
                                         <th>是否过期</th>
+                                        <th>操作</th>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -565,7 +573,7 @@
     <!--footer start-->
     <footer class="site-footer">
         <div class="text-center">
-            2021 &copy; FlatLab by VectorLab.
+            2013 &copy; FlatLab by VectorLab.
             <a href="#" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>
