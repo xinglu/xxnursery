@@ -22,7 +22,6 @@ public interface IDomesticConsumerSV {
      */
     void insertConsumer(DomesticConsumerDO domesticConsumerDO) throws Exception;
 
-
     //查询当前月份新增用户，
     List<DomesticConsumerDO> selectByMonth(String date);
 
@@ -31,4 +30,8 @@ public interface IDomesticConsumerSV {
 
     //查询今年份新增用户，
     List<DomesticConsumerDO> selectByYear(String date);
+
+    //查询所有的用户
+    List<DomesticConsumerDO> selectConsumers();
+
 }

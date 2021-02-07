@@ -146,6 +146,11 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
         return mapper.selectByYear(date.substring(0,4)+"%");
     }
 
+    @Override
+    public List<DomesticConsumerDO> selectConsumers() {
+        return mapper.selectConsumers();
+    }
+
 
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){

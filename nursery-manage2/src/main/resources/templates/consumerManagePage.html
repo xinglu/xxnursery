@@ -8,7 +8,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="/img/favicon.png">
 
-    <title>用户管理</title>
+    <title>用户中心</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -298,9 +298,9 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;" class="active">
+                    <a href="javascript:;">
                         <i class="fa fa-laptop"></i>
-                        <span>recruit-manage</span>
+                        <span>招聘中心</span>
                     </a>
                     <ul class="sub">
                         <li class="active"><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
@@ -310,12 +310,12 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="active">
                         <i class="fa fa-book"></i>
                         <span>用户中心</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="general.html">General</a></li>
+                        <li class="active"><a th:href="@{/manage/consumer/visit}">显示</a></li>
                         <li><a href="buttons.html">Buttons</a></li>
                         <li><a href="modal.html">Modal</a></li>
                         <li><a href="toastr.html">Toastr Notifications</a></li>
@@ -374,40 +374,48 @@
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
                                     <tr>
-                                        <th>招聘职位</th>
-                                        <th>学历要求</th>
-                                        <th>结束时间</th>
-                                        <th>招聘人数</th>
-                                        <th>地点</th>
-                                        <th>是否过期</th>
+                                        <th>姓名</th>
+                                        <th>昵称</th>
+                                        <th>地址</th>
+                                        <th>年龄</th>
+                                        <th>性别</th>
+                                        <th>教育背景</th>
+                                        <th>邮箱</th>
+                                        <th>手机</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="gradeX" th:each="demo,stat:${data.queryResult.list}">
-                                            <td th:text="${demo.recruittablename}"></td>
-                                            <td th:text="${demo.requireEduDB}"></td>
-                                            <td th:text="${#dates.format(demo.endTime,'yyyy年MM月dd日 HH:mm')}"></td>
-                                            <td th:text="${demo.manNumbers}"></td>
-                                            <td th:text="${demo.place}"></td>
-                                            <td th:text="(${demo.isNotStaleDated} == 'true')? '过期' : '可投递'"></td>
-                                            <td>
-                                                <div class="pull-left hidden-phone">
-                                                    <a th:href="'/manage/recruit/getRecruitInfo/' + ${demo.id}" class="btn btn-success btn-xs"><i class=" fa fa-check"></i></a>
-                                                    <a th:href="'/manage/recruit/modify/page/' + ${demo.id}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                                    <a class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    <tr class="gradeX" th:each="demo,stat:${data.queryResult.list}" th:object="${demo}">
+                                        <td th:text="*{consumerName}==null?'null':*{consumerName}"></td>
+                                        <td th:text="*{consumerNickname}==null?'null':*{consumerNickname}"></td>
+                                        <td th:text="*{consumerAddress}==null?'null':*{consumerAddress}"></td>
+                                        <td th:text="*{consumerAge}==null?'null':*{consumerAge}"></td>
+                                        <td th:text="*{consumerSex}==null?'null':*{consumerSex}"></td>
+                                        <td th:text="*{consumerEducationBg}==null?'null':*{consumerEducationBg}"></td>
+                                        <td th:text="*{consumerEmail}==null?'null':*{consumerEmail}"></td>
+                                        <td th:text="*{consumerCellPhone}==null?'null':*{consumerCellPhone}"></td>
+                                        <td>
+                                            <div class="pull-left hidden-phone">
+                                                <a th:href="'/manage/consumer/getConsumerInfo/' + ${demo.consumerID}"
+                                                   class="btn btn-success btn-xs"><i class=" fa fa-check"></i></a>
+                                                <a th:href="'/manage/consumer/modify/page/' + ${demo.consumerID}"
+                                                   class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                                <a class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>招聘职位</th>
-                                        <th>学习要求</th>
-                                        <th>结束时间</th>
-                                        <th>招聘人数</th>
-                                        <th>地点</th>
-                                        <th>是否过期</th>
+                                        <th>姓名</th>
+                                        <th>昵称</th>
+                                        <th>地址</th>
+                                        <th>年龄</th>
+                                        <th>性别</th>
+                                        <th>教育背景</th>
+                                        <th>邮箱</th>
+                                        <th>手机</th>
                                         <th>操作</th>
                                     </tr>
                                     </tfoot>

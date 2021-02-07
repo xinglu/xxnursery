@@ -86,4 +86,10 @@ public interface DomesticConsumerMapper {
     @Select("select * from tb_consumer where consumer_joinDay  like '#{date}' ")
     @ResultMap("domesticConsumer")
     List<DomesticConsumerDO> selectByYear(String date);
+
+    //查询所有用户
+    @Select("select * from tb_consumer ")
+    @ResultMap("domesticConsumer")
+    List<DomesticConsumerDO> selectConsumers();
+
 }
