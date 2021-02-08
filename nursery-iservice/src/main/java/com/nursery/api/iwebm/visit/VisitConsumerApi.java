@@ -17,5 +17,8 @@ public interface VisitConsumerApi{
     ModelAndView visitConsumerPage();
 
     @ApiOperation("访问个人信息")
-    ModelAndView getConsumerInfoByID(String consumerID,ModelAndView modelAndView);
+    ModelAndView visitConsumerInfoByID(String consumerID,ModelAndView modelAndView);
+
+    @ApiOperation("访问个人资料-编辑")
+    ModelAndView visitConsumerEditByID(String consumerID,ModelAndView modelAndView);
 }

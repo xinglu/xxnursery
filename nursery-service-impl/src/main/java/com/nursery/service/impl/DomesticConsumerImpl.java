@@ -155,6 +155,16 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
         return mapper.selectConsumerByConsumerID(consumerID);
     }
 
+    @Override
+    public int updateConsumer(DomesticConsumerDO consumerDO) {
+        return mapper.updateConsumer(consumerDO);
+    }
+
+    @Override
+    public void addPassword(String id,String password) throws Exception {
+        mapper.updatePassword(id,password);
+    }
+
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){
         boolean flag = false;

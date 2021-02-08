@@ -61,10 +61,10 @@ public class VisitConsumerController implements VisitConsumerApi {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/getConsumerInfo/{consumerID}",method = RequestMethod.GET)
+    @RequestMapping(value = "/visitConsumerInfo/{consumerID}",method = RequestMethod.GET)
     @Override
-    public ModelAndView getConsumerInfoByID(@PathVariable("consumerID") String consumerID,ModelAndView modelAndView) {
-        logger.info("VisitConsumerController: getConsumerInfoByID==>"+consumerID);
+    public ModelAndView visitConsumerInfoByID(@PathVariable("consumerID") String consumerID,ModelAndView modelAndView) {
+        logger.info("VisitConsumerController: visitConsumerInfoByID==>"+consumerID);
         QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
         try {
            DomesticConsumerDO consumerDO = domesticConsumerSV.selectConsumerByConsumerID(consumerID);
@@ -82,7 +82,32 @@ public class VisitConsumerController implements VisitConsumerApi {
         data.setCommonCode(CommonCode.SUCCESS);
         modelAndView.addObject("data", data);
         modelAndView.setViewName("consumerInfoPage");
-        logger.info("getConsumerInfoByID: data ==> "+JSON.toJSONString(data));
+        logger.info("visitConsumerInfoByID: data ==> "+JSON.toJSONString(data));
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/visitConsumerEdit/{consumerID}",method = RequestMethod.GET)
+    @Override
+    public ModelAndView visitConsumerEditByID(@PathVariable("consumerID") String consumerID, ModelAndView modelAndView) {
+        logger.info("VisitConsumerController: visitConsumerEditByID==>"+consumerID);
+        QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
+        try {
+            DomesticConsumerDO consumerDO = domesticConsumerSV.selectConsumerByConsumerID(consumerID);
+            if (consumerDO!=null){
+                QueryResult<DomesticConsumerDO> queryResult = new QueryResult<>();
+                queryResult.setObject(consumerDO);
+                data.setQueryResult(queryResult);
+            }else {
+
+            }
+        }catch (Exception e){
+            String localizedMessage = e.getLocalizedMessage();
+            System.out.println(localizedMessage);
+        }
+        data.setCommonCode(CommonCode.SUCCESS);
+        modelAndView.addObject("data", data);
+        modelAndView.setViewName("consumerInfoEditPage");
+        logger.info("visitConsumerEditByID: data ==> "+JSON.toJSONString(data));
         return modelAndView;
     }
 }

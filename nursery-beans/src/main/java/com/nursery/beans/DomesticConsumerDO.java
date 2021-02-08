@@ -23,8 +23,14 @@ public class DomesticConsumerDO {
     private String consumerPass;
     private String consumerSignature;//签名
     private String consumerNickname;//昵称
-    private String consumerAge;//昵称
+    private String consumerAge;//年龄
     private String consumerEducationBg;//教学背景
+    private String consumerEduBgCollege;//教学背景-大学
+    private String consumerEduBgDepartment;//教学背景-院系
+    private String consumerEduBgSpecialty;//教学背景-专业
+    private String consumerEduBgDegree;//教学背景-学位
+    private String consumerEduBgGrade;//教学背景-成绩
+    private String consumerEduBgCourse;//教学背景-课程
     private String consumerStatus;//省份
     private String consumerURL;//头像
     private String consumerBirthday;//生日

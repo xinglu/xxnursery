@@ -115,4 +115,18 @@ public interface DomesticConsumerMapper {
                     @Result(column = "consumer_URL",property = "consumerURL",one = @One(select = "com.nursery.dao.ConsumerImageMapper.selectImageUrlByImageId"))
             })
     DomesticConsumerDO selectConsumerByConsumerID(String consumerID) throws SQLException;
+
+    @Update("update tb_consumer set consumer_address = #{consumerAddress}," +
+            "consumer_cellphone = #{consumerCellPhone}," +
+            "consumer_email = #{consumerEmail}," +
+            "consumer_name = #{consumerName}," +
+            "consumer_sex = #{consumerSex}," +
+            "consumer_nickname = #{consumerNickname}," +
+            "consumer_age = #{consumerAge}," +
+            "consumer_educationBg = #{consumerEducationBg}," +
+            "consumer_qianming = #{consumerSignature}," +
+            "consumer_status = #{consumerStatus}," +
+            "consumer_birthday = #{consumerBirthday}," +
+            "where consumer_id = #{consumerID}")
+    int updateConsumer(DomesticConsumerDO consumerDO);
 }

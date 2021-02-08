@@ -16,10 +16,7 @@ public interface IDomesticConsumerSV {
 
     boolean updatePassword(String consumerID, String password);
 
-    /**
-     * 注册
-     * @param domesticConsumerDO
-     */
+    //注册
     void insertConsumer(DomesticConsumerDO domesticConsumerDO) throws Exception;
 
     //查询当前月份新增用户，
@@ -34,10 +31,12 @@ public interface IDomesticConsumerSV {
     //查询所有的用户
     List<DomesticConsumerDO> selectConsumers();
 
-    /**
-     * 查询个人资料
-     * @param consumerID
-     * @return
-     */
+    //查询个人资料
     DomesticConsumerDO selectConsumerByConsumerID(String consumerID) throws Exception;
+
+    //更新个人资料
+    int updateConsumer(DomesticConsumerDO consumerDO)throws Exception;
+
+    //更新密码
+    void addPassword(String id,String password) throws Exception ;
 }

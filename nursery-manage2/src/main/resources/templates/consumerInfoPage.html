@@ -348,7 +348,6 @@
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
-            <!-- page start-->
             <div class="row">
                 <!--个人 侧标栏-->
                 <aside class="profile-nav col-lg-3">
@@ -368,12 +367,13 @@
                         </div>
 
                         <ul class="nav nav-pills nav-stacked">
-                            <li class="active"><a href="#"> <i class="fa fa-user"></i> 个人资料</a></li>
-                            <li><a href="profile-activity.html"> <i class="fa fa-calendar"></i> 近期活动 <span class="label label-danger pull-right r-activity">9</span></a></li>
-                            <li><a href="profile-edit.html"> <i class="fa fa-edit"></i> 编辑个人资料</a></li>
+                            <li class="active"><a th:href="'/manage/consumer/visitConsumerInfo/'+*{consumerID}"> <i class="fa fa-user"></i> 个人资料</a></li>
+                            <li><a th:href="'/manage/consumer/visitConsumerEdit/'+*{consumerID}"> <i class="fa fa-edit"></i> 编辑个人资料</a></li>
                         </ul>
                     </section>
                 </aside>
+                <!--个人 侧标栏-->
+                <!--个人资料-->
                 <aside class="profile-info col-lg-9">
                     <section class="panel" th:object="${data.queryResult.object}">
                         <div class="bio-graph-heading">
@@ -515,9 +515,8 @@
                         </div>
                     </section>
                 </aside>
+                <!--个人资料-->
             </div>
-
-            <!-- page end-->
         </section>
     </section>
     <!--main content end-->

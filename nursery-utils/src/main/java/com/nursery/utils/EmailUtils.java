@@ -11,12 +11,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * 邮件工具类
  */
 @Component
 public class EmailUtils {
+    private static final String EMAIL_REGEX="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     @Autowired
     private JavaMailSenderImpl javaMailSender;
 
@@ -37,6 +39,15 @@ public class EmailUtils {
 
     public static boolean checkEmail(String consumerEmail) {
         return false;
+    }
+
+    /**
+     * 校验邮箱
+     * @param consumerEmail
+     * @return
+     */
+    public static boolean verify(String consumerEmail) {
+        return Pattern.matches(EMAIL_REGEX, consumerEmail.trim());
     }
 
     public MailVo sendSimpleEmail(MailVo mailVo) {
