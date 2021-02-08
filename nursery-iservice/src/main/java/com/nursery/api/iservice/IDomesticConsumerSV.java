@@ -34,4 +34,10 @@ public interface IDomesticConsumerSV {
     //查询所有的用户
     List<DomesticConsumerDO> selectConsumers();
 
+    /**
+     * 查询个人资料
+     * @param consumerID
+     * @return
+     */
+    DomesticConsumerDO selectConsumerByConsumerID(String consumerID) throws Exception;
 }

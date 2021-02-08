@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * 普通用户--招聘者
+ * 普通用户--应聘者
  */
 @Data
 @ToString
@@ -29,18 +29,6 @@ public class DomesticConsumerDO {
     private String consumerURL;//头像
     private String consumerBirthday;//生日
     private String consumerJoinDay;//加入时间
-    private Integer resumeISNOT ;//简历是否上传 默认0 没有, 1 已经上传
-
-//    private String consumer;
-//    private String consumerID;
-//    private String consumerID;
-//    private String consumerID;
-//    private String consumerID;
-//    private String consumerID;
-//    private String consumerID;
-//    private String consumerID;
-//    private String consumerID;
-//    private String consumerID;
-//    private String consumerID;
+    private Integer resumeISNOT;//简历是否上传 默认0 没有, 1 已经上传
 
 }

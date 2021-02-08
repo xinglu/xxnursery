@@ -63,7 +63,26 @@ public class VisitConsumerController implements VisitConsumerApi {
 
     @RequestMapping(value = "/getConsumerInfo/{consumerID}",method = RequestMethod.GET)
     @Override
-    public ModelAndView getConsumerInfoByID(@PathVariable("consumerID") String consumerID) {
-        return null;
+    public ModelAndView getConsumerInfoByID(@PathVariable("consumerID") String consumerID,ModelAndView modelAndView) {
+        logger.info("VisitConsumerController: getConsumerInfoByID==>"+consumerID);
+        QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
+        try {
+           DomesticConsumerDO consumerDO = domesticConsumerSV.selectConsumerByConsumerID(consumerID);
+           if (consumerDO!=null){
+               QueryResult<DomesticConsumerDO> queryResult = new QueryResult<>();
+               queryResult.setObject(consumerDO);
+               data.setQueryResult(queryResult);
+           }else {
+
+           }
+        }catch (Exception e){
+            String localizedMessage = e.getLocalizedMessage();
+            System.out.println(localizedMessage);
+        }
+        data.setCommonCode(CommonCode.SUCCESS);
+        modelAndView.addObject("data", data);
+        modelAndView.setViewName("consumerInfoPage");
+        logger.info("getConsumerInfoByID: data ==> "+JSON.toJSONString(data));
+        return modelAndView;
     }
 }

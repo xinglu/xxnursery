@@ -4,27 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <meta name="author" content="meishiqiang">
 
-    <title>Profile</title>
+    <title>个人资料</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <!--right slidebar-->
-    <link href="css/slidebars.css" rel="stylesheet">
+    <link href="/css/slidebars.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -352,82 +350,71 @@
         <section class="wrapper">
             <!-- page start-->
             <div class="row">
+                <!--个人 侧标栏-->
                 <aside class="profile-nav col-lg-3">
-                    <section class="panel">
+                    <section class="panel" th:object="${data.queryResult.object}">
                         <div class="user-heading round">
                             <a href="#">
-                                <img src="img/profile-avatar.jpg" alt="">
+                                <th:block th:if="*{consumerURL== null}">
+                                    <img src="/img/profile-avatar.jpg" alt="头像">
+                                </th:block>
+                                <th:block th:if="*{consumerURL!= null}">
+                                    <img th:src="*{consumerURL}" alt="头像">
+                                </th:block>
                             </a>
-                            <h1>Jonathan Smith</h1>
-                            <p>jsmith@flatlab.com</p>
+                            <h1 th:text="*{consumerName}">meishiqiang</h1>
+                            <p th:text="*{consumerEmail}== null?'':*{consumerEmail}">13243038531@163.com</p>
+                            <p th:text="*{consumerCellPhone}== null?'':*{consumerCellPhone}">13243038531</p>
                         </div>
 
                         <ul class="nav nav-pills nav-stacked">
-                            <li class="active"><a href="profile.html"> <i class="fa fa-user"></i> Profile</a></li>
-                            <li><a href="profile-activity.html"> <i class="fa fa-calendar"></i> Recent Activity <span class="label label-danger pull-right r-activity">9</span></a></li>
-                            <li><a href="profile-edit.html"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                            <li class="active"><a href="#"> <i class="fa fa-user"></i> 个人资料</a></li>
+                            <li><a href="profile-activity.html"> <i class="fa fa-calendar"></i> 近期活动 <span class="label label-danger pull-right r-activity">9</span></a></li>
+                            <li><a href="profile-edit.html"> <i class="fa fa-edit"></i> 编辑个人资料</a></li>
                         </ul>
-
                     </section>
                 </aside>
                 <aside class="profile-info col-lg-9">
-                    <section class="panel">
-                        <form>
-                            <textarea placeholder="Whats in your mind today?" rows="2" class="form-control input-lg p-text-area"></textarea>
-                        </form>
-                        <footer class="panel-footer">
-                            <button class="btn btn-danger pull-right">Post</button>
-                            <ul class="nav nav-pills">
-                                <li>
-                                    <a href="#"><i class="fa fa-map-marker"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-camera"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class=" fa fa-film"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-microphone"></i></a>
-                                </li>
-                            </ul>
-                        </footer>
-                    </section>
-                    <section class="panel">
+                    <section class="panel" th:object="${data.queryResult.object}">
                         <div class="bio-graph-heading">
-                            Aliquam ac magna metus. Nam sed arcu non tellus fringilla fringilla ut vel ispum. Aliquam ac magna metus.
+                            <span th:text="*{consumerSignature}==null?'这家伙很懒，什么都没有留下！！！！！！':*{consumerSignature}">
+                            </span>
                         </div>
                         <div class="panel-body bio-graph-info">
-                            <h1>Bio Graph</h1>
+                            <h1>资料信息</h1>
                             <div class="row">
                                 <div class="bio-row">
-                                    <p><span>First Name </span>: Jonathan</p>
+                                    <p><span>名字 </span>: <span th:if="*{consumerName != null}" th:text="*{consumerName}">梅士强</span></p>
                                 </div>
                                 <div class="bio-row">
-                                    <p><span>Last Name </span>: Smith</p>
+                                    <p><span>昵称 </span>: <span th:if="*{consumerNickname != null}" th:text="*{consumerNickname}">梅小二</span></p>
                                 </div>
                                 <div class="bio-row">
-                                    <p><span>Country </span>: Australia</p>
+                                    <p><span>现居地址 </span>: <span th:if="*{consumerAddress != null}" th:text="*{consumerAddress}">河南省郑州市管城回族区南三环道路</span></p>
                                 </div>
                                 <div class="bio-row">
-                                    <p><span>Birthday</span>: 13 July 1983</p>
+                                    <p><span>生日</span>: <span th:if="*{consumerBirthday != null}" th:text="*{consumerBirthday}">1997-07-03 04:06</span></p>
                                 </div>
                                 <div class="bio-row">
-                                    <p><span>Occupation </span>: UI Designer</p>
+                                    <p><span>邮箱 </span>: <span th:if="*{consumerEmail != null}" th:text="*{consumerEmail}">13243038531@163.com</span></p>
                                 </div>
                                 <div class="bio-row">
-                                    <p><span>Email </span>: jsmith@flatlab.com</p>
+                                    <p><span>手机号 </span>: <span th:if="*{consumerCellPhone != null}" th:text="*{consumerCellPhone}">13243038531</span></p>
                                 </div>
                                 <div class="bio-row">
-                                    <p><span>Mobile </span>: (12) 03 4567890</p>
+                                    <p><span>身份 </span>: <span th:if="*{consumerStatus != null}" th:text="*{consumerStatus}">学生</span></p>
                                 </div>
                                 <div class="bio-row">
-                                    <p><span>Phone </span>: 88 (02) 123456</p>
+                                    <p><span>加入日期 </span>: <span th:if="*{consumerJoinDay != null}" th:text="*{consumerJoinDay}">2021-02-08 16:32:53</span></p>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <section>
+                        <div class="bio-graph-heading">
+                            <span th:text="*{consumerSignature}==null?'这家伙很懒，什么都没有留下！！！！！！':*{consumerSignature}">
+                            </span>
+                        </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="panel">
@@ -487,6 +474,46 @@
                             </div>
                         </div>
                     </section>
+                    <section class="panel">
+                        <header class="panel-heading summary-head">
+                            <h4>Day summary</h4>
+                            <p>12 August 2013</p>
+                        </header>
+                        <div class="panel-body">
+                            <ul class="summary-list">
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class=" fa fa-shopping-cart text-primary"></i>
+                                        1 Purchase
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="fa fa-envelope text-info"></i>
+                                        15 Emails
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="fa fa-picture-o text-muted"></i>
+                                        2 Photo Upload
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="fa fa-tags text-success"></i>
+                                        19 Sales
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="fa fa-microphone text-danger"></i>
+                                        4 Audio
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
                 </aside>
             </div>
 
@@ -502,7 +529,7 @@
             <li class="online">
                 <div class="media">
                     <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="img/chat-avatar2.jpg" class="media-object">
+                        <img alt="" src="/img/chat-avatar2.jpg" class="media-object">
                     </a>
                     <div class="media-body">
                         <strong>John Doe</strong>
@@ -513,7 +540,7 @@
             <li class="online">
                 <div class="media">
                     <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="img/chat-avatar.jpg" class="media-object">
+                        <img alt="" src="/img/chat-avatar.jpg" class="media-object">
                     </a>
                     <div class="media-body">
                         <div class="media-status">
@@ -528,7 +555,7 @@
             <li class="online">
                 <div class="media">
                     <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="img/pro-ac-1.png" class="media-object">
+                        <img alt="" src="/img/pro-ac-1.png" class="media-object">
                     </a>
                     <div class="media-body">
                         <div class="media-status">
@@ -542,7 +569,7 @@
             <li class="online">
                 <div class="media">
                     <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="img/avatar1.jpg" class="media-object">
+                        <img alt="" src="/img/avatar1.jpg" class="media-object">
                     </a>
                     <div class="media-body">
                         <strong>Anjelina Joli</strong>
@@ -553,7 +580,7 @@
             <li class="online">
                 <div class="media">
                     <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="img/mail-avatar.jpg" class="media-object">
+                        <img alt="" src="/img/mail-avatar.jpg" class="media-object">
                     </a>
                     <div class="media-body">
                         <div class="media-status">
@@ -653,19 +680,19 @@
 </section>
 
 <!-- js placed at the end of the document so the pages load faster -->
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="js/jquery.scrollTo.min.js"></script>
-<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-<script src="assets/jquery-knob/js/jquery.knob.js"></script>
-<script src="js/respond.min.js" ></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="/js/jquery.scrollTo.min.js"></script>
+<script src="/js/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="/assets/jquery-knob/js/jquery.knob.js"></script>
+<script src="/js/respond.min.js" ></script>
 
 <!--right slidebar-->
-<script src="js/slidebars.min.js"></script>
+<script src="/js/slidebars.min.js"></script>
 
 <!--common script for all pages-->
-<script src="js/common-scripts.js"></script>
+<script src="/js/common-scripts.js"></script>
 
 <script>
 

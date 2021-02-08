@@ -24,7 +24,6 @@ import java.util.List;
 public class DomesticConsumerImpl implements IDomesticConsumerSV {
     private static final Logger logger = LoggerFactory.getLogger(DomesticConsumerImpl.class);
 
-
     @Autowired
     @SuppressWarnings("all")
     DomesticConsumerMapper mapper;
@@ -151,6 +150,10 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
         return mapper.selectConsumers();
     }
 
+    @Override
+    public DomesticConsumerDO selectConsumerByConsumerID(String consumerID) throws SQLException {
+        return mapper.selectConsumerByConsumerID(consumerID);
+    }
 
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){

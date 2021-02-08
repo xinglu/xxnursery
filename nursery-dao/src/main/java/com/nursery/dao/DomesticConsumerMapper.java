@@ -3,6 +3,7 @@ package com.nursery.dao;
 import com.nursery.beans.DomesticConsumerDO;
 import org.apache.ibatis.annotations.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -92,4 +93,26 @@ public interface DomesticConsumerMapper {
     @ResultMap("domesticConsumer")
     List<DomesticConsumerDO> selectConsumers();
 
+    //查询个人资料
+    @Select("select * from tb_consumer where consumer_id = #{value}")
+    @Results(
+            value = {
+                    @Result(id = true,column = "consumer_id",property = "consumerID"),
+                    @Result(column = "consumer_address",property = "consumerAddress"),
+                    @Result(column = "consumer_cellphone",property = "consumerCellPhone"),
+                    @Result(column = "consumer_email",property = "consumerEmail"),
+                    @Result(column = "consumer_name",property = "consumerName"),
+                    @Result(column = "consumer_password",property = "consumerPass"),
+                    @Result(column = "consumer_qianming",property = "consumerSignature"),
+                    @Result(column = "consumer_sex",property = "consumerSex"),
+                    @Result(column = "consumer_nickname",property = "consumerNickname"),
+                    @Result(column = "consumer_age",property = "consumerAge"),
+                    @Result(column = "consumer_status",property = "consumerStatus"),
+                    @Result(column = "consumer_educationBg",property = "consumerEducationBg"),
+                    @Result(column = "consumer_birthday",property = "consumerBirthday"),
+                    @Result(column = "resumeISNOT",property = "resumeISNOT"),
+                    @Result(column = "consumer_joinDay",property = "consumerJoinDay"),
+                    @Result(column = "consumer_URL",property = "consumerURL",one = @One(select = "com.nursery.dao.ConsumerImageMapper.selectImageUrlByImageId"))
+            })
+    DomesticConsumerDO selectConsumerByConsumerID(String consumerID) throws SQLException;
 }
