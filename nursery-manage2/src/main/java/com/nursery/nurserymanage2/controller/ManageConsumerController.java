@@ -112,11 +112,12 @@ public class ManageConsumerController implements ManageConsumerApi {
         if (StringUtils.isEmpty(consumerPass)){
             try {
                 domesticConsumerSV.addPassword(consumerID,consumerPass);
+                responseResult.setCommonCode(ConsumerCode.CONSUMER_SQL_SELECT_FAIL);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return null;
+        return responseResult;
     }
 
 
