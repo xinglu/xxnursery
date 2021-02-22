@@ -20,13 +20,13 @@ public enum ConsumerCode implements ResultCode {
     CONSUMER_ACCOUNT_NOTEXISTS(false,13006,"账号不存在！"),
     CONSUMER_CREDENTIAL_ERROR(false,13007,"账号或密码错误！"),
     CONSUMER_LOGIN_ERROR(false,13008,"登陆过程出现异常请尝试重新操作！"),
-    CONSUMER_SELECT_LIST_ISNULL(true,13008,"查询为空！"),
-    CONSUMER_SQL_SELECT_FAIL(true,13008,"查询失败！"),
-    CONSUMER_PARAM_ID_ISNOT(false,13009,"参数不对，没有id值！"),
-    CONSUMER_VERIFY_CELL_NOT(false,13010,"手机号格式不正确！"),
-    CONSUMER_VERIFY_EMAIL_NOT(false,13011,"邮箱格式不正确！"),
-    CONSUMER_FAIL_TO_REGISTER(false,13012,"注册失败！"),
-    CONSUMER_REAL_NAME_WRONG(false,13013,"请输入正确的真实姓名！");
+    CONSUMER_SELECT_LIST_ISNULL(true,13009,"查询为空！"),
+    CONSUMER_SQL_SELECT_FAIL(true,13010,"查询失败！"),
+    CONSUMER_PARAM_ID_ISNOT(false,13011,"参数不对，没有id值！"),
+    CONSUMER_VERIFY_CELL_NOT(false,13012,"手机号格式不正确！"),
+    CONSUMER_VERIFY_EMAIL_NOT(false,13013,"邮箱格式不正确！"),
+    CONSUMER_FAIL_TO_REGISTER(false,13014,"注册失败！"),
+    CONSUMER_REAL_NAME_WRONG(false,13015,"请输入正确的真实姓名！");
 
     boolean success;
 

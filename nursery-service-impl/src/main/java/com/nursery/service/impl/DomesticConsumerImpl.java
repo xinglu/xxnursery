@@ -165,6 +165,15 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
         mapper.updatePassword(id,password);
     }
 
+    @Override
+    public DomesticConsumerDO findByMailAndPass(String mail, String pass) throws SQLException {
+        List<DomesticConsumerDO> consumerDOList = mapper.findByMailAndPass(mail,pass);
+        if (consumerDOList!=null && consumerDOList.size()>0){
+            return consumerDOList.get(0);
+        }
+        return null;
+    }
+
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){
         boolean flag = false;

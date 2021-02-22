@@ -2,6 +2,7 @@ package com.nursery.api.iservice;
 
 import com.nursery.beans.DomesticConsumerDO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -39,4 +40,7 @@ public interface IDomesticConsumerSV {
 
     //更新密码
     void addPassword(String id,String password) throws Exception ;
+
+    //登录
+    DomesticConsumerDO findByMailAndPass(String mail, String pass) throws SQLException;
 }

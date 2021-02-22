@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="meishiqiang">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>登录</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-reset.css" rel="stylesheet">
+    <!-- 图标字体库 -->
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet"/>
+
+</head>
+<body class="login-body">
+<div class="container">
+    <form class="form-signin" action="" id="loginForm">
+        <h2 class="form-signin-heading">立即登入</h2>
+        <div class="login-wrap">
+            <input type="text" class="form-control" name="mail" placeholder="邮箱" required autofocus>
+            <input type="password" class="form-control" name="pass" placeholder="密码" required>
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> 记住我
+                <span class="pull-right">
+                    <a data-toggle="modal" href="#myModal"> 忘记密码</a>
+                </span>
+            </label>
+            <button class="btn btn-lg btn-login btn-block" type="submit">登录</button>
+
+            <div class="registration">
+                还没有帐号？
+                <a class="" href="registration.html">
+                    创建一个帐户
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/formSubmit.js"></script>
+</body>
+</html>

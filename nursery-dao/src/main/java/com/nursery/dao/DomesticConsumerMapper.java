@@ -129,4 +129,9 @@ public interface DomesticConsumerMapper {
             "consumer_birthday = #{consumerBirthday}," +
             "where consumer_id = #{consumerID}")
     int updateConsumer(DomesticConsumerDO consumerDO);
+
+    //查询当前月份新增用户，
+    @Select("select * from tb_consumer where consumer_email = #{param1} AND consumer_password = #{param2}")
+    @ResultMap("domesticConsumer")
+    List<DomesticConsumerDO> findByMailAndPass(String mail, String pass)throws SQLException;
 }

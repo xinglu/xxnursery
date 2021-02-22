@@ -15,7 +15,7 @@ public class HelloController extends BaseController {
     }
     @RequestMapping(value = {"/login","/login.html","/login/","/nursery/login","/nursery/login/","/nursery/login.html"})
     public String login(){
-        return "consumerLoginPage";
+        return "login";
     }
     @RequestMapping(value = {"/index","/index.html","/index/","/nursery/main","/nursery/main/","/nursery/main.html"})
     public void index_main(){

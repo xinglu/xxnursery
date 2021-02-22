@@ -52,4 +52,17 @@ var Script = function () {
     });
     $("#password").blur(checkPassword);
     $("#verifyPass").blur(checkVerifyPass);
+
+
+    //登录
+    $("#loginForm").submit(function () {
+        $.post("/consumer/login", $("#loginForm").serialize(), function (data) {
+            if (data.success) {
+                // window
+                alert("跳转到登录页面")
+            } else {
+                alert(data.message);
+            }
+        });
+    });
 }();
