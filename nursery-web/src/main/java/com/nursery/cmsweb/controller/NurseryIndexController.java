@@ -49,7 +49,7 @@ public class NurseryIndexController extends BaseController implements NurseryInd
     @SuppressWarnings("all")
     SlideshowMapper slideshowMapper;
 
-    @GetMapping("/recruit_index")
+    @GetMapping("/index")
     public ResponseResult index() {
         HashMap<String, Map<String, String>> returnMap = null;
         QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.FAIL,null);
