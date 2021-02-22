@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="注册">
+    <meta name="author" content="meishiqiang">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>注册</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-reset.css" rel="stylesheet">
+    <!-- 图标字体库 -->
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet"/>
+</head>
+
+<body class="login-body">
+<div class="container">
+    <form class="form-signin" action="" id="registForm"
+          method="post" accept-charset="utf-8">
+        <h2 class="form-signin-heading">现在注册</h2>
+        <div class="login-wrap">
+            <p>在下面输入您的个人详细信息</p>
+            <input type="text" class="form-control" placeholder="真实姓名" name="realName" id="realName" required autofocus>
+            <input type="text" class="form-control" placeholder="当前地址" name="address" id="address" required autofocus>
+            <input type="email" class="form-control" placeholder="电子邮箱" name="email" style="margin-bottom: 15px; font-size: 12px"
+                   required autofocus>
+            <input type="text" class="form-control" placeholder="出生年月" name="birthday" id="birthday" required autofocus>
+            <div class="radios">
+                <label class="label_radio col-lg-6 col-sm-6" for="radio-01">
+                    <input name="gender" id="radio-01" value="1" type="radio" checked/> 男
+                </label>
+                <label class="label_radio col-lg-6 col-sm-6" for="radio-02">
+                    <input name="gender" id="radio-02" value="1" type="radio"/> 女
+                </label>
+            </div>
+            <p> 在下面输入您的帐户详细信息</p>
+            <input type="text" class="form-control" placeholder="用户名" name="nickname" id="nickname" required autofocus>
+            <input type="password" class="form-control" placeholder="密码由8-20位（数字和大小写、字符组成的）" name="password" id="password" required>
+            <input type="password" class="form-control" placeholder="重新输入密码" id="verifyPass" required>
+            <label class="checkbox">
+                <input type="checkbox" id="condition" required> 我同意服务条款和隐私政策
+            </label>
+            <button class="btn btn-lg btn-login btn-block" type="submit" id="btn_reg">提交</button>
+
+            <div class="registration">
+                已经登记了。
+                <a class="" href="login.html">
+                    登录
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/registration.js"></script>
+</body>
+</html>

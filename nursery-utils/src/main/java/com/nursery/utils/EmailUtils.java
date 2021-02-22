@@ -25,14 +25,6 @@ public class EmailUtils {
     @Value("${spring.mail.username}")
     private String from;
 
-    public static EmailUtils sendEmailUtils = new EmailUtils();
-
-    public EmailUtils() {
-        if (sendEmailUtils ==null){
-            sendEmailUtils = new EmailUtils();
-        }
-    }
-
     public static String sendCheckEmail(String email) {
         return null;
     }
@@ -47,6 +39,7 @@ public class EmailUtils {
      * @return
      */
     public static boolean verify(String consumerEmail) {
+        System.out.println("123456");
         return Pattern.matches(EMAIL_REGEX, consumerEmail.trim());
     }
 

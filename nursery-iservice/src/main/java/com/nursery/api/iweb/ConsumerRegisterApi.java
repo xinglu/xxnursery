@@ -1,6 +1,7 @@
 package com.nursery.api.iweb;
 
-import com.nursery.beans.DomesticConsumerDO;
+import com.nursery.beans.bo.RegisterBO;
+import com.nursery.common.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -14,7 +15,7 @@ public interface ConsumerRegisterApi {
 
 
     @ApiOperation("创建用户")
-    void register(DomesticConsumerDO consumerDO);
+    ResponseResult register(RegisterBO registerBO);
 
     @ApiOperation("注册成功,向邮箱发布信息")
     void sendRegisterinfo();

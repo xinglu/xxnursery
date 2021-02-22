@@ -5,10 +5,13 @@ import com.alibaba.fastjson.JSON;
 import com.nursery.api.iservice.IDomesticConsumerSV;
 import com.nursery.api.iweb.ConsumerRegisterApi;
 import com.nursery.beans.DomesticConsumerDO;
+import com.nursery.beans.bo.RegisterBO;
+import com.nursery.beans.code.ConsumerCode;
+import com.nursery.common.model.response.ResponseResult;
 import com.nursery.common.web.BaseController;
+import com.nursery.utils.CellUtils;
 import com.nursery.utils.CommonUtil;
 import com.nursery.utils.DateUtils;
-import com.nursery.utils.CellUtils;
 import com.nursery.utils.EmailUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +31,7 @@ import java.util.Map;
  * 获取当前省份
  */
 @RestController
-@RequestMapping("/consumerRegister")
+@RequestMapping("/consumer")
 public class ConsumerRegisterController extends BaseController implements ConsumerRegisterApi {
     private static final Logger logger = LoggerFactory.getLogger(ConsumerRegisterController.class);
     @Autowired
@@ -36,89 +39,69 @@ public class ConsumerRegisterController extends BaseController implements Consum
 
     /**
      * 注册
-     *
-     * @param consumerDO
+     * consumer/register
+     * @param registerBO
      */
     @PostMapping("/register")
     @Override
     @SuppressWarnings("all")
-    public void register(DomesticConsumerDO consumerDO) {
-        Map logoMap = new HashMap<String, String>();
-        String consumerID = consumerDO.getConsumerID();
-        String consumerName = consumerDO.getConsumerName();    //名字
-        String consumerXing = consumerDO.getConsumerXing();    //姓
-        String consumerSex = consumerDO.getConsumerSex();     //性别
-        String consumerAddress = consumerDO.getConsumerAddress(); //地址
-        String consumerCellPhone = consumerDO.getConsumerCellPhone();
-        String consumerEmail = consumerDO.getConsumerEmail();
-        String consumerPass = consumerDO.getConsumerPass();
-        String consumerNickname = consumerDO.getConsumerNickname();//昵称
-        String consumerAge = consumerDO.getConsumerAge();//根据出生日期得出
-        String consumerEducationBg = consumerDO.getConsumerEducationBg();//教学背景
-        String consumerStatus = consumerDO.getConsumerStatus();//省份
-        String consumerURL = consumerDO.getConsumerURL();//头像
-        String consumerBirthday = consumerDO.getConsumerBirthday();//生日
-        String consumerJoinDay = consumerDO.getConsumerJoinDay();//加入时间
-
+    public ResponseResult register(RegisterBO registerBO) {
+        ResponseResult responseResult = ResponseResult.SUCCESS();
+        String consumerXing = "";
+        String consumerAge = "";
+        String consumerURL = "";
+        DomesticConsumerDO consumerDO = new DomesticConsumerDO();
         try {
             String uuid = CommonUtil.getUUID();
             if (uuid != null && uuid.length() == 32) {
                 consumerDO.setConsumerID(uuid);
             } else {
                 System.out.println("获取id错误");
-                request.setAttribute("returnCode", "服务器报错，请重新注册 '\n' 感谢你支持");
-                return;
+                responseResult.setCommonCode(ConsumerCode.CONSUMER_FAIL_TO_REGISTER);
+                return responseResult;
             }
-            if (StringUtils.isEmpty(consumerName) || (StringUtils.isEmpty(consumerCellPhone)
-                    && StringUtils.isEmpty(consumerEmail)) || StringUtils.isEmpty(consumerPass)) {
-                System.out.println("参数错误");
-                request.setAttribute("returnCode", "参数错误");
-                return;
-            }
-            if (consumerName.length() <= 3) consumerXing = consumerName.substring(0, 1);
-            else consumerXing = "";
-            consumerDO.setConsumerName(consumerName);
-            consumerDO.setConsumerXing(consumerXing);
+            consumerDO.setConsumerNickname(registerBO.getNickname());
+            consumerDO.setConsumerSex(registerBO.getGender());
+            consumerDO.setConsumerPass(registerBO.getPassword());
+            consumerDO.setConsumerAddress(registerBO.getAddress());
+            String email = registerBO.getEmail();
 
-            logoMap.put("name", consumerName);
-            logoMap.put("xing", consumerXing);
-            logoMap.put("id", consumerID);
-            logoMap.put("sex", consumerSex);
-            logoMap.put("address", consumerAddress);
-            logoMap.put("cellphone", consumerCellPhone);
-            logoMap.put("email", consumerEmail);
-            logoMap.put("pass", consumerPass);
-            logoMap.put("nickname", consumerNickname);
-            if (!StringUtils.isEmpty(consumerBirthday)) {
-                consumerAge = DateUtils.getAge(consumerBirthday);
-                consumerDO.setConsumerBirthday(consumerBirthday);
+            if (!StringUtils.isEmpty(email) && EmailUtils.verify(email)){
+                //校验邮箱；
+                consumerDO.setConsumerEmail(email);
+            }else {
+                responseResult.setCommonCode(ConsumerCode.CONSUMER_VERIFY_EMAIL_NOT);
+                return responseResult;
+            }
+            String realName = registerBO.getRealName();
+            if (realName != "" && !StringUtils.isEmpty(realName)) {
+                consumerXing = realName.substring(0, 1);
+                consumerDO.setConsumerName(realName);
+                consumerDO.setConsumerXing(consumerXing);
+            }else {
+                responseResult.setCommonCode(ConsumerCode.CONSUMER_REAL_NAME_WRONG);
+                return responseResult;
+            }
+            String birthday = registerBO.getBirthday();
+            if (!StringUtils.isEmpty(birthday)) {
+                consumerAge = DateUtils.getAge(birthday);//获取年龄
+                consumerDO.setConsumerBirthday(birthday);
                 consumerDO.setConsumerAge(consumerAge);
             }
-            logoMap.put("age", consumerAge);
-            logoMap.put("birthday", consumerBirthday);
-            logoMap.put("edcationbg", consumerEducationBg);
-            logoMap.put("status", consumerStatus);
             if (StringUtils.isEmpty(consumerURL)) {
                 //  后期从数据库中获取   YLY_ZP_IMAGE_HEAR_URL
                 consumerURL = "image1";
                 consumerDO.setConsumerURL(consumerURL);
             }
-            logoMap.put("consumerurl", consumerURL);
-            String consumerDayStr = consumerJoinDay;
-            if (consumerDayStr == null || StringUtils.isEmpty(consumerDayStr)) {
-                String nowDay = DateUtils.getNowDate(DateUtils.YYYYMMDDHHMMSS);
-                consumerDayStr = nowDay;
-            }
-            logoMap.put("joinday", consumerDayStr);
-            consumerDO.setConsumerJoinDay(consumerDayStr);
-            logger.info("consumerid: " + uuid + "register注册参数：" + JSON.toJSONString(consumerDO));
+            //获取当前时间
+            String nowDay = DateUtils.getNowDate(DateUtils.YYYYMMDDHHMMSS);
+            consumerDO.setConsumerJoinDay(nowDay);
+            logger.info("consumerid: " + consumerDO.getConsumerID() + "register注册参数：" + JSON.toJSONString(consumerDO));
             domesticConsumerSV.insertConsumer(consumerDO);
-
-            //重定向
-            response.sendRedirect("");
         } catch (Exception e) {
-            System.out.println("错误");
+            responseResult.setCommonCode(ConsumerCode.CONSUMER_REAL_NAME_WRONG);
         }
+        return responseResult;
     }
 
     @Override
