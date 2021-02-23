@@ -67,4 +67,19 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
         }
         return i;
     }
+
+    @Override
+    public List<RecruitmentDO> getRandomRecruit() throws SQLException {
+        return mapper.randomSelectRecruit();
+    }
+
+    @Override
+    public List<RecruitmentDO> selectRecruitinfoByName(String tableName) {
+        return null;
+    }
+
+    @Override
+    public List<RecruitmentDO> getRecruitByType(String type) {
+        return mapper.selectRecruitinfoByType(type);
+    }
 }

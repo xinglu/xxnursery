@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nursery.dao.SearchMapper">
+
+    <select id="selectSearchASCCount" resultType="com.nursery.beans.SearchDO">
+        SELECT * FROM tb_search ORDER BY tb_search.`count` DESC LIMIT 0,6
+    </select>
+</mapper>

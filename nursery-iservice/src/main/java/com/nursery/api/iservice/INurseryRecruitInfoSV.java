@@ -51,4 +51,13 @@ public interface INurseryRecruitInfoSV {
      * @throws SQLException
      */
     int updateRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException;
+
+    //随机获取招聘信息
+    List<RecruitmentDO> getRandomRecruit() throws SQLException;
+
+    //根据名称
+    List<RecruitmentDO> selectRecruitinfoByName(String tableName);
+
+    //根据名称
+    List<RecruitmentDO> getRecruitByType(String type);
 }

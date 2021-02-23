@@ -371,8 +371,54 @@ a.logo:hover, a.logo:focus {
 a.logo span {
     color: #FF6C60;
 }
+/*职位推荐*/
 
+.box-title::before{
+    content: '';
+    display: inline-block;
+    vertical-align: 8px;
+    margin: 0 10px;
+    width: 50px;
+    height: 1px;
+    background: #d1d4db;
+}
+.box-title::after{
+    content: '';
+    display: inline-block;
+    vertical-align: 8px;
+    margin: 0 10px;
+    width: 50px;
+    height: 1px;
+    background: #d1d4db;
+}
+.position-body{
+    background-color: white;
+    font-size: 13px;
+    color: #2e2e2e;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+.position-bg{
+    background-color: rgba(0,0,0,0);
+}
+.position-thumbnail{
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 2px 1px silver;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+.position-thumbnail  p{
+    color: black;
+    font-size: 10px;
+    margin-bottom: 2px;
+}
 
+.position-thumbnail  span{
+    font-size: 8px;
+    color: #7d7d7d;
+}
 /*notification*/
 
 #top_menu .nav > li, ul.top-menu > li {
@@ -704,7 +750,15 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     color: #c8c8c8;
     font-weight: 300;
 }
-
+.inner {
+    position: relative;
+    width: 1184px;
+    margin: 0 auto;
+    padding: 0 90px;
+}
+.search-inner {
+    margin-top: 100px;
+}
 /*--sidebar toggle---*/
 
 .sidebar-toggle-box {
@@ -5834,7 +5888,7 @@ a.guest-on i {
 }
 
 .bold {
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .p-details .bio-row p span {

@@ -1,9 +1,9 @@
 package com.nursery.api.iweb;
 
-import com.nursery.common.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 首页
@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 public interface NurseryIndexApi {
 
     @ApiOperation("首页")
-    ResponseResult index();
-
+    public ModelAndView index(ModelAndView modelAndView);
 
     /**
      * 测试

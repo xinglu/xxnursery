@@ -38,4 +38,9 @@ public interface NurseryRecruitmentMapper {
 
     //更新
     int updateRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException;
+
+    //随机查询
+    List<RecruitmentDO> randomSelectRecruit() throws SQLException;
+
+    List<RecruitmentDO> selectRecruitinfoByType(String type);
 }

@@ -2,15 +2,17 @@ package com.nursery.cmsweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nursery.api.iservice.INurseryAnnounceSV;
+import com.nursery.api.iservice.INurseryRecruitInfoSV;
+import com.nursery.api.iservice.ISearchInfoSV;
 import com.nursery.api.iservice.ISlideshowSV;
 import com.nursery.api.iweb.NurseryIndexApi;
 import com.nursery.beans.DBDataParam;
 import com.nursery.beans.NurseryAnnounceDO;
+import com.nursery.beans.RecruitmentDO;
 import com.nursery.beans.SlideshowDO;
 import com.nursery.common.model.CommonString;
 import com.nursery.common.model.response.CommonCode;
 import com.nursery.common.model.response.QueryResponseResult;
-import com.nursery.common.model.response.ResponseResult;
 import com.nursery.common.web.BaseController;
 import com.nursery.dao.NurseryAnnouncefMapper;
 import com.nursery.dao.SlideshowMapper;
@@ -22,7 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -36,52 +40,53 @@ public class NurseryIndexController extends BaseController implements NurseryInd
     private static final Logger LOGGER = LoggerFactory.getLogger(NurseryIndexController.class);
 
     @Autowired
-    NurseryRecruitInfoController recruitInfoController;
+    private INurseryRecruitInfoSV nurseryRecruitInfoSV;
     @Autowired
-    ISlideshowSV slideshowSV;
+    private ISlideshowSV slideshowSV;//搜索框
     @Autowired
-    INurseryAnnounceSV nurseryAnnounceSV;
+    private INurseryAnnounceSV nurseryAnnounceSV;
+    @Autowired
+    private ISearchInfoSV searchInfoSV;
 
     @Autowired
     @SuppressWarnings("all")
-    NurseryAnnouncefMapper mapper;
+    private NurseryAnnouncefMapper mapper;
     @Autowired
     @SuppressWarnings("all")
-    SlideshowMapper slideshowMapper;
+    private SlideshowMapper slideshowMapper;
+
+    private String hotjob = "RANKED_FIRST_HOT_JOB";
 
     @GetMapping("/index")
-    public ResponseResult index() {
+    public ModelAndView index(ModelAndView modelAndView) {
         HashMap<String, Map<String, String>> returnMap = null;
         QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.FAIL,null);
+        modelAndView.addObject("data", queryResponseResult);
         try {
             returnMap = new HashMap<>();
-            //获取轮播图的类名,根据类名查找
-            String classify = CommonString.SLIDESHOW_CLASS_INDEX_NAME;
-            if (classify == null) {
-                classify = NurseryIndexController.class.getName();
-            }
-            Map<String, String> slideMap = slideList(classify);
-            LOGGER.info("轮播图的所属类型:" + classify + " slideMap:" + JSONObject.toJSONString(slideMap));
-            returnMap.put("slideInfo", slideMap);
-            //获取公告
-            Map<String, String> announceMap = announceeList();
-            LOGGER.info("获取公告:" + JSONObject.toJSONString(announceMap));
-            returnMap.put("announceInfo", announceMap);
-            //获取招聘信息
-            queryResponseResult = recruitInfoController.recruitList(null, null);
+            //1. 获取热门信息
+            String sordStr = searchInfoSV.getSordStr();
+            String[] searchArr = sordStr.split(",");
+            //2. 获取职位推荐
+            List<RecruitmentDO> recruitmentDOList = nurseryRecruitInfoSV.getRandomRecruit();
+            //3. 获取热招职位（只获取排行第一的）
+            //根据type查询
+            String type = "";
+            List<RecruitmentDO> recruitmentDOList1 = nurseryRecruitInfoSV.getRecruitByType(type);
+
             LOGGER.info("招聘信息:" + JSONObject.toJSONString(queryResponseResult));
-        } catch (SQLException e) {
-            return queryResponseResult;
+        } catch (Exception e) {
+            return modelAndView;
         }
         queryResponseResult.setCommonCode(CommonCode.SUCCESS);
         queryResponseResult.setBeans(returnMap);
-        return queryResponseResult;
+        modelAndView.setViewName("index");
+        return modelAndView;
     }
 
 
     /**
      * 查询轮播图
-     *
      * @param classify
      * @return
      */
@@ -100,7 +105,6 @@ public class NurseryIndexController extends BaseController implements NurseryInd
 
     /**
      * 查询公告
-     *
      * @param
      * @return
      */

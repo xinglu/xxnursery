@@ -24,7 +24,7 @@ import java.util.List;
 public class NurseryRecruitInfoController extends BaseController implements NurseryRecruitInfoApi {
 
     @Autowired
-    INurseryRecruitInfoSV nurseryRecruitInfoSV;
+    private INurseryRecruitInfoSV nurseryRecruitInfoSV;
 
     /**
      * 招聘信息
