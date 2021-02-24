@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,8 +36,8 @@
                 </div>
                 <div class="navbar-collapse collapse" role="navigation">
                     <ul class="nav navbar-nav">
-                        <li><a href="#" target="_blank">首页</a></li>
-                        <li><a href="https://v4.bootcss.com/" target="_blank">职位</a></li>
+                        <li class="active"><a href="#" target="_blank">首页</a></li>
+                        <li><a th:href="'/job_detail'" target="_blank">职位</a></li>
                         <li><a href="https://www.sasscss.com/" target="_blank">咨询</a></li>
                         <li><a href="https://less.bootcss.com" target="_blank">发现</a></li>
                     </ul>
@@ -77,12 +77,16 @@
             <div class="navbar navbar-inner btn-group">
                 <ol class="breadcrumb" style="background-color: rgba(0,0,0,0)">
                     <b>热门职位 : &nbsp;&nbsp;&nbsp;&nbsp;</b>
-                    <li><a href="#">音乐</a></li>
-                    <li><a href="#">舞蹈</a></li>
-                    <li><a href="#">门卫</a></li>
-                    <li><a href="#">后台管理员</a></li>
-                    <li><a href="#">院长</a></li>
-                    <li><a href="#">院长</a></li>
+
+                    <li th:if="${sordStr!=null}" th:each="str: ${sordStr}"><a href="#" th:text="${str}"></a></li>
+                    <th:block th:unless="${sordStr!=null}">
+                        <li><a href="#">音乐</a></li>
+                        <li><a href="#">舞蹈</a></li>
+                        <li><a href="#">门卫</a></li>
+                        <li><a href="#">后台管理员</a></li>
+                        <li><a href="#">院长</a></li>
+                        <li><a href="#">院长</a></li>
+                    </th:block>
                     <li>......</li>
                 </ol>
             </div>
@@ -104,7 +108,7 @@
                     <div class="jumbotron position-body">
                         <ul id="myTab" class="nav nav-tabs">
                             <li class="active"><a href="#home" data-toggle="tab">推荐职位</a></li>
-                            <li><a href="#new-job" data-toggle="tab">最新职位</a></li>
+                            <li><a href="#new_job" data-toggle="tab" onclick="newJob()">最新职位</a></li>
                         </ul>
                     </div>
                     <div class="jumbotron position-body position-bg">
@@ -113,75 +117,55 @@
                             <div class="tab-pane fade in active" id="home">
                                 <div>
                                     <div class="row">
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="position-thumbnail">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <p>数学老师</p>
-                                                        <span>大专</span>
+                                        <th:block th:if="${recommendData!=null}" th:each="date:${recommendData}"
+                                                  th:object="${date}">
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="position-thumbnail">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <p th:text="*{recruittablename}">数学老师</p>
+                                                            <span th:text="*{requireEduDB}">大专</span>
+                                                        </div>
+                                                        <div class="col-md-4 col-md-offset-2">
+                                                            <p th:text="*{pay}">4k-6k.13薪资</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-4 col-md-offset-2">
-                                                        <p>4k-6k.13薪资</p>
-                                                    </div>
+                                                    <hr/>
+                                                    <p th:text="*{place}">郑州市高新区祝福红城校区</p>
                                                 </div>
-                                                <hr/>
-                                                <p>郑州市高新区祝福红城校区</p>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="position-thumbnail">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <p>数学老师</p>
-                                                        <span>大专</span>
-                                                    </div>
-                                                    <div class="col-md-4 col-md-offset-2">
-                                                        <p>4k-6k.13薪资</p>
-                                                    </div>
-                                                </div>
-                                                <hr/>
-                                                <p>郑州市高新区祝福红城校区</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="position-thumbnail">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <p>数学老师</p>
-                                                        <span>大专</span>
-                                                    </div>
-                                                    <div class="col-md-4 col-md-offset-2">
-                                                        <p>4k-6k.13薪资</p>
-                                                    </div>
-                                                </div>
-                                                <hr/>
-                                                <p>郑州市高新区祝福红城校区</p>
-                                            </div>
-                                        </div>
+                                        </th:block>
                                     </div>
                                 </div>
                             </div>
                             <!--最新职位-->
-                            <div class="tab-pane fade" id="new-job">
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="position-thumbnail">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <p>数学老师</p>
-                                                <span>大专</span>
-                                            </div>
-                                            <div class="col-md-4 col-md-offset-2">
-                                                <p>4k-6k.13薪资</p>
+                            <div class="tab-pane fade" id="new_job">
+                                <div class="row">
+                                    <th:block th:fragment="new_job" th:each="date:${newData}" th:object="${date}">
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="position-thumbnail">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <p th:text="*{recruittablename}">数学老师</p>
+                                                        <span th:text="*{requireEduDB}">大专</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-md-offset-2">
+                                                        <p th:text="*{pay}">4k-6k.13薪资</p>
+                                                    </div>
+                                                </div>
+                                                <hr/>
+                                                <p th:text="*{place}">郑州市高新区祝福红城校区</p>
                                             </div>
                                         </div>
-                                        <hr/>
-                                        <p>郑州市高新区祝福红城校区</p>
-                                    </div>
+                                    </th:block>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="text-center bold"><h4><a type="button" class="btn btn-primary" href="#">&nbsp;查看更多&nbsp;</a></h4></div>
+                    <div class="row">
+                        <div class="text-center bold"><h4><a type="button" class="btn btn-primary"
+                                                             href="#">&nbsp;查看更多&nbsp;</a></h4></div>
+                    </div>
                 </div>
             </div>
             <!--热招职位-->
@@ -190,137 +174,55 @@
                     <div class="text-center bold"><h3 class="box-title">热招职位</h3></div>
                     <div class="jumbotron position-body">
                         <ul id="hotjob" class="nav nav-tabs">
-                            <li class="active"><a href="#music" data-toggle="tab">音乐</a></li>
-                            <li><a href="#dance" data-toggle="tab">舞蹈</a></li>
-                            <li><a href="#doorkeeper" data-toggle="tab">门卫</a></li>
-                            <li><a href="#admin" data-toggle="tab">后台管理员</a></li>
-                            <li><a href="#dean" data-toggle="tab">院长</a></li>
+                            <th:block th:if="${classStr!=null}" th:each="str,star:${classStr}" th:object="${str}">
+                                <li th:if="${star.index==0}" th:classappend="active"><a th:href="'#'+*{type_id}"
+                                                                                        data-toggle="tab"
+                                                                                        th:text="*{type_name}"></a></li>
+                                <li th:unless="${star.index==0}"><a th:href="'#'+*{type_id}" data-toggle="tab"
+                                                                    th:text="*{type_name}"
+                                                                    th:onclick="hotJob([[${str.type_id}]],[[${str.type_name}]]);"></a>
+                                </li>
+                            </th:block>
                         </ul>
                     </div>
                     <div class="jumbotron position-body position-bg">
                         <div id="hotContent" class="tab-content">
-                            <div class="tab-pane fade in active" id="music">
-                                <div>
-                                    <div class="row">
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="position-thumbnail">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <p>数学老师</p>
-                                                        <span>大专</span>
-                                                    </div>
-                                                    <div class="col-md-4 col-md-offset-2">
-                                                        <p>4k-6k.13薪资</p>
+                            <th:block th:if="${classStr!=null}" th:each="str,star:${classStr}" th:object="${str}">
+                                <div class="tab-pane fade in" th:if="${star.index==0}" th:classappend="active"
+                                     th:id="*{type_id}">
+                                    <div>
+                                        <div class="row">
+                                            <th:block th:if="${hotData!=null}" th:each="date:${hotData}"
+                                                      th:object="${date}">
+                                                <div class="col-sm-6 col-md-4">
+                                                    <div class="position-thumbnail">
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <p th:text="*{recruittablename}">数学老师</p>
+                                                                <span th:text="*{requireEduDB}">大专</span>
+                                                            </div>
+                                                            <div class="col-md-4 col-md-offset-2">
+                                                                <p th:text="*{pay}">4k-6k.13薪资</p>
+                                                            </div>
+                                                        </div>
+                                                        <hr/>
+                                                        <p th:text="*{place}">郑州市高新区祝福红城校区</p>
                                                     </div>
                                                 </div>
-                                                <hr/>
-                                                <p>郑州市高新区祝福红城校区</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="position-thumbnail">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <p>数学老师</p>
-                                                        <span>大专</span>
-                                                    </div>
-                                                    <div class="col-md-4 col-md-offset-2">
-                                                        <p>4k-6k.13薪资</p>
-                                                    </div>
-                                                </div>
-                                                <hr/>
-                                                <p>郑州市高新区祝福红城校区</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="position-thumbnail">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <p>数学老师</p>
-                                                        <span>大专</span>
-                                                    </div>
-                                                    <div class="col-md-4 col-md-offset-2">
-                                                        <p>4k-6k.13薪资</p>
-                                                    </div>
-                                                </div>
-                                                <hr/>
-                                                <p>郑州市高新区祝福红城校区</p>
-                                            </div>
+                                            </th:block>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="dance">
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="position-thumbnail">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <p>数学老师</p>
-                                                <span>大专</span>
-                                            </div>
-                                            <div class="col-md-4 col-md-offset-2">
-                                                <p>4k-6k.13薪资</p>
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                        <p>郑州市高新区祝福红城校区</p>
-                                    </div>
+                                <div class="tab-pane fade " th:unless="${star.index==0}" th:id="*{type_id}">
+
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="doorkeeper">
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="position-thumbnail">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <p>数学老师</p>
-                                                <span>大专</span>
-                                            </div>
-                                            <div class="col-md-4 col-md-offset-2">
-                                                <p>4k-6k.13薪资</p>
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                        <p>郑州市高新区祝福红城校区</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="admin">
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="position-thumbnail">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <p>数学老师</p>
-                                                <span>大专</span>
-                                            </div>
-                                            <div class="col-md-4 col-md-offset-2">
-                                                <p>4k-6k.13薪资</p>
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                        <p>郑州市高新区祝福红城校区</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="dean">
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="position-thumbnail">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <p>数学老师</p>
-                                                <span>大专</span>
-                                            </div>
-                                            <div class="col-md-4 col-md-offset-2">
-                                                <p>4k-6k.13薪资</p>
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                        <p>郑州市高新区祝福红城校区</p>
-                                    </div>
-                                </div>
-                            </div>
+                            </th:block>
                         </div>
                     </div>
-                    <div class="text-center bold"><h4><a type="button" class="btn btn-primary" href="#">&nbsp;查看更多&nbsp;</a></h4></div>
+                    <div class="row">
+                        <div class="text-center bold"><h4><a type="button" class="btn btn-primary"
+                                                             href="#">&nbsp;查看更多&nbsp;</a></h4></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -341,7 +243,7 @@
 <!-- js placed at the end of the document so the pages load faster -->
 <script src="/js/jquery.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-
+<script src="/js/index.js"></script>
 <script>
     $(document).on('click', '.yamm .dropdown-menu', function (e) {
         e.stopPropagation()

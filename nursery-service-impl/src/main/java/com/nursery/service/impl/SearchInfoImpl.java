@@ -20,13 +20,12 @@ public class SearchInfoImpl implements ISearchInfoSV {
     private SearchMapper searchMapper;
 
     @Override
-    public String getSordStr() {
+    public String[] getSordStr() {
         List<SearchDO> searchDOS = searchMapper.selectSearchASCCount();
-        String returnStr = "";
-        for (SearchDO searchDO : searchDOS) {
-            returnStr = returnStr+searchDO.getInfo()+",";
+        String[] returnStr = new String[searchDOS.size()];
+        for (int i = 0; i < searchDOS.size(); i++) {
+            returnStr[i] = searchDOS.get(i).getInfo();
         }
-        returnStr = returnStr.substring(0, returnStr.length() - 1);
         return returnStr;
     }
 }

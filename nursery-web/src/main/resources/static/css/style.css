@@ -372,7 +372,6 @@ a.logo span {
     color: #FF6C60;
 }
 /*职位推荐*/
-
 .box-title::before{
     content: '';
     display: inline-block;

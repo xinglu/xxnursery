@@ -1,5 +1,6 @@
 package com.nursery.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.nursery.api.iservice.INurseryRecruitInfoSV;
 import com.nursery.beans.DBDataParam;
 import com.nursery.beans.RecruitmentDO;
@@ -70,6 +71,8 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
 
     @Override
     public List<RecruitmentDO> getRandomRecruit() throws SQLException {
+        List<RecruitmentDO> recruitmentDOList = mapper.randomSelectRecruit();
+        logger.info("职位推荐:" + JSONObject.toJSONString(recruitmentDOList));
         return mapper.randomSelectRecruit();
     }
 
@@ -79,7 +82,22 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
     }
 
     @Override
-    public List<RecruitmentDO> getRecruitByType(String type) {
+    public List<RecruitmentDO> getRecruitByType(String type) throws SQLException {
+        type = "%"+type+"%";
         return mapper.selectRecruitinfoByType(type);
+    }
+
+    @Override
+    public List<RecruitmentDO> getRecruitByNewDate() throws SQLException {
+        List<RecruitmentDO> newDate = mapper.selectRecruitByNewDateAndDesc();
+        logger.info("最新职位:" + JSONObject.toJSONString(newDate));
+        return newDate;
+    }
+
+    @Override
+    public List<RecruitmentDO> getRecruitByTypeId(String typeId) throws SQLException {
+        List<RecruitmentDO> hotDate = mapper.selectRecruitinfoByType(typeId);
+        logger.info("热门职位:" + JSONObject.toJSONString(hotDate));
+        return hotDate;
     }
 }

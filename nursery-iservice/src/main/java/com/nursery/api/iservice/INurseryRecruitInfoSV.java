@@ -59,5 +59,11 @@ public interface INurseryRecruitInfoSV {
     List<RecruitmentDO> selectRecruitinfoByName(String tableName);
 
     //根据名称
-    List<RecruitmentDO> getRecruitByType(String type);
+    List<RecruitmentDO> getRecruitByType(String type) throws SQLException;
+
+    //获取最新时间的职位
+    List<RecruitmentDO> getRecruitByNewDate() throws SQLException;
+
+    //根据类型名称获取
+    List<RecruitmentDO> getRecruitByTypeId(String typeId) throws SQLException;
 }

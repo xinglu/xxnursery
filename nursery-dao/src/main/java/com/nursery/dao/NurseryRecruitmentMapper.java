@@ -42,5 +42,10 @@ public interface NurseryRecruitmentMapper {
     //随机查询
     List<RecruitmentDO> randomSelectRecruit() throws SQLException;
 
-    List<RecruitmentDO> selectRecruitinfoByType(String type);
+    //根据类型模糊查询
+    List<RecruitmentDO> selectRecruitinfoByType(String type) throws SQLException;
+
+    //更加最新时间排序获取职位
+    List<RecruitmentDO> selectRecruitByNewDateAndDesc() throws SQLException;
+
 }

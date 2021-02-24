@@ -8,5 +8,5 @@ package com.nursery.api.iservice;
 public interface ISearchInfoSV {
 
     //获取搜索热门的行业
-    public String getSordStr();
+    public String[] getSordStr();
 }

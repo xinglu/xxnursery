@@ -72,8 +72,11 @@
             t1.id
             LIMIT 12;
     </select>
-    <select id="selectRecruitinfoByType" resultMap="recruitment" >
-
+    <select id="selectRecruitinfoByType" resultMap="recruitment">
+        SELECT * FROM tb_nursery_recruitinfo WHERE recruitclassify like #{value}
+    </select>
+    <select id="selectRecruitByNewDateAndDesc" resultMap="recruitment">
+        SELECT * FROM tb_nursery_recruitinfo ORDER BY tb_nursery_recruitinfo.`recruitstarttime` DESC LIMIT 12
     </select>
 
     <insert id="insert" parameterType="com.nursery.beans.RecruitmentDO">
