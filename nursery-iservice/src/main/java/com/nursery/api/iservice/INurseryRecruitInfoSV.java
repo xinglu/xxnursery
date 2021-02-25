@@ -35,6 +35,7 @@ public interface INurseryRecruitInfoSV {
      */
     List<RecruitmentDO> selectRecruitinfoByerid() throws SQLException;
 
+    public List<RecruitmentDO> selectRecruitmentDOs() throws SQLException;
 
     /**
      * 根究id 查询招聘信息

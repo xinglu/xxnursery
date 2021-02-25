@@ -30,8 +30,17 @@ public class RecruitmentDO {
     private String companyresume;//公司简历
     private String jobdesciption;//职位描述
     private String isNotStaleDated;//时间是否过期
+    private String experience;//工作经验
     private String[] types;
     private String[] labels;
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
 
     public String[] getTypes() {
         return types;

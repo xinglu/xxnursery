@@ -53,6 +53,11 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
     }
 
     @Override
+    public List<RecruitmentDO> selectRecruitmentDOs() throws SQLException {
+        return mapper.selectRecruitmentDOs();
+    }
+
+    @Override
     public RecruitmentDO selectRecruitInfoByrecruitid(String recruitid) throws SQLException {
         return mapper.selectRecruitInfoByrecruitid(recruitid);
     }

@@ -418,6 +418,181 @@ a.logo span {
     font-size: 8px;
     color: #7d7d7d;
 }
+/*job_detail*/
+.filter_area {
+    margin-top: 10px;
+    font-size: 12px;
+}
+.condition-district{
+    display: block;
+    border-bottom: 1px #eef0f5 solid;
+}
+.show-condition-district {
+    margin: 0 15px;
+    padding: 10px;
+    border-bottom: 0;
+    background: #fff;
+    transition: none;
+    -webkit-transition: none;
+    border-radius: 3px;
+}
+.show-condition-district a{
+    padding: 15px ;
+
+}
+.show-condition-district a::after{
+    content: '';
+    display: inline-block;
+    vertical-align: -6px;
+    margin-left: -15px;
+    width: 15px;
+    height: 2px;
+    background: #a09292;
+}
+.show-condition-district a::hover{
+    color: #ad1919;
+    font-weight: 400;
+}
+/*招聘信息 正文*/
+.job-primary{
+    width: 460px;
+    color: #4a4160;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+}
+.job-odd{
+    margin-right: 10px;
+    border-right: 10px solid #a7a7a7;
+}
+.info-primary{
+    height: 70px;
+    padding-top: 20px;
+    float: none;
+}
+.primary-wrapper{
+    vertical-align: top;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.primary-box{
+    display: inline-block;
+    line-height: 26px;
+}
+.job-title{
+    font-size: 16px;
+    color: #00c2b3;
+    font-weight: 400;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+.job-name ,.job-area{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    float: left;
+}
+.job-name a {
+    color: #00c2b3;
+}
+.job-area-wrapper{
+    margin-right: 10px;
+    float: left;
+}
+
+.job-pub-time{
+    font-size: 13px;
+    color: #8d92a1;
+    overflow: hidden;
+    padding-top: 1px;
+    display: block;
+    text-overflow: ellipsis;
+}
+.job-limit{
+    height: 26px;
+    overflow: hidden;
+}
+.job-limit .red{
+    float: left;
+    margin-right: 12px;
+}
+.vline{
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    vertical-align: middle;
+    /*background: #e0e0e0;*/
+    margin: 0 10px;
+}
+.job-primary .btn-startchat{
+    display: none;
+    width: 87px;
+    min-width: auto;
+    height: 21px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 21px;
+}
+.job-primary .btn-startchat .icon-chat{
+    width: 13px;
+    height: 13px;
+    vertical-align: -2px;
+    margin: 0 6px 0 0;
+    border-radius: 0;
+}
+.job-primary .btn-startchat .icon-chat .icon-chat-hover{
+    margin: 0;
+}
+.job-primary .info-detail{
+    position: absolute;
+    white-space: normal;
+    right: -30px;
+    top: 0;
+    width: 500px;
+    height: auto;
+    display: none;
+    padding: 0;
+    color: #abafba;
+    background: rgba(244,247,252,1);
+    box-shadow: 0 4px 8px 0 rgba(65,74,96,.2);
+    z-index: 2001;
+}
+.info-append{
+    height: 40px;
+    line-height: 40px;
+    margin: 0 -30px;
+    padding: 0 30px;
+}
+.info-append .tags{
+    width: 389px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 85px;
+    font-size: 0;
+    height: 40px;
+}
+.info-append .tags .tag-item{
+    font-size: 12px;
+    height: 21px;
+    line-height: 21px;
+    padding: 0 8px;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: 9px;
+    color: #61687c;
+    background: #f8f9fc;
+}
+
 /*notification*/
 
 #top_menu .nav > li, ul.top-menu > li {
@@ -753,7 +928,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     position: relative;
     width: 1184px;
     margin: 0 auto;
-    padding: 0 90px;
+    padding: 0 160px 0 10px;
 }
 .search-inner {
     margin-top: 100px;
