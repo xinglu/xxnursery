@@ -13,13 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
  * 对应  discover.html页面
  */
 @Controller
-@RequestMapping("/discover")
+@RequestMapping("/information")
 public class DiscoverController extends BaseController implements DiscoverApi {
 
     @RequestMapping(method = RequestMethod.GET)
     @Override
     public ModelAndView visitDiscover(ModelAndView modelAndView) {
-        modelAndView.setViewName("discover");
+        modelAndView.setViewName("information");
         return modelAndView;
     }
 }
