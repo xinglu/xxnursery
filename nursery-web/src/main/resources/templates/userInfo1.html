@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="meishiqiang">
+    <title>个人资料</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet" />
+</head>
+<body>
+<section id="container" class="">
+    <!--头部-->
+    <header class="">
+        <!--导航栏-->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                            data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand hidden-sm" href="http://www.bootcss.com">新星幼儿园</a>
+                </div>
+                <div class="navbar-collapse collapse" role="navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#" target="_blank">首页</a></li>
+                        <li><a th:href="'/job_detail'" target="_blank">职位</a></li>
+                        <li><a href="https://www.sasscss.com/" target="_blank">咨询</a></li>
+                        <li><a href="https://less.bootcss.com" target="_blank">发现</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right hidden-sm">
+                        <li><a href="/about/">简历</a></li>
+                        <li><a href="/about/">上传</a></li>
+                        <li><a th:href="'/consumer/personal/1'">个人中心</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--搜索框-->
+        <div class="row inner search-inner">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default btn-lg dropdown-toggle " data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">职位类型 <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">教师</a></li>
+                            <li><a href="#">职工</a></li>
+                            <li><a href="#">门卫</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">院长</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input type="text" class="form-control input-lg" placeholder="搜索职位"
+                           aria-describedby="sizing-addon1">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success btn-lg" type="button">搜索框</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--热门职位-->
+        <div class="row inner">
+            <div class="navbar navbar-inner btn-group">
+                <ol class="breadcrumb" style="background-color: rgba(0,0,0,0)">
+                    <b>热门职位 : &nbsp;&nbsp;&nbsp;&nbsp;</b>
+
+                    <li th:if="${sordStr!=null}" th:each="str: ${sordStr}"><a href="#" th:text="${str}"></a></li>
+                    <th:block th:unless="${sordStr!=null}">
+                        <li><a href="#">音乐</a></li>
+                        <li><a href="#">舞蹈</a></li>
+                        <li><a href="#">门卫</a></li>
+                        <li><a href="#">后台管理员</a></li>
+                        <li><a href="#">院长</a></li>
+                        <li><a href="#">院长</a></li>
+                    </th:block>
+                    <li>......</li>
+                </ol>
+            </div>
+        </div>
+        <!--分类导航-->
+        <div class="row">
+
+        </div>
+    </header>
+    <!--头部-->
+
+    <!--正文-->
+    <section>
+        <section>
+            <div class="container">
+                <div class="row position">
+                    <div >
+                        <!--个人 侧标栏-->
+                        <aside class="profile-nav col-lg-3">
+                            <section class="panel" th:object="${data.queryResult.object}">
+                                <div class="user-heading round">
+                                    <a href="#">
+                                        <th:block th:if="*{consumerURL== null}">
+                                            <img src="/img/profile-avatar.jpg" alt="头像">
+                                        </th:block>
+                                        <th:block th:if="*{consumerURL!= null}">
+                                            <img th:src="*{consumerURL}" alt="头像">
+                                        </th:block>
+                                    </a>
+                                    <h1 th:text="*{consumerName}">meishiqiang</h1>
+                                    <p th:text="*{consumerEmail}== null?'':*{consumerEmail}">13243038531@163.com</p>
+                                    <p th:text="*{consumerCellPhone}== null?'':*{consumerCellPhone}">13243038531</p>
+                                </div>
+
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li class="active"><a th:href="'/consumer/personal/1'"> <i class="fa fa-user"></i> 个人资料</a></li>
+                                    <li><a th:href="'/consumer/personalEdit/1'"> <i class="fa fa-edit"></i> 编辑个人资料</a></li>
+                                </ul>
+                            </section>
+                        </aside>
+                        <!--个人 侧标栏-->
+                        <!--个人资料-->
+                        <aside class="profile-info col-lg-9">
+                            <section class="panel" th:object="${data.queryResult.object}">
+                                <div class="bio-graph-heading">
+                            <span th:text="*{consumerSignature}==null?'这家伙很懒，什么都没有留下！！！！！！':*{consumerSignature}">
+                            </span>
+                                </div>
+                                <div class="panel-body bio-graph-info">
+                                    <h1>资料信息</h1>
+                                    <div class="row">
+                                        <div class="bio-row">
+                                            <p><span>名字 </span>: <span th:if="*{consumerName != null}" th:text="*{consumerName}">梅士强</span></p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>昵称 </span>: <span th:if="*{consumerNickname != null}" th:text="*{consumerNickname}">梅小二</span></p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>现居地址 </span>: <span th:if="*{consumerAddress != null}" th:text="*{consumerAddress}">河南省郑州市管城回族区南三环道路</span></p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>生日</span>: <span th:if="*{consumerBirthday != null}" th:text="*{consumerBirthday}">1997-07-03 04:06</span></p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>邮箱 </span>: <span th:if="*{consumerEmail != null}" th:text="*{consumerEmail}">13243038531@163.com</span></p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>手机号 </span>: <span th:if="*{consumerCellPhone != null}" th:text="*{consumerCellPhone}">13243038531</span></p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>身份 </span>: <span th:if="*{consumerStatus != null}" th:text="*{consumerStatus}">学生</span></p>
+                                        </div>
+                                        <div class="bio-row">
+                                            <p><span>加入日期 </span>: <span th:if="*{consumerJoinDay != null}" th:text="*{consumerJoinDay}">2021-02-08 16:32:53</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="bio-graph-heading">
+                            <span th:text="*{consumerSignature}==null?'这家伙很懒，什么都没有留下！！！！！！':*{consumerSignature}">
+                            </span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="panel">
+                                            <div class="panel-body">
+                                                <div class="bio-chart">
+                                                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true  data-thickness=".2" value="35" data-fgColor="#e06b7d" data-bgColor="#e8e8e8">
+                                                </div>
+                                                <div class="bio-desk">
+                                                    <h4 class="red">Envato Website</h4>
+                                                    <p>Started : 15 July</p>
+                                                    <p>Deadline : 15 August</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="panel">
+                                            <div class="panel-body">
+                                                <div class="bio-chart">
+                                                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true  data-thickness=".2" value="63" data-fgColor="#4CC5CD" data-bgColor="#e8e8e8">
+                                                </div>
+                                                <div class="bio-desk">
+                                                    <h4 class="terques">ThemeForest CMS </h4>
+                                                    <p>Started : 15 July</p>
+                                                    <p>Deadline : 15 August</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="panel">
+                                            <div class="panel-body">
+                                                <div class="bio-chart">
+                                                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true  data-thickness=".2" value="75" data-fgColor="#96be4b" data-bgColor="#e8e8e8">
+                                                </div>
+                                                <div class="bio-desk">
+                                                    <h4 class="green">VectorLab Portfolio</h4>
+                                                    <p>Started : 15 July</p>
+                                                    <p>Deadline : 15 August</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="panel">
+                                            <div class="panel-body">
+                                                <div class="bio-chart">
+                                                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true  data-thickness=".2" value="50" data-fgColor="#cba4db" data-bgColor="#e8e8e8">
+                                                </div>
+                                                <div class="bio-desk">
+                                                    <h4 class="purple">Adobe Muse Template</h4>
+                                                    <p>Started : 15 July</p>
+                                                    <p>Deadline : 15 August</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="panel">
+                                <header class="panel-heading summary-head">
+                                    <h4>Day summary</h4>
+                                    <p>12 August 2013</p>
+                                </header>
+                                <div class="panel-body">
+                                    <ul class="summary-list">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class=" fa fa-shopping-cart text-primary"></i>
+                                                1 Purchase
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-envelope text-info"></i>
+                                                15 Emails
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-picture-o text-muted"></i>
+                                                2 Photo Upload
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-tags text-success"></i>
+                                                19 Sales
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-microphone text-danger"></i>
+                                                4 Audio
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
+                        </aside>
+                        <!--个人资料-->
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </section>
+    <!--正文-->
+
+    <!--页脚-->
+    <footer class="site-footer">
+        <div class="text-center">
+            2013 &copy; FlatLab by VectorLab.
+            <a href="#" class="go-top">
+                <i class="fa fa-angle-up"></i>
+            </a>
+        </div>
+    </footer>
+    <!--页脚-->
+</section>
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="/js/jquery.scrollTo.min.js"></script>
+<script src="/js/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="/assets/jquery-knob/js/jquery.knob.js"></script>
+<script src="/js/respond.min.js" ></script>
+<script src="/js/common-scripts.js"></script>
+
+<script>
+
+    //knob
+    $(".knob").knob();
+
+</script>
+
+
+</body>
+</html>

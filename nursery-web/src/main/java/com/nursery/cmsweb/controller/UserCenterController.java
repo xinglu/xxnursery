@@ -1,17 +1,20 @@
 package com.nursery.cmsweb.controller;
 
 import com.nursery.api.iservice.IDomesticConsumerSV;
-import com.nursery.api.iweb.PersonalCenterApi;
-import com.nursery.beans.UserInfo;
+import com.nursery.api.iweb.UserCenterApi;
 import com.nursery.beans.DomesticConsumerDO;
+import com.nursery.beans.UserInfo;
 import com.nursery.common.model.response.CommonCode;
+import com.nursery.common.model.response.QueryResponseResult;
+import com.nursery.common.model.response.QueryResult;
 import com.nursery.common.model.response.ResponseResult;
 import com.nursery.common.web.BaseController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,12 +26,60 @@ import java.util.Map;
  *  更改用户名
  *  更改出生日期
  */
-@RestController
+@Controller
 @RequestMapping("/consumer")
-public class PersonalCenterController extends BaseController implements PersonalCenterApi {
+public class UserCenterController extends BaseController implements UserCenterApi {
+
+    private Logger logger = LoggerFactory.getLogger(UserCenterController.class);
 
     @Autowired
     IDomesticConsumerSV domesticConsumerSV;
+
+    @RequestMapping(value = "/personal/{userid}",method = RequestMethod.GET)
+    public ModelAndView visitUserInfoPage(@PathVariable("userid") String userid, ModelAndView modelAndView) {
+        logger.info("visitUserInfoPage==>"+userid);
+        QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
+        try {
+            DomesticConsumerDO consumerDO = domesticConsumerSV.selectConsumerByConsumerID(userid);
+            if (consumerDO!=null){
+                QueryResult<DomesticConsumerDO> queryResult = new QueryResult<>();
+                queryResult.setObject(consumerDO);
+                data.setQueryResult(queryResult);
+            }else {
+
+            }
+        }catch (Exception e){
+            String localizedMessage = e.getLocalizedMessage();
+            System.out.println(localizedMessage);
+        }
+        data.setCommonCode(CommonCode.SUCCESS);
+        modelAndView.addObject("data", data);
+        modelAndView.setViewName("userInfo1");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/personalEdit/{userid}",method = RequestMethod.GET)
+    public ModelAndView visitUserEditByID(@PathVariable("userid") String userid, ModelAndView modelAndView) {
+        logger.info(" visitUserEditByID==>"+userid);
+        QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
+        try {
+            DomesticConsumerDO consumerDO = domesticConsumerSV.selectConsumerByConsumerID(userid);
+            if (consumerDO!=null){
+                QueryResult<DomesticConsumerDO> queryResult = new QueryResult<>();
+                queryResult.setObject(consumerDO);
+                data.setQueryResult(queryResult);
+            }else {
+
+            }
+        }catch (Exception e){
+            String localizedMessage = e.getLocalizedMessage();
+            System.out.println(localizedMessage);
+        }
+        data.setCommonCode(CommonCode.SUCCESS);
+        modelAndView.addObject("data", data);
+        modelAndView.setViewName("userEdit");
+        return modelAndView;
+    }
 
     /**
      * generalContent

@@ -8,7 +8,8 @@ import io.swagger.annotations.ApiOperation;
  * 个人用户中心页面  personalCenterPage.jsp
  */
 @Api(value = "/consumer",description = "个人用户中心信息")
-public interface PersonalCenterApi {
+public interface UserCenterApi {
+
 
 
     @ApiOperation("查询个人的大概信息,,,")
