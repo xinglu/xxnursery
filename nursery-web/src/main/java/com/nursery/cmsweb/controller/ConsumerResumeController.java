@@ -1,25 +1,41 @@
 package com.nursery.cmsweb.controller;
 
-import com.nursery.api.iweb.ResumeUploadDownApi;
+import com.nursery.api.iweb.ResumeApi;
+import com.nursery.beans.vo.PeoRecruitSendVO;
 import com.nursery.common.model.response.QueryResponseResult;
 import com.nursery.common.web.BaseController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 简历上传下载
  */
 
 @RestController
-@RequestMapping("/resume")
-public class ResumeUploadDownController extends BaseController implements ResumeUploadDownApi {
+public class ConsumerResumeController extends BaseController implements ResumeApi {
 
+
+    /**
+     * 访问个人简历界面
+     * @param consumerId 用户id
+     * @param model 返回值
+     * @return
+     */
+    @RequestMapping(value = "/consumer/resume/{consumerId}",method = RequestMethod.GET)
+    public ModelAndView visitConsumerResume(@PathVariable("consumerId") String consumerId, ModelAndView model){
+
+        return model;
+    }
+
+    @Override
+    public List<PeoRecruitSendVO> showRecruitSend(String consumerID) {
+        return null;
+    }
 
     @PostMapping("/resumeUploadIng")
     @Override

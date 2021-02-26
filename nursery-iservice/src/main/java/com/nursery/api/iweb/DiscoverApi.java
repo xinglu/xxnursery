@@ -6,12 +6,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * author:MeiShiQiang
- * Date:2021/2/25 | Time:14:13
+ * Date:2021/2/25 | Time:16:49
  */
-@Api(value = "/discover",description = "最新新闻，发现")
+@Api(value = "/discover",description = "最新内容，发现")
 public interface DiscoverApi {
 
     @ApiOperation("访问发现页面")
-    public ModelAndView visitDiscover(ModelAndView modelAndView);
+    ModelAndView visitDiscover(ModelAndView modelAndView);
 
 }
