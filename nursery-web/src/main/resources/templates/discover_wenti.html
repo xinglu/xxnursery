@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="发现-问题详情">
+    <meta name="author" content="meishiqiang">
+    <link rel="shortcut icon" href="/img/ico/favicon32.ico" th:href="@{/img/ico/favicon32.ico}">
+    <title>发现-问题</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/assets/bootstrap-fileupload/bootstrap-fileupload.css"/>
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet"/>
+</head>
+<body>
+<section id="container" class="">
+    <!--头部-->
+    <header class="">
+        <!--导航栏-->
+        <div class="navbar navbar-inverse navbar-fixed-top bg-discover1">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                            data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand hidden-sm" href="http://www.bootcss.com">新星幼儿园</a>
+                </div>
+                <div class="navbar-collapse collapse" role="navigation">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="'/index'" target="_blank">首页</a></li>
+                        <li><a th:href="'/job_detail'" target="_blank">职位</a></li>
+                        <li class="discover1-active"><a th:href="'/discover'" target="_blank">发现</a></li>
+                        <li><a th:href="'/information'" target="_blank">咨询</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right hidden-sm">
+                        <li><a href="/about/">简历</a></li>
+                        <li><a href="/about/">上传</a></li>
+                        <li><a th:href="'/consumer/personal/1'">个人中心</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--头部-->
+
+    <!--正文-->
+    <section>
+        <section th:object="${data}">
+            <!--头部标题-->
+            <div class="row">
+                <div class="bg-success">
+                    <div class="bs-docs-header">
+                        <div class="container text-center">
+                            <h3 th:text="'#'+*{tag}"></h3>
+                            <p th:text="*{tablename}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--faxian-content-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="faxian-item">
+                            <div class="faxian-item-header" th:id="*{authorId}">
+                                <img class="header-img"
+                                     src="https://img.bosszhipin.com/beijin/upload/avatar/20201223/bcad5b10df6fc6011080e01473e559219e8464193ee4e7857ba3fa53894d1194_s.jpg">
+                                <p class="author" th:text="*{author}">作者</p>
+                                <p class="introduce" th:text="*{introduce}">作者介绍</p>
+                            </div>
+                            <div class="faxian-item-content" th:utext="*{content}">
+                                内容展示
+                            </div>
+                            <div class="faxian-item-time">发布于：<span th:text="*{startdate}">发布时间</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12">
+                        <textarea id="editor" name="editor" rows="5" style="display: none;"></textarea>
+                        <button onclick="getHtml()" class="btn btn-success col-lg-12 col-md-12 col-sm-12">发表</button>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div th:each="comment:${commentDOS}" th:object="${comment}" class="pinglun">
+                        <div class="media">
+                            <div class="media-left media-middle">
+                                <a href="#" >
+                                    <img class="header-img"
+                                         src="https://img.bosszhipin.com/beijin/upload/avatar/20201223/bcad5b10df6fc6011080e01473e559219e8464193ee4e7857ba3fa53894d1194_s.jpg">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading" th:text="*{consumerName}">人名</h4>
+                                <th:block  th:utext="*{content}">内容</th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--faxian-content-->
+        </section>
+
+    </section>
+    <!--正文-->
+    <!--页脚-->
+    <footer class="site-footer">
+        <div class="text-center">
+            2013 &copy; FlatLab by VectorLab.
+            <a href="#" class="go-top">
+                <i class="fa fa-angle-up"></i>
+            </a>
+        </div>
+    </footer>
+    <!--页脚-->
+</section>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="/js/jquery.scrollTo.min.js"></script>
+<script src="/js/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="/assets/jquery-knob/js/jquery.knob.js"></script>
+<script src="/js/respond.min.js"></script>
+<script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<script src="/js/slidebars.min.js"></script>
+<script src="/js/common-scripts.js"></script>
+<script type="text/javascript" src="/assets/HandyEditor-master/HandyEditor.min.js"></script>
+<script>
+    function publish(tableid) {
+        var content = $("#" + "input" + tableid).val();
+        window.href.location = "/wenti/" + tableid + '/' + content;
+    }
+    var he = HE.getEditor('editor',{
+        height: '200px',
+        autoHeight : true,
+        uploadPhoto : true,
+        uploadPhotoSize : 1024,
+        uploadPhotoType : 'gif,png,jpg,jpeg',
+        uploadPhotoSizeError : '不能上传大于1024KB的图片',
+        uploadPhotoTypeError : '只能上传gif,png,jpg,jpeg格式的图片',
+        item : ['bold','italic','color','expression','undo','redo']
+    });
+    function getHtml() {
+        alert(he.getHtml());
+    }
+</script>
+</body>
+</html>

@@ -67,150 +67,49 @@
             <div class="container">
                 <div class="row faxian-content">
                     <div class="col-md-9">
-                        <div class="faxian-item">
-                            <div class="faxian-item-header">
+                        <!--/*@thymesVar id="topic" type="com.nursery.beans.HotTopicDO"*/-->
+                        <div class="faxian-item" th:each="topic,star:${data}">
+                            <div class="faxian-item-header" th:id="${topic.authorId}">
                                 <img class="header-img"
                                      src="https://img.bosszhipin.com/beijin/upload/avatar/20201223/bcad5b10df6fc6011080e01473e559219e8464193ee4e7857ba3fa53894d1194_s.jpg">
-                                <p class="author">梅士强</p>
-                                <p class="introduce">其他技术职业.1年</p>
+                                <p class="author" th:text="${topic.author}">作者</p>
+                                <p class="introduce" th:text="${topic.introduce}">作者介绍</p>
                             </div>
-                            <div class="faxian-item-content">
-                                <p>面试官：请问您的期望薪资是多少？</p>
-                                <p>我：6000 左右，</p>
-                                <p>面试官：我们的薪水是 5900&nbsp;没达到您的预期，但我们的员工福利比较优厚，您可以考虑一下。</p>
-                                <p>您到底是想让我过还是不想让我过？😂</p>
+                            <div class="faxian-item-content" th:utext="${topic.content}">
+                                内容展示
                             </div>
-                            <div class="faxian-item-time">发布于：2021年01月07日</div>
+                            <div class="faxian-item-time">发布于：<span th:text="${topic.startDate}">发布时间</span></div>
                             <div class="faxian-item-link">
                                 <a href="/huati/61b9ca05bbce3695s3V9.html"
                                    target="_blank" title="与面试官沟通的技巧"
-                                   class="topic-link">#与面试官沟通的技巧#</a>
-                                <div class="like-wrap">
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span class="like-count">6660</span>
-                                </div>
-                                <div class="get-wrap">
-                                    <i class="fa fa-heart-o"></i>
-                                    <span class="desc">Get</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="faxian-item">
-                            <div class="faxian-item-header">
-                                <img class="header-img"
-                                     src="https://img.bosszhipin.com/beijin/upload/avatar/20201223/bcad5b10df6fc6011080e01473e559219e8464193ee4e7857ba3fa53894d1194_s.jpg">
-                                <p class="author">梅士强</p>
-                                <p class="introduce">其他技术职业.1年</p>
-                            </div>
-                            <div class="faxian-item-content">
-                                <p>面试官：请问您的期望薪资是多少？</p>
-                                <p>我：6000 左右，</p>
-                                <p>面试官：我们的薪水是 5900&nbsp;没达到您的预期，但我们的员工福利比较优厚，您可以考虑一下。</p>
-                                <p>您到底是想让我过还是不想让我过？😂</p>
-                            </div>
-                            <div class="faxian-item-time">发布于：2021年01月07日</div>
-                            <div class="faxian-item-link">
-                                <a href="/huati/61b9ca05bbce3695s3V9.html"
-                                   target="_blank" title="与面试官沟通的技巧"
-                                   class="topic-link">#与面试官沟通的技巧#</a>
-                                <div class="like-wrap">
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span class="like-count">6660</span>
-                                </div>
-                                <div class="get-wrap">
-                                    <i class="fa fa-heart-o"></i>
-                                    <span class="desc">Get</span>
+                                   class="topic-link">#<span th:text="${topic.tag}">标签内容</span></a>
+                                <div class="faxian-answer">
+                                    <div class="like-wrap">
+                                        <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                th:attrappend="data-target=${'#' + topic.id}" aria-expanded="false">
+                                            回答
+                                        </button>
+                                    </div>
+                                    <div class="get-wrap">
+                                        <a class="btn btn-primary" th:href="'/discover/wenti/'+${topic.id}">
+                                            所有回答
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="faxian-item">
-                            <div class="faxian-item-header">
-                                <img class="header-img"
-                                     src="https://img.bosszhipin.com/beijin/upload/avatar/20201223/bcad5b10df6fc6011080e01473e559219e8464193ee4e7857ba3fa53894d1194_s.jpg">
-                                <p class="author">梅士强</p>
-                                <p class="introduce">其他技术职业.1年</p>
-                            </div>
-                            <div class="faxian-item-content">
-                                <p>面试官：请问您的期望薪资是多少？</p>
-                                <p>我：6000 左右，</p>
-                                <p>面试官：我们的薪水是 5900&nbsp;没达到您的预期，但我们的员工福利比较优厚，您可以考虑一下。</p>
-                                <p>您到底是想让我过还是不想让我过？😂</p>
-                            </div>
-                            <div class="faxian-item-time">发布于：2021年01月07日</div>
-                            <div class="faxian-item-link">
-                                <a href="/huati/61b9ca05bbce3695s3V9.html"
-                                   target="_blank" title="与面试官沟通的技巧"
-                                   class="topic-link">#与面试官沟通的技巧#</a>
-                                <div class="like-wrap">
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span class="like-count">6660</span>
-                                </div>
-                                <div class="get-wrap">
-                                    <i class="fa fa-heart-o"></i>
-                                    <span class="desc">Get</span>
+                            <div>
+                                <div class="collapse" th:id="${topic.id}">
+                                    <div class="">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" th:id="${'input'+topic.id}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"
+                                                        th:onclick="publish([[${topic.id}]]);">发表</button>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="faxian-item">
-                            <div class="faxian-item-header">
-                                <img class="header-img"
-                                     src="https://img.bosszhipin.com/beijin/upload/avatar/20201223/bcad5b10df6fc6011080e01473e559219e8464193ee4e7857ba3fa53894d1194_s.jpg">
-                                <p class="author">梅士强</p>
-                                <p class="introduce">其他技术职业.1年</p>
-                            </div>
-                            <div class="faxian-item-content">
-                                <p>面试官：请问您的期望薪资是多少？</p>
-                                <p>我：6000 左右，</p>
-                                <p>面试官：我们的薪水是 5900&nbsp;没达到您的预期，但我们的员工福利比较优厚，您可以考虑一下。</p>
-                                <p>您到底是想让我过还是不想让我过？😂</p>
-                            </div>
-                            <div class="faxian-item-time">发布于：2021年01月07日</div>
-                            <div class="faxian-item-link">
-                                <a href="/huati/61b9ca05bbce3695s3V9.html"
-                                   target="_blank" title="与面试官沟通的技巧"
-                                   class="topic-link">#与面试官沟通的技巧#</a>
-                                <div class="like-wrap">
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span class="like-count">6660</span>
-                                </div>
-                                <div class="get-wrap">
-                                    <i class="fa fa-heart-o"></i>
-                                    <span class="desc">Get</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="faxian-item">
-                            <div class="faxian-item-header">
-                                <img class="header-img"
-                                     src="https://img.bosszhipin.com/beijin/upload/avatar/20201223/bcad5b10df6fc6011080e01473e559219e8464193ee4e7857ba3fa53894d1194_s.jpg">
-                                <p class="author">梅士强</p>
-                                <p class="introduce">其他技术职业.1年</p>
-                            </div>
-                            <div class="faxian-item-content">
-                                <p>面试官：请问您的期望薪资是多少？</p>
-                                <p>我：6000 左右，</p>
-                                <p>面试官：我们的薪水是 5900&nbsp;没达到您的预期，但我们的员工福利比较优厚，您可以考虑一下。</p>
-                                <p>您到底是想让我过还是不想让我过？😂</p>
-                            </div>
-                            <div class="faxian-item-time">发布于：2021年01月07日</div>
-                            <div class="faxian-item-link">
-                                <a href="/huati/61b9ca05bbce3695s3V9.html"
-                                   target="_blank" title="与面试官沟通的技巧"
-                                   class="topic-link">#与面试官沟通的技巧#</a>
-                                <div class="like-wrap">
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                    <span class="like-count">6660</span>
-                                </div>
-                                <div class="get-wrap">
-                                    <i class="fa fa-heart-o"></i>
-                                    <span class="desc">Get</span>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                     <div class="col-md-3 side-border">
@@ -300,5 +199,11 @@
 <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <script src="/js/slidebars.min.js"></script>
 <script src="/js/common-scripts.js"></script>
+<script>
+    function publish(tableid) {
+        var content = $("#"+"input"+tableid).val();
+        window.href.location = "/wenti/"+tableid+'/'+content;
+    }
+</script>
 </body>
 </html>

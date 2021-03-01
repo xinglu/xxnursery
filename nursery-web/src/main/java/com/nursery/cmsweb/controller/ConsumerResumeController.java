@@ -28,7 +28,7 @@ public class ConsumerResumeController extends BaseController implements ResumeAp
      */
     @RequestMapping(value = "/consumer/resume/{consumerId}",method = RequestMethod.GET)
     public ModelAndView visitConsumerResume(@PathVariable("consumerId") String consumerId, ModelAndView model){
-
+        model.setViewName("resume");
         return model;
     }
 

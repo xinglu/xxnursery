@@ -13,5 +13,6 @@ public interface DiscoverApi {
 
     @ApiOperation("访问发现页面")
     ModelAndView visitDiscover(ModelAndView modelAndView);
-
+    @ApiOperation("问题跳转")
+    ModelAndView visitWenti(String table,ModelAndView modelAndView);
 }
