@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nursery.dao.AnnounceDetailMapper">
+
+    <!--tb_announce_details-->
+    <resultMap id="announceDetails" type="com.nursery.beans.NurseryAnnounceDO">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="content" property="bigContent" jdbcType="VARCHAR"/>
+        <result column="startDate" property="date_YYYYMMDD" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectAnnounceDetailById" resultMap="announceDetails">
+        select * from tb_announce_details where id = #{id};
+    </select>
+
+</mapper>

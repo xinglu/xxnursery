@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="资讯--公告信息">
+    <meta name="description" content="资讯（公告信息）">
     <meta name="author" content="meishiqiang">
+    <meta name="keyword" content="">
     <link rel="shortcut icon" href="/img/ico/favicon32.ico" th:href="@{/img/ico/favicon32.ico}">
     <title>资讯</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -55,7 +56,7 @@
             <!--头部标题-->
             <div class="row">
                 <div class="bg-success">
-                    <div class="bs-docs-header" id="content" tabindex="-1">
+                    <div class="bs-docs-header" id="content">
                         <div class="container text-center">
                             <h3>新星幼儿园-新闻发现和跟踪</h3>
                             <p>New Star Kindergarten - News Discovery and Tracking</p>
@@ -65,66 +66,100 @@
             </div>
             <div class="container">
                 <!--公告标题-->
-                <div class="row notice">
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail notice-box">
-                            <div class="notice-new"><span class="title">最新新闻</span><button class="button">-更多-</button></div>
-                            <img class="image" src="https://img.bosszhipin.com/beijin/article/cover/20190131/5b35710c800420cab9086d2471805712c6407cb7c39ed9df81ce65de750288b8_s.jpg" alt="...">
-                            <div class="notice-bottom">
-                                <p>拿不到年终奖就跳槽？80后或成最硬核职场人 | 2018年终奖调查</p>
-                                <p class="btn-detail">-&nbsp;点击详情&nbsp;-</p>
+                <div class="row notice" th:if="${nhrData!=null}">
+                    <th:block th:each="data,star:${nhrData}" th:object="${data}">
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail notice-box">
+                                <th:block th:if="${star.index==0}">
+                                    <div class="notice-new">
+                                        <span class="title">最新新闻</span>
+                                        <button class="button" id="btn_new_more" type="button">-更多-</button>
+                                    </div>
+                                </th:block>
+                                <th:block th:if="${star.index==1}">
+                                    <div class="notice-new">
+                                        <span class="title">最热新闻</span>
+                                        <button class="button" id="btn_hot_more" type="button">-更多-</button>
+                                    </div>
+                                </th:block>
+                                <th:block th:if="${star.index==2}">
+                                    <div class="notice-new">
+                                        <span class="title">内容推荐</span>
+                                        <button class="button" id="btn_recommend_more" type="button">-更多-</button>
+                                    </div>
+                                </th:block>
+                                <th:block th:if="*{imgPath!=null}">
+                                    <img class="image" th:href="*{imgPath}" alt="...">
+                                </th:block>
+                                <th:block th:unless="*{imgPath!=null}">
+                                    <img class="image"
+                                         src="https://img.bosszhipin.com/beijin/article/cover/20190131/5b35710c800420cab9086d2471805712c6407cb7c39ed9df81ce65de750288b8_s.jpg"
+                                         alt="...">
+                                </th:block>
+                                <div class="notice-bottom">
+                                    <p th:text="*{table}">拿不到年终奖就跳槽？80后或成最硬核职场人 | 2018年终奖调查</p>
+                                    <p class="btn-detail">-&nbsp;<a th:href="*{path}" class="hover">点击详情</a>&nbsp;-</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail notice-box">
-                            <div class="notice-new"><span class="title">最热新闻</span><button class="button">-更多-</button></div>
-                            <img class="image" src="https://img.bosszhipin.com/beijin/article/cover/20190131/5b35710c800420cab9086d2471805712c6407cb7c39ed9df81ce65de750288b8_s.jpg" alt="...">
-                            <div class="notice-bottom">
-                                <p>拿不到年终奖就跳槽？80后或成最硬核职场人 | 2018年终奖调查</p>
-                                <p class="btn-detail">-&nbsp;点击详情&nbsp;-</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail notice-box">
-                            <div class="notice-new"><span class="title">内容推荐</span><button class="button">-更多-</button></div>
-                            <img class="image" src="https://img.bosszhipin.com/beijin/article/cover/20190131/5b35710c800420cab9086d2471805712c6407cb7c39ed9df81ce65de750288b8_s.jpg" alt="...">
-                            <div class="notice-bottom">
-                                <p>拿不到年终奖就跳槽？80后或成最硬核职场人 | 2018年终奖调查</p>
-                                <p class="btn-detail">-&nbsp;点击详情&nbsp;-</p>
-                            </div>
-                        </div>
-                    </div>
+                    </th:block>
                 </div>
                 <!--公告标题-->
                 <!--公告内容-->
-                <div class="row notice-content notice-body">
+                <!--information 页面-->
+                <div class="row notice-content notice-body" th:if="${announces!=null}">
                     <div class="notice-block">
-                        <div class="notice-items">
-                            <img class="image" src="https://img.bosszhipin.com/beijin/article/cover/20190131/5b35710c800420cab9086d2471805712c6407cb7c39ed9df81ce65de750288b8_s.jpg" alt="...">
-                            <div class="notice-bottom">
-                                <h3>有类产品运营岗，最爱招留学生</h3>
-                                <p class="text-info">随着越来越多的公司开展了出海业务，试图开拓海外市场，各大公司们也在寻找能够担负起海外产品的运营者。那么具体到岗位中，究竟哪些为什么公司会更倾向于招聘留学生来运营产品呢？本篇概览：1. 为什么留学生擅长</p>
-                                <p class="btn-detail">海归直直·2021-02-06</p>
+                        <th:block th:each="data,star:${announces}" th:object="${data}">
+                            <div class="notice-items">
+                                <th:block th:if="*{imgPath!=null}">
+                                    <img class="image" th:src="*{imgPath}" alt="...">
+                                </th:block>
+                                <th:block th:unless="*{imgPath!=null}">
+                                    <img class="image"
+                                         src="https://img.bosszhipin.com/beijin/article/cover/20190131/5b35710c800420cab9086d2471805712c6407cb7c39ed9df81ce65de750288b8_s.jpg"
+                                         alt="...">
+                                </th:block>
+                                <div class="notice-bottom">
+                                    <h3><a th:text="*{table}" th:href="*{path}">标题</a></h3>
+                                    <p class="text-info" th:text="*{content}">内容</p>
+                                    <p class="btn-detail"><span th:text="*{author}">作者</span>·<span th:text="*{date}">发布时间</span>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        </th:block>
                     </div>
-                    <div  class="notice-block">
-                        <div class="notice-items">
-                            <img class="image" src="https://img.bosszhipin.com/beijin/article/cover/20190131/5b35710c800420cab9086d2471805712c6407cb7c39ed9df81ce65de750288b8_s.jpg" alt="...">
-                            <div class="notice-bottom">
-                                <h3>有类产品运营岗，最爱招留学生</h3>
-                                <p class="text-info">随着越来越多的公司开展了出海业务，试图开拓海外市场，各大公司们也在寻找能够担负起海外产品的运营者。那么具体到岗位中，究竟哪些为什么公司会更倾向于招聘留学生来运营产品呢？本篇概览：1. 为什么留学生擅长</p>
-                                <p class="btn-detail">海归直直·2021-02-06</p>
-                            </div>
-                        </div>
-                    </div>
-
                     <div>
-                        <button class="notice-btn">浏览更多</button>
+                        <button id="btn_liulang" class="notice-btn">浏览更多</button>
                     </div>
                 </div>
+                <!--information 页面结束-->
+                <!--information newdate/hottime 页面-->
+                <div class="row notice-content notice-body" th:if="${pageInfo!=null}">
+                    <div class="notice-block" id="notice-body">
+                        <th:block th:each="data,star:${pageInfo.list}" th:object="${data}">
+                            <div class="notice-items">
+                                <th:block th:if="*{imgPath!=null}">
+                                    <img class="image" th:src="*{imgPath}" alt="...">
+                                </th:block>
+                                <th:block th:unless="*{imgPath!=null}">
+                                    <img class="image"
+                                         src="https://img.bosszhipin.com/beijin/article/cover/20190131/5b35710c800420cab9086d2471805712c6407cb7c39ed9df81ce65de750288b8_s.jpg"
+                                         alt="...">
+                                </th:block>
+                                <div class="notice-bottom">
+                                    <h3><a th:text="*{table}" th:href="*{path}" class="hover">标题</a></h3>
+                                    <p class="text-info" th:text="*{content}">内容</p>
+                                    <p class="btn-detail"><span th:text="*{author}">作者</span>·<span th:text="*{date}">发布时间</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                    <div>
+                        <button id="btn_liulang_more" class="notice-btn btn-info">浏览更多</button>
+                    </div>
+                </div>
+                <!--information newdate/hottime 页面结束-->
                 <!--公告内容-->
             </div>
         </section>
@@ -152,5 +187,6 @@
 <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <script src="/js/slidebars.min.js"></script>
 <script src="/js/common-scripts.js"></script>
+<script src="/js/information.js"></script>
 </body>
 </html>

@@ -140,7 +140,7 @@ public class NurseryIndexController extends BaseController implements NurseryInd
         dbDataParam.setTable_flag(table_flag);
         List<NurseryAnnounceDO> nurseryAnnounceDOList = null;
         try {
-            nurseryAnnounceDOList = nurseryAnnounceSV.announceeList(dbDataParam);
+            nurseryAnnounceDOList = nurseryAnnounceSV.getAnnounceeList(dbDataParam);
             for (NurseryAnnounceDO nurseryAnnounceDO : nurseryAnnounceDOList) {
                 Integer id = nurseryAnnounceDO.getId();
                 String author = nurseryAnnounceDO.getAuthor();

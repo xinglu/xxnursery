@@ -12,21 +12,47 @@
         <result column="ANNOUNCETTIME" property="time" jdbcType="VARCHAR"/>
         <result column="ANNOUNCETSIZE" property="size" jdbcType="VARCHAR"/>
         <result column="ANNOUNCETPATH" property="path" jdbcType="VARCHAR"/>
+        <result column="ANNOUNCEIMG" property="imgPath" jdbcType="VARCHAR"/>
+        <result column="ANNOUNCCONTENT" property="content" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="announceeList" resultMap="announceMap" parameterType="com.nursery.beans.DBDataParam" useCache="true">
-        SELECT * FROM ${table_flag}  ORDER BY ANNOUNCEID DESC
+        SELECT *
+        FROM ${table_flag}
+        ORDER BY ANNOUNCEID DESC
+    </select>
+    <select id="selectAnnounceByNewDate" resultMap="announceMap">
+        SELECT *
+        FROM tb_announce_202101 b
+        WHERE b.`ANNOUNCETDATE` = (SELECT MAX(a.`ANNOUNCETDATE`) FROM tb_announce_202101 a);
+    </select>
+
+    <select id="selectAnnounceBytime" resultMap="announceMap">
+        SELECT *
+        FROM tb_announce_202101 b
+        WHERE b.`ANNOUNCETTIME` = (SELECT MAX(a.`ANNOUNCETTIME`) FROM tb_announce_202101 a);
+    </select>
+    <select id="selectRecommendAnnounce" resultMap="announceMap" parameterType="integer">
+        SELECT *
+        FROM `tb_announce_202101`
+        WHERE ANNOUNCEID >= (SELECT FLOOR(RAND() * (SELECT MAX(ANNOUNCEID) FROM `tb_announce_202101`)))
+        ORDER BY ANNOUNCEID LIMIT #{value}
+    </select>
+    <select id="selectAnnounceByNewDates" resultMap="announceMap">
+        SELECT * FROM `tb_announce_202101`  ORDER BY ANNOUNCETDATE DESC
+    </select>
+    <select id="selectAnnounceBytimes" resultMap="announceMap">
+        SELECT * FROM `tb_announce_202101`  ORDER BY ANNOUNCETTIME DESC
     </select>
 
     <insert id="insert" parameterType="com.nursery.beans.NurseryAnnounceDO">
-        INSERT INTO ${tableflag} (
-        ANNOUNCETABLE,
-        ANNOUNCETDATE,
-        ANNOUNCETAUTHOR,
-        ANNOUNCETCOMPILER,
-        ANNOUNCETTIME,
-        ANNOUNCETSIZE,
-        ANNOUNCETPATH)
-        values (#{table},#{date},#{author},#{etcompiler},#{time},#{size},#{path})
+        INSERT INTO ${tableflag} (ANNOUNCETABLE,
+                                  ANNOUNCETDATE,
+                                  ANNOUNCETAUTHOR,
+                                  ANNOUNCETCOMPILER,
+                                  ANNOUNCETTIME,
+                                  ANNOUNCETSIZE,
+                                  ANNOUNCETPATH)
+        values (#{table}, #{date}, #{author}, #{etcompiler}, #{time}, #{size}, #{path})
     </insert>
 
     <update id="update" parameterType="com.nursery.beans.NurseryAnnounceDO">

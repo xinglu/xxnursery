@@ -47,51 +47,7 @@
             </div>
         </div>
         <!--搜索框-->
-        <div class="row inner search-inner">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-lg dropdown-toggle " data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">职位类型 <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">教师</a></li>
-                            <li><a href="#">职工</a></li>
-                            <li><a href="#">门卫</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">院长</a></li>
-                        </ul>
-                    </div><!-- /btn-group -->
-                    <input type="text" class="form-control input-lg" placeholder="搜索职位"
-                           aria-describedby="sizing-addon1">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success btn-lg" type="button">搜索框</button>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <!--热门职位-->
-        <div class="row inner">
-            <div class="navbar navbar-inner btn-group">
-                <ol class="breadcrumb" style="background-color: rgba(0,0,0,0)">
-                    <b>热门职位 : &nbsp;&nbsp;&nbsp;&nbsp;</b>
-
-                    <li th:if="${sordStr!=null}" th:each="str: ${sordStr}"><a href="#" th:text="${str}"></a></li>
-                    <th:block th:unless="${sordStr!=null}">
-                        <li><a href="#">音乐</a></li>
-                        <li><a href="#">舞蹈</a></li>
-                        <li><a href="#">门卫</a></li>
-                        <li><a href="#">后台管理员</a></li>
-                        <li><a href="#">院长</a></li>
-                        <li><a href="#">院长</a></li>
-                    </th:block>
-                    <li>......</li>
-                </ol>
-            </div>
-        </div>
-        <!--分类导航-->
-        <div class="row">
-
-        </div>
+        <div class="row inner search-inner"></div>
     </header>
     <!--头部-->
 

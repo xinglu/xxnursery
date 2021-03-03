@@ -28,8 +28,9 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <mybatis-spring-boot.version>2.1.3</mybatis-spring-boot.version>
+        <mybatis-spring-boot.version>2.1.4</mybatis-spring-boot.version>
         <mybatis.version>3.5.5</mybatis.version>
+        <pagehelper>1.2.8</pagehelper>
         <druid.version>1.1.6</druid.version>
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
         <commons-io.version>2.6</commons-io.version>
@@ -153,6 +154,12 @@
                 <artifactId>druid</artifactId>
                 <version>1.1.10</version>
                 <scope>compile</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>1.2.8</version>
             </dependency>
 
         </dependencies>

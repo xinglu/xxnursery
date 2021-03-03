@@ -43,6 +43,10 @@ a, a:hover, a:focus {
     height: 100%;
 }
 
+.hover::hover {
+    color: #9e7470;
+}
+
 /*login page*/
 
 .login-body {
@@ -428,6 +432,7 @@ a.logo span {
     margin-bottom: 2px;
 }
 
+
 .position-thumbnail span {
     font-size: 8px;
     color: #7d7d7d;
@@ -766,6 +771,37 @@ a.logo span {
     background-color: #f6f6f6;
 }
 
+.notice-body-content {
+    margin-right: 30px;
+    background-color: #FFFFFF;
+}
+
+.notice-body-content > .title {
+    color: black;
+    font-size: 30px;
+    line-height: 50px;
+    font-weight: 400;
+}
+
+.notice-body-content > .info {
+    color: #999;
+    line-height: 18px;
+    font-size: 14px;
+}
+
+.notice-body-content > .info > .author {
+    float: right;
+    margin-top: 25px;
+}
+
+.notice-body-content > .info > .tags {
+    padding: 25px 0 40px;
+}
+
+.heading-notice {
+    margin-top: 100px;
+}
+
 /*discover 发现*/
 .bg-discover1 {
     background-color: #bbff8b;
@@ -802,10 +838,12 @@ a.logo span {
     float: left;
     margin-right: 20px;
 }
-.pinglun{
+
+.pinglun {
     margin: 5px;
     padding: 5px;
 }
+
 .header-img {
     width: 50px;
     height: 50px;
@@ -814,6 +852,7 @@ a.logo span {
     float: left;
     margin-right: 20px;
 }
+
 .faxian-item-header > .author {
     font-weight: 600;
     font-size: 17px;
@@ -837,9 +876,11 @@ a.logo span {
 .faxian-item-link > .topic-link {
     color: #00a6b2;
 }
-.faxian-answer{
+
+.faxian-answer {
     display: flex;
 }
+
 .get-wrap {
     color: #747474;
     width: 100px;
