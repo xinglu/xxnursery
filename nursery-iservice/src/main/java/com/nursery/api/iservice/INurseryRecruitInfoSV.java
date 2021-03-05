@@ -35,7 +35,8 @@ public interface INurseryRecruitInfoSV {
      */
     List<RecruitmentDO> selectRecruitinfoByerid() throws SQLException;
 
-    public List<RecruitmentDO> selectRecruitmentDOs() throws SQLException;
+    //查询所有招聘信息
+    List<RecruitmentDO> selectRecruitmentDOs() throws SQLException;
 
     /**
      * 根究id 查询招聘信息
@@ -59,7 +60,7 @@ public interface INurseryRecruitInfoSV {
     //根据名称
     List<RecruitmentDO> selectRecruitinfoByName(String tableName);
 
-    //根据名称
+    //根据类型
     List<RecruitmentDO> getRecruitByType(String type) throws SQLException;
 
     //获取最新时间的职位

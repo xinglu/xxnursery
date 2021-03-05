@@ -122,7 +122,7 @@
                                                 <div class="position-thumbnail">
                                                     <div class="row">
                                                         <div class="col-md-5">
-                                                            <p th:text="*{recruittablename}">数学老师</p>
+                                                            <a class="title" th:href="'/job_detail/'+*{id}+'.html'"><p th:text="*{recruittablename}">数学老师</p></a>
                                                             <span th:text="*{requireEduDB}">大专</span>
                                                         </div>
                                                         <div class="col-md-4 col-md-offset-2">
@@ -145,7 +145,7 @@
                                             <div class="position-thumbnail">
                                                 <div class="row">
                                                     <div class="col-md-5">
-                                                        <p th:text="*{recruittablename}"><a class="title" th:href="*{'/recruit/detail/'+id+'.html'}">数学老师</a></p>
+                                                        <a class="title" th:href="*{'/recruit/detail/'+id+'.html'}"><p th:text="*{recruittablename}">数学老师</p></a>
                                                         <span th:text="*{requireEduDB}">大专</span>
                                                     </div>
                                                     <div class="col-md-4 col-md-offset-2">
@@ -197,7 +197,7 @@
                                                     <div class="position-thumbnail">
                                                         <div class="row">
                                                             <div class="col-md-5">
-                                                                <p th:text="*{recruittablename}">数学老师</p>
+                                                                <a class="title" th:href="'/job_detail/'+*{id}+'.html'"><p th:text="*{recruittablename}">数学老师</p></a>
                                                                 <span th:text="*{requireEduDB}">大专</span>
                                                             </div>
                                                             <div class="col-md-4 col-md-offset-2">

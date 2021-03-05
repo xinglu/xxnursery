@@ -15,4 +15,6 @@ public interface ManageRecruitApi {
 
     @ApiOperation(value = "更新招聘信息",httpMethod = "PUT",response = ModelAndView.class )
     public ResponseResult putRecruitInfo(RecruitBO recruitBO);
+
+
 }

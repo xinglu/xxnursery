@@ -15,6 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecruitmentDO {
+
     private String id;
     private String recruittablename;//招聘标题
     private String classify;//招聘分类信息
@@ -23,16 +24,23 @@ public class RecruitmentDO {
     private Date startTime;//招聘开始时间
     private String endtime;//招聘结束时间
     private Date endTime;//招聘结束时间
-    private String place;//招聘地点
-    private String requireExperience;//招聘要求--工作经验
+    private String place;//工作地点
+    private String requireExperience;//招聘要求--工作经验*
     private String requireEduDB;//招聘要求--学历
-    private String manNumbers;//招聘人数
+    private int manNumbers;//招聘人数
     private String companyresume;//公司简历
     private String jobdesciption;//职位描述
     private String isNotStaleDated;//时间是否过期
     private String experience;//工作经验
     private String[] types;
     private String[] labels;
+    private String responsibility;//职责描述
+    private String require;//职位要求
+    private String treatment;//职位待遇
+    private int applynum;//报名人数
+    private String cutoff;//报名是否过期
+    private String enrollFull;//报名人数已满
+    private String authorId;//招聘发布人员
 
     public String getExperience() {
         return experience;
@@ -94,11 +102,11 @@ public class RecruitmentDO {
 
     public void setIsNotStaleDated(Date endtime) {
         Date nowDate = new Date();
-        if (endtime!=null){
+        if (endtime != null) {
             int i = nowDate.compareTo(endtime);
-            if (i>0){
+            if (i > 0) {
                 this.isNotStaleDated = "true";//过期了
-            }else {
+            } else {
                 this.isNotStaleDated = "false";//没有过期
             }
         }
@@ -177,14 +185,6 @@ public class RecruitmentDO {
         this.requireEduDB = requireEduDB;
     }
 
-    public String getManNumbers() {
-        return manNumbers;
-    }
-
-    public void setManNumbers(String manNumbers) {
-        this.manNumbers = manNumbers;
-    }
-
     public String getCompanyresume() {
         return companyresume;
     }
@@ -199,5 +199,69 @@ public class RecruitmentDO {
 
     public void setJobdesciption(String jobdesciption) {
         this.jobdesciption = jobdesciption;
+    }
+
+    public String getResponsibility() {
+        return responsibility;
+    }
+
+    public void setResponsibility(String responsibility) {
+        this.responsibility = responsibility;
+    }
+
+    public String getRequire() {
+        return require;
+    }
+
+    public void setRequire(String require) {
+        this.require = require;
+    }
+
+    public String getTreatment() {
+        return treatment;
+    }
+
+    public void setTreatment(String treatment) {
+        this.treatment = treatment;
+    }
+
+    public int getApplynum() {
+        return applynum;
+    }
+
+    public void setApplynum(int applynum) {
+        this.applynum = applynum;
+    }
+
+    public String getCutoff() {
+        return cutoff;
+    }
+
+    public void setCutoff(String cutoff) {
+        this.cutoff = cutoff;
+    }
+
+    public String getEnrollFull() {
+        return enrollFull;
+    }
+
+    public void setEnrollFull(String enrollFull) {
+        this.enrollFull = enrollFull;
+    }
+
+    public int getManNumbers() {
+        return manNumbers;
+    }
+
+    public void setManNumbers(int manNumbers) {
+        this.manNumbers = manNumbers;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 }

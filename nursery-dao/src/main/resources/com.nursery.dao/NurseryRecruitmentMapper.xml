@@ -13,9 +13,16 @@
         <result column="recruitplace" property="place" jdbcType="VARCHAR"/>
         <result column="recruitrequire_experience" property="requireExperience" jdbcType="VARCHAR"/>
         <result column="recruitrequire_edubg" property="requireEduDB" jdbcType="VARCHAR"/>
-        <result column="recruitnumbers" property="manNumbers" jdbcType="VARCHAR"/>
+        <result column="recruitnumbers" property="manNumbers" jdbcType="INTEGER"/> <!--Mybatis的JdbcType全是大写，而且没有INT，只有INTEGER-->
         <result column="companyresume" property="companyresume" jdbcType="VARCHAR"/>
         <result column="jobdesciption" property="jobdesciption" jdbcType="VARCHAR"/>
+        <result column="responsibility" property="responsibility" jdbcType="VARCHAR"/><!--职位描述-->
+        <result column="require" property="require" jdbcType="VARCHAR"/><!--职位要求-->
+        <result column="treatment" property="treatment" jdbcType="VARCHAR"/><!--职位待遇-->
+        <result column="applynum" property="applynum" jdbcType="INTEGER"/><!--报名人数-->
+        <result column="cutoff" property="cutoff" javaType="string"/><!--报名是否过期（yes,no)-->
+        <result column="enrollFull" property="enrollFull" javaType="string"/><!--报名人数已满（yes,no)-->
+        <result column="authorId" property="authorId" javaType="string"/><!--招聘发布人员id-->
     </resultMap>
 
     <sql id="recruitsql">

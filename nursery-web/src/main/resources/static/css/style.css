@@ -426,12 +426,20 @@ a.logo span {
     padding: 10px 15px;
 }
 
+.position-thumbnail:hover {
+    box-shadow: 5px 5px 5px silver;
+}
+
+.position-thumbnail .title > p:hover {
+    color: black;
+    font-weight: 400;
+}
+
 .position-thumbnail p {
     color: black;
     font-size: 10px;
     margin-bottom: 2px;
 }
-
 
 .position-thumbnail span {
     font-size: 8px;
@@ -474,7 +482,7 @@ a.logo span {
     background: #a09292;
 }
 
-.show-condition-district a::hover {
+.show-condition-district a:hover {
     color: #ad1919;
     font-weight: 400;
 }
@@ -946,8 +954,115 @@ a.logo span {
     color: #1b6d85;
 }
 
-/*notification*/
+/*recruitment-details*/
+.bg-white {
+    background-color: black;
+    border: 5px solid black;
+}
 
+.active_job {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.active_job_zhiwei {
+    color: #1b6d85;
+    font-weight: 400;
+}
+
+.bg_zhiwei_box {
+    background-color: rgb(50, 51, 57);
+    color: white;
+    font-size: 12px;
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.bg_zhiwei_detail {
+    margin: 0 auto;
+    padding: 10px 5px 0px 5px;
+}
+
+.zhiwei_box p {
+    color: #c9c9c9;
+}
+
+.bg_zhiwei_detail > .zhiwei_box .flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bg_zhiwei_detail > .zhiwei_box .flex > button {
+    height: 40px;
+    width: 193px;
+    line-height: 40px;
+    background-color: #78CD51;
+    border-color: #78CD51;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+.zhiwei_type {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: inline;
+
+}
+
+.zhiwei_type > li, .zhiwei_type_p {
+    border: 1px solid #30b4b4;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: #30b4b4;
+}
+
+.zhiwei_type > li {
+    margin-right: 15px;
+    float: left;
+}
+
+.zhiwei_type_p {
+    margin-left: 15px;
+}
+
+.zhiwei_type_p:first-child, .zhiwei_type_p:last-child {
+    color: #30b4b4;
+}
+
+.zhiwei_content_box {
+    padding: 10px 15px;
+}
+
+.zhiwei_content_box .zhiwei_item > p {
+    font-size: 16px;
+    font-weight: 400;
+    padding: 6px 0;
+    color: black;
+}
+
+.zhiwei_content_box .zhiwei_item > p {
+    border-bottom: 1px solid #cecece;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 15px 0;
+    color: black;
+    margin-bottom: 16px;
+}
+
+.zhiwei_content_box .zhiwei_item > p:after {
+    content: "";
+    display: inline-block;
+    width: 30px;
+    height: 3px;
+    background: #3f7d7d;
+    margin-left: -64px;
+    margin-bottom: -21px;
+}
+
+/*notification*/
 #top_menu .nav > li, ul.top-menu > li {
     float: left;
 }

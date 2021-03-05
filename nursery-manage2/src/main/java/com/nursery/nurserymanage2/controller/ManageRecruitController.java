@@ -72,7 +72,7 @@ public class ManageRecruitController extends BaseController implements ManageRec
         String endTime = recruitBO.getEndTime();
         String label = recruitBO.getLabel();
         String jobDescription = recruitBO.getJobDescription();
-        String needNumber = recruitBO.getNeedNumber();
+        Integer needNumber = Integer.parseInt(recruitBO.getNeedNumber());
         String workPlace = recruitBO.getWorkPlace();
         String type = recruitBO.getType();
         String pay = recruitBO.getPay();

@@ -25,4 +25,8 @@ public interface VisitRecruitApi {
 
     @ApiOperation("跳转到招聘详情页")
     ModelAndView getRecruitDetails(String paramID,ModelAndView modelAndView);
+
+    @ApiOperation("访问-发布招聘")
+    ModelAndView visitPullRecruitPage(String paramID,ModelAndView modelAndView);
+
 }

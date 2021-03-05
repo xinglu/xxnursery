@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="新星幼儿园-招聘网站首页">
+    <meta name="author" content="meishiqiang">
+    <meta name="keyword" content="幼儿园，招聘，招聘网，新星，首页">
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <title>新星幼儿园-招聘网</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/css/yamm.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet"/>
+</head>
+
+<body class="mega-nav">
+<section id="container">
+    <!--头部 导航栏-->
+    <header class="">
+        <div class="navbar navbar-inverse navbar-fixed-top bg-white">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                            data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand hidden-sm" href="http://www.bootcss.com">新星幼儿园</a>
+                </div>
+                <div class="navbar-collapse collapse" role="navigation">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="'/index'" target="_blank">首页</a></li>
+                        <li class="active_job"><a th:href="'/job_detail'" target="_blank"><span
+                                class="active_job_zhiwei">职位</span></a></li>
+                        <li><a th:href="'/discover'" target="_blank">发现</a></li>
+                        <li><a th:href="'/information'" target="_blank">咨询</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right hidden-sm">
+                        <li><a th:href="'/resume'">简历</a></li>
+                        <li><a th:href="'/consumer/personal/1'">个人中心</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--头部-->
+    <section th:if="${recruitment!=null}" th:object="${recruitment}">
+        <!--标题内容 是否过期|名称|月薪|地址|经验|学历|分类信息|关键词-->
+        <div class="container-fluid bg_zhiwei_box">
+            <div class="row bg_zhiwei_detail text-left">
+                <div class="col-lg-8 col-lg-offset-2 zhiwei_box">
+                    <p th:text="*{cutoff=='yes'?'招聘进行时':'招聘已过期，请选择其他招聘信息'}">招聘进行时</p>
+                    <div class="flex">
+                        <h2 style="margin: 0;"><th:block th:text="*{recruittablename}">招聘标题！！！！</th:block>&nbsp;&nbsp;<strong style="color: #b88d0c"><th:block th:text="*{pay}"></th:block>月</strong></h2>
+                        <button>沟通. <th:block th:text="*{author}"></th:block></button>
+                    </div>
+                    <div style="height: 10px"></div>
+                    <p><span th:text="*{place}">地点</span>&nbsp;.&nbsp;<span>经验</span>&nbsp;.&nbsp;<span th:text="*{requireEduDB}">学历</span></p>
+                    <div class="flex">
+                        <ol class="zhiwei_type">
+                            <li th:each="type:*{types}" th:text="${type}">分类</li>
+                            <li th:each="label:*{labels}" th:text="${label}">信息</li>
+                        </ol>
+                        <div class="flex">
+                            <p class="zhiwei_type_p"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;<span>完善简历</span></p>
+                            <p class="zhiwei_type_p"><i
+                                    class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;<span>新建简历</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row zhiwei_content_box">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="zhiwei_item">
+                        <p>职位描述</p>
+                        <div class="zhiwei_description">
+                            <p><strong>职责描述</strong></p>
+                            <div th:utext="*{responsibility}"></div>
+                            <p><strong>职位要求</strong></p>
+                            <div th:utext="*{require}"></div>
+                            <p><strong>待遇.福利</strong></p>
+                            <div th:utext="*{treatment}"></div>
+                            <p><strong>工作地址</strong></p>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/assets/bootstrap-AMapPositionPicker/js/bootstrap.AMapPositionPicker.min.js"></script>
+</body>
+</html>

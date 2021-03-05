@@ -11,6 +11,7 @@ import com.nursery.common.model.response.QueryResult;
 import com.nursery.common.web.BaseController;
 import com.nursery.utils.DateUtils;
 import com.nursery.utils.RSAUtils;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,16 @@ public class VisitRecruitController extends BaseController implements VisitRecru
     @Autowired
     private INurseryRecruitInfoSV nurseryRecruitInfoSV;
 
+    //定义一个测试的id
+    private String RECRUIT_ER_ID = "1";
+
     /**
      * 获取所有的招聘信息
      * @return
      */
     @GetMapping("/manage/recruit/getRecruitManages")
     @ResponseBody
+    @Override
     public ModelAndView getRecruitManage() {
         Map<String, String> returnMap = new HashMap<>();
         QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
@@ -74,12 +79,12 @@ public class VisitRecruitController extends BaseController implements VisitRecru
 
     /**
      * 根据内容id 获取招聘的详细信息
-     *
      * @param recruitid 招聘内容id
      * @return 招聘详情页面、招聘更新页面
      */
     @GetMapping("/manage/recruit/getRecruitInfo/{recruitid}")
     @ResponseBody
+    @Override
     public ModelAndView getRecruitInfoByrecruitid(@PathVariable("recruitid") String recruitid) {
         //定义返回值
         QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
@@ -121,6 +126,7 @@ public class VisitRecruitController extends BaseController implements VisitRecru
      */
     @GetMapping("/manage/recruit/getRecruitManage")
     @ResponseBody
+    @Override
     public ModelAndView getRecruitManage(String param) {
         Map<String, String> returnMap = new HashMap<>();
         QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
@@ -162,12 +168,12 @@ public class VisitRecruitController extends BaseController implements VisitRecru
 
     /**
      * 根据内容id 获取招聘的详细信息
-     *
      * @param recruitid 招聘内容id
      * @return 招聘详情页面、招聘更新页面
      */
     @GetMapping("/manage/recruit/modify/page/{recruitid}")
     @ResponseBody
+    @Override
     public ModelAndView getRecruitInfoByid(@PathVariable("recruitid") String recruitid) {
         QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
         QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.FAIL, queryResult);
@@ -197,9 +203,17 @@ public class VisitRecruitController extends BaseController implements VisitRecru
      * @return
      */
     @GetMapping("/details/page/{paramId}")
+    @Override
     public ModelAndView getRecruitDetails(@PathVariable("paramId") String paramId,ModelAndView modelAndView) {
 //        modelAndView.addObject("data", queryResponseResult);
         modelAndView.setViewName("recruitDetailsPage");
+        return modelAndView;
+    }
+
+    @GetMapping("/manage/recruit/pull")
+    @Override
+    public ModelAndView visitPullRecruitPage(@Param(value = "erId") String paramID, ModelAndView modelAndView) {
+        modelAndView.setViewName("pullRecruitPage");
         return modelAndView;
     }
 }
