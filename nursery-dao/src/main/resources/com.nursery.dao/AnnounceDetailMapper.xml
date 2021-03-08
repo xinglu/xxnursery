@@ -16,5 +16,4 @@
     <select id="selectAnnounceDetailById" resultMap="announceDetails">
         select * from tb_announce_details where id = #{id};
     </select>
-
 </mapper>

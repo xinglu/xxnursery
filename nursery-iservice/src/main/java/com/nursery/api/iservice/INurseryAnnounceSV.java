@@ -43,4 +43,9 @@ public interface INurseryAnnounceSV {
 
     //根据id获取announce的详细页面
     NurseryAnnounceDO getannounceDetailById(String id);
+
+    //获取所有的公告信息
+    List<NurseryAnnounceDO> selectAnnunces() throws SQLException;
+
+    NurseryAnnounceDO getAnnounceById(String announceId) throws SQLException;
 }

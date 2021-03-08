@@ -1,5 +1,6 @@
 package com.nursery.api.iwebm;
 
+import com.nursery.beans.RecruitmentDO;
 import com.nursery.beans.bo.RecruitBO;
 import com.nursery.common.model.response.ResponseResult;
 import io.swagger.annotations.Api;
@@ -16,5 +17,7 @@ public interface ManageRecruitApi {
     @ApiOperation(value = "更新招聘信息",httpMethod = "PUT",response = ModelAndView.class )
     public ResponseResult putRecruitInfo(RecruitBO recruitBO);
 
+    @ApiOperation(value = "发布招聘信息",httpMethod = "POST",response = ResponseResult.class)
+    public ResponseResult postRecruitInfo(RecruitmentDO recruitmentDO);
 
 }

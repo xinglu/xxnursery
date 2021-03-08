@@ -9,12 +9,17 @@ import com.nursery.beans.bo.RecruitBO;
 import com.nursery.beans.code.RecruitCode;
 import com.nursery.common.model.response.ResponseResult;
 import com.nursery.common.web.BaseController;
+import com.nursery.utils.CommonUtil;
+import com.nursery.utils.DateUtils;
 import com.nursery.utils.RSAUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -25,7 +30,7 @@ import java.net.InetAddress;
  * 一级目录 recruit manage | 二级目录 招聘管理
  */
 @Controller
-@RequestMapping("/manage/recruit")
+@RequestMapping("/manage")
 public class ManageRecruitController extends BaseController implements ManageRecruitApi {
     private static final Logger logger = LoggerFactory.getLogger(ManageRecruitController.class);
 
@@ -33,7 +38,7 @@ public class ManageRecruitController extends BaseController implements ManageRec
     private INurseryRecruitInfoSV nurseryRecruitInfoSV;
 
     // 获取公钥
-    @PostMapping("/getPublicKey")
+    @PostMapping("/recruit/getPublicKey")
     @ResponseBody
     public String getPublicKey() {
         String publicKey = RSAUtils.getPublicKey();
@@ -42,7 +47,7 @@ public class ManageRecruitController extends BaseController implements ManageRec
     }
 
     // 模仿前端传来的数据
-    @PostMapping("/getModol")
+    @PostMapping("/recruit/getModol")
     @ResponseBody
     public String getModol() throws Exception {
         String publicKey = RSAUtils.getPublicKey();
@@ -56,11 +61,12 @@ public class ManageRecruitController extends BaseController implements ManageRec
 
     /**
      * 更新招聘内容
+     *
      * @param recruitBO 招聘内容
      * @return 提示信息
      */
 //    @PutMapping("")
-    @RequestMapping(value = "/recruitInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/recruit/recruitInfo", method = RequestMethod.POST)
     @ResponseBody
     @Override
     public ResponseResult putRecruitInfo(RecruitBO recruitBO) {
@@ -76,7 +82,7 @@ public class ManageRecruitController extends BaseController implements ManageRec
         String workPlace = recruitBO.getWorkPlace();
         String type = recruitBO.getType();
         String pay = recruitBO.getPay();
-        logger.info("putRecruitInfo：RecruitBO==> "+recruitBO);
+        logger.info("putRecruitInfo：RecruitBO==> " + recruitBO);
         //判断是否参数有误
         if (StringUtils.isEmpty(recruitBO.getId())) {
             logger.warn("参数不对，没有id值");
@@ -97,11 +103,11 @@ public class ManageRecruitController extends BaseController implements ManageRec
             recruitmentDO.setRequireExperience(label);
             recruitmentDO.setPlace(workPlace);
             recruitmentDO.setPay(pay);
-            logger.warn("putRecruitInfo: RecruitmentDO==>"+JSON.toJSONString(recruitmentDO));
+            logger.warn("putRecruitInfo: RecruitmentDO==>" + JSON.toJSONString(recruitmentDO));
             int i = nurseryRecruitInfoSV.updateRecruitInfo(recruitmentDO);
             //判断更新是否成功
             if (i > 0) {
-                logger.error("putRecruitInfo： 更新成功,影响行数"+i);
+                logger.error("putRecruitInfo： 更新成功,影响行数" + i);
                 responseResult.setCommonCode(RecruitCode.RECRUIT_SQL_SUCCEED);
                 return responseResult;
             }
@@ -109,6 +115,60 @@ public class ManageRecruitController extends BaseController implements ManageRec
             logger.error("putRecruitInfo： 更新失败");
             responseResult.setCommonCode(RecruitCode.RECRUIT_SQL_FAIL);
             return responseResult;
+        }
+        return responseResult;
+    }
+
+    @RequestMapping(value = "/postRecruitment", method = RequestMethod.POST)
+    @ResponseBody
+    @Override
+    public ResponseResult postRecruitInfo(RecruitmentDO recruitmentDO) {
+        ResponseResult responseResult = ResponseResult.SUCCESS();
+        String id = CommonUtil.getUUID();
+        String authorId = recruitmentDO.getAuthorId();  //发布者id
+        String startTime = recruitmentDO.getStarttime();
+        String endTime = recruitmentDO.getEndtime();
+        //封面内容
+        String recruittablename = recruitmentDO.getRecruittablename();//标题
+        String place = recruitmentDO.getPlace();//地点
+        String pay = recruitmentDO.getPay();//薪资情况
+        String requireEduDB = recruitmentDO.getRequireEduDB();//学历要求
+        int manNumbers = recruitmentDO.getManNumbers();//招聘人数
+        String responsibility = recruitmentDO.getResponsibility();//职责描述
+        String require = recruitmentDO.getRequire();//职位要求
+        String treatment = recruitmentDO.getTreatment();//福利待遇
+        String requireExperience = recruitmentDO.getRequireExperience();//工作经验
+        String classify = recruitmentDO.getClassify();//分类信息
+
+        try {
+            /*判断参数问题*/
+            if (StringUtils.isEmpty(recruittablename) || StringUtils.isEmpty(place)
+                    || StringUtils.isEmpty(pay) || StringUtils.isEmpty(requireEduDB)) {
+                logger.warn("请输入正确的参数！！");
+                responseResult.setCommonCode(RecruitCode.RECRUIT_PARAM_NONE);
+                return responseResult;
+            }
+            /*判断id 是否为null*/
+            if (StringUtils.isEmpty(id)) {
+                logger.warn("获取id为空，服务器异常！！");
+                responseResult.setCommonCode(RecruitCode.RECRUIT_GET_ID_ISNULL);
+                return responseResult;
+            }
+            recruitmentDO.setId(id);
+            /*判断是否过期 传过来的日期格式 yyyy-MM-dd HH:ss*/
+            if (StringUtils.isEmpty(startTime) || StringUtils.isEmpty(endTime)
+                    || !DateUtils.verifyOverDue(startTime, endTime)) {
+                logger.warn("日期格式不正确，or开始时间和结束时间前后顺序颠倒！");
+                responseResult.setCommonCode(RecruitCode.RECRUIT_Date_IS_WRONG);
+                return responseResult;
+            }
+            recruitmentDO.setCutoff("no");
+            recruitmentDO.setEnrollFull("no");
+            nurseryRecruitInfoSV.insertRecruitInfo(recruitmentDO);
+            logger.info("招聘信息recruitmentDO "+ JSON.toJSONString(recruitmentDO));
+        }catch (Exception e){
+            logger.error("数据插入失败=>错误信息 : "+e.getMessage());
+            responseResult.setCommonCode(RecruitCode.RECRUIT_SQL_Fail);
         }
         return responseResult;
     }

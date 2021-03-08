@@ -92,9 +92,17 @@
             recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers,
             companyresume,jobdesciption
         ) values (
-            #{id},#{recruittablename},#{classify},#{pay},#{starttime},#{endtime},#{place},#{recruitrequire_experience},
+            #{id},#{recruittablename},#{classify},#{pay},#{starttime},#{endtime},#{place},#{requireExperience},
             #{requireEduDB},#{manNumbers},#{companyresume},#{jobdesciption}
         );
+    </insert>
+    <insert id="insertRecruitInfo" parameterType="com.nursery.beans.RecruitmentDO">
+        insert  into `tb_nursery_recruitinfo`
+            (`id`,`recruittablename`,`recruitclassify`,`recruitpay`,`recruitstarttime`,`recruitendtime`,`recruitplace`,`recruitrequire_experience`,`recruitrequire_edubg`,`recruitnumbers`,`companyresume`,`jobdesciption`,`responsibility`,`require`,`treatment`,`applynum`,`cutoff`,`enrollFull`,`authorId`)
+        values
+            (#{id},#{recruittablename},#{classify},#{pay},#{starttime},#{endtime},#{place},#{requireExperience},#{requireEduDB},#{manNumbers},#{companyresume},#{jobdesciption},#{responsibility},#{require},#{treatment},#{applynum},#{cutoff},#{enrollFull},#{authorId});
+
+
     </insert>
 
     <delete id="delete" parameterType="string">

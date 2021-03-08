@@ -4,16 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nursery.dao.NurseryAnnouncefMapper">
     <resultMap id="announceMap" type="com.nursery.beans.NurseryAnnounceDO">
-        <id column="ANNOUNCEID" jdbcType="INTEGER" property="id"/>
-        <result column="ANNOUNCETABLE" property="table" jdbcType="VARCHAR"/>
-        <result column="ANNOUNCETDATE" property="date" jdbcType="VARCHAR"/>
-        <result column="ANNOUNCETAUTHOR" property="author" jdbcType="VARCHAR"/>
-        <result column="ANNOUNCETCOMPILER" property="etcompiler" jdbcType="VARCHAR"/>
-        <result column="ANNOUNCETTIME" property="time" jdbcType="VARCHAR"/>
-        <result column="ANNOUNCETSIZE" property="size" jdbcType="VARCHAR"/>
-        <result column="ANNOUNCETPATH" property="path" jdbcType="VARCHAR"/>
-        <result column="ANNOUNCEIMG" property="imgPath" jdbcType="VARCHAR"/>
-        <result column="ANNOUNCCONTENT" property="content" jdbcType="VARCHAR"/>
+        <id column="ANNOUNCEID" jdbcType="VARCHAR" property="id"/>
+        <result column="ANNOUNCETABLE" property="table" jdbcType="VARCHAR"/><!--公告标题-->
+        <result column="ANNOUNCETDATE" property="date" jdbcType="VARCHAR"/><!--发布时间-->
+        <result column="ANNOUNCETAUTHOR" property="author" jdbcType="VARCHAR"/><!--作者-->
+        <result column="ANNOUNCETCOMPILER" property="etcompiler" jdbcType="VARCHAR"/><!--编辑者-->
+        <result column="ANNOUNCETTIME" property="time" jdbcType="INTEGER"/><!--次数-->
+        <result column="ANNOUNCETSIZE" property="size" jdbcType="VARCHAR"/><!--大小-->
+        <result column="ANNOUNCETPATH" property="path" jdbcType="VARCHAR"/><!--路径-->
+        <result column="ANNOUNCEIMG" property="imgPath" jdbcType="VARCHAR"/><!--图片路径-->
+        <result column="ANNOUNCCONTENT" property="content" jdbcType="VARCHAR"/><!--缩率内容-->
+    </resultMap>
+    <resultMap id="announceMap2" type="com.nursery.beans.NurseryAnnounceDO">
+        <id column="ANNOUNCEID" jdbcType="VARCHAR" property="id"/>
+        <result column="ANNOUNCETABLE" property="table" jdbcType="VARCHAR"/><!--公告标题-->
+        <result column="ANNOUNCETDATE" property="date" jdbcType="VARCHAR"/><!--发布时间-->
+        <result column="ANNOUNCETAUTHOR" property="author" jdbcType="VARCHAR"/><!--作者-->
+        <result column="ANNOUNCETCOMPILER" property="etcompiler" jdbcType="VARCHAR"/><!--编辑者-->
+        <result column="ANNOUNCETTIME" property="time" jdbcType="INTEGER"/><!--次数-->
+        <result column="ANNOUNCETSIZE" property="size" jdbcType="VARCHAR"/><!--大小-->
+        <result column="ANNOUNCETPATH" property="path" jdbcType="VARCHAR"/><!--路径-->
+        <result column="ANNOUNCEIMG" property="imgPath" jdbcType="VARCHAR"/><!--图片路径-->
+        <result column="ANNOUNCCONTENT" property="content" jdbcType="VARCHAR"/><!--缩率内容-->
+        <association property="announceDetailDO" column="ANNOUNCEID" javaType="com.nursery.beans.NurseryAnnounceDetailDO">
+            <result column="title" property="title" jdbcType="VARCHAR"/><!--公告标题-->
+            <result column="content" property="bigContent" jdbcType="VARCHAR"/><!--文本内容-->
+        </association>
     </resultMap>
     <select id="announceeList" resultMap="announceMap" parameterType="com.nursery.beans.DBDataParam" useCache="true">
         SELECT *
@@ -42,6 +58,12 @@
     </select>
     <select id="selectAnnounceBytimes" resultMap="announceMap">
         SELECT * FROM `tb_announce_202101`  ORDER BY ANNOUNCETTIME DESC
+    </select>
+    <select id="selectAnnounces" resultMap="announceMap">
+        select * from `tb_announce_202101`;
+    </select>
+    <select id="selectAnnounceById" resultMap="announceMap2">
+        SELECT a.*,b.* FROM tb_announce_202101 a , tb_announce_details b WHERE a.`ANNOUNCEID`=b.`id`=#{value};
     </select>
 
     <insert id="insert" parameterType="com.nursery.beans.NurseryAnnounceDO">

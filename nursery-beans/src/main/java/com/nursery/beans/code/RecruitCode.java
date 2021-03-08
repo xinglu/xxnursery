@@ -12,6 +12,7 @@ import lombok.ToString;
 @ToString
 public enum RecruitCode implements ResultCode {
 
+    RECRUIT_SQL_Fail(false,23000,"数据库插入失败！"),
     RECRUIT_SQL_SUCCEED(true,23001,"招聘信息更新成功！"),
     RECRUIT_SQL_FAIL(false,23002,"招聘信息操作数据库错误！"),
     RECRUIT_PARAM_NONE(false,23003,"请传入正确的参数信息！"),
@@ -19,7 +20,9 @@ public enum RecruitCode implements ResultCode {
     RECRUIT_VERIFYCODE_NONE(false,23005,"请输入验证码！"),
     RECRUIT_ACCOUNT_NOTEXISTS(false,23006,"账号不存在！"),
     RECRUIT_CREDENTIAL_ERROR(false,23007,"账号或密码错误！"),
-    RECRUIT_LOGIN_ERROR(false,23008,"登陆过程出现异常请尝试重新操作！");
+    RECRUIT_LOGIN_ERROR(false,23008,"登陆过程出现异常请尝试重新操作！"),
+    RECRUIT_Date_IS_WRONG(false,23009,"参数时间不正确，请再次确认后请求！"),
+    RECRUIT_GET_ID_ISNULL(false,23010,"获取id失败！服务器异常");
 
     boolean success;
 

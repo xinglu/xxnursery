@@ -28,5 +28,5 @@ public class NurseryAnnounceDO {
     private String tableflag;//
     private String title;   //表名
     private String bigContent; // 文本内容
-
+    private NurseryAnnounceDetailDO announceDetailDO;
 }

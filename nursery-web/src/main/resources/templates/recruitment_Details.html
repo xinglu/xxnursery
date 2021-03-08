@@ -58,7 +58,7 @@
                     <p th:text="*{cutoff=='yes'?'招聘进行时':'招聘已过期，请选择其他招聘信息'}">招聘进行时</p>
                     <div class="flex">
                         <h2 style="margin: 0;"><th:block th:text="*{recruittablename}">招聘标题！！！！</th:block>&nbsp;&nbsp;<strong style="color: #b88d0c"><th:block th:text="*{pay}"></th:block>月</strong></h2>
-                        <button>沟通. <th:block th:text="*{author}"></th:block></button>
+                        <button>沟通. <th:block th:text="*{authorId}"></th:block></button>
                     </div>
                     <div style="height: 10px"></div>
                     <p><span th:text="*{place}">地点</span>&nbsp;.&nbsp;<span>经验</span>&nbsp;.&nbsp;<span th:text="*{requireEduDB}">学历</span></p>

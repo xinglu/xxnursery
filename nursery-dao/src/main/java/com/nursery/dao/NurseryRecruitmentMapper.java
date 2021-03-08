@@ -48,4 +48,6 @@ public interface NurseryRecruitmentMapper {
     //更加最新时间排序获取职位
     List<RecruitmentDO> selectRecruitByNewDateAndDesc() throws SQLException;
 
+    //查询一条数据
+    void insertRecruitInfo(RecruitmentDO recruitmentDO);
 }

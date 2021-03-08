@@ -36,4 +36,8 @@ public interface NurseryAnnouncefMapper {
 
     List<NurseryAnnounceDO> selectAnnounceBytimes() throws SQLException;
 
+    //所有
+    List<NurseryAnnounceDO> selectAnnounces() throws SQLException;
+
+    NurseryAnnounceDO selectAnnounceById(String announceId);
 }

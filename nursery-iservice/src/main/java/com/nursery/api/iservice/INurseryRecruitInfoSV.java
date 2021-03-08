@@ -68,4 +68,7 @@ public interface INurseryRecruitInfoSV {
 
     //根据类型名称获取
     List<RecruitmentDO> getRecruitByTypeId(String typeId) throws SQLException;
+
+    //插入一行招聘信息
+    void insertRecruitInfo(RecruitmentDO recruitmentDO);
 }

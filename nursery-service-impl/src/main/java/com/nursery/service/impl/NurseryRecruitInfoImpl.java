@@ -105,4 +105,9 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
         logger.info("热门职位:" + JSONObject.toJSONString(hotDate));
         return hotDate;
     }
+
+    @Override
+    public void insertRecruitInfo(RecruitmentDO recruitmentDO) {
+        mapper.insertRecruitInfo(recruitmentDO);
+    }
 }

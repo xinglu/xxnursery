@@ -14,10 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Create with IDEA
  * author:MeiShiQiang
- * Date:2021/1/5
- * Time:15:20
  */
 @Service
 public class NurseryAnnounceImpl implements INurseryAnnounceSV {
@@ -90,5 +87,15 @@ public class NurseryAnnounceImpl implements INurseryAnnounceSV {
     @Override
     public NurseryAnnounceDO getannounceDetailById(String id) {
         return announceDetailMapper.selectAnnounceDetailById(id);
+    }
+
+    @Override
+    public List<NurseryAnnounceDO> selectAnnunces() throws SQLException {
+        return nurseryAnnounceMapper.selectAnnounces();
+    }
+
+    @Override
+    public NurseryAnnounceDO getAnnounceById(String announceId) throws SQLException{
+        return nurseryAnnounceMapper.selectAnnounceById(announceId);
     }
 }
