@@ -48,4 +48,7 @@ public interface INurseryAnnounceSV {
     List<NurseryAnnounceDO> selectAnnunces() throws SQLException;
 
     NurseryAnnounceDO getAnnounceById(String announceId) throws SQLException;
+
+    //根据id删除
+    void deleteAnnounceById(String id) throws SQLException;
 }

@@ -40,4 +40,6 @@ public interface NurseryAnnouncefMapper {
     List<NurseryAnnounceDO> selectAnnounces() throws SQLException;
 
     NurseryAnnounceDO selectAnnounceById(String announceId);
+
+    Integer deleteAnnounceById(String id) throws SQLException;
 }

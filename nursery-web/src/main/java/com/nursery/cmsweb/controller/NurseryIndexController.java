@@ -142,7 +142,7 @@ public class NurseryIndexController extends BaseController implements NurseryInd
         try {
             nurseryAnnounceDOList = nurseryAnnounceSV.getAnnounceeList(dbDataParam);
             for (NurseryAnnounceDO nurseryAnnounceDO : nurseryAnnounceDOList) {
-                Integer id = nurseryAnnounceDO.getId();
+                String id = nurseryAnnounceDO.getId();
                 String author = nurseryAnnounceDO.getAuthor();
                 String etcompiler = nurseryAnnounceDO.getEtcompiler();
                 String date = nurseryAnnounceDO.getDate();
@@ -165,7 +165,7 @@ public class NurseryIndexController extends BaseController implements NurseryInd
     @PutMapping("/insertAnnounce")
     public void insertAnnounce() {
         String nowDate = DateUtils.getNowDate();
-        String tableflag = CommonString.TB_ANNOUNCE.concat(nowDate);
+        String tableflag = CommonString.TB_ANNOUNCE.concat("202101");
         NurseryAnnounceDO nurseryAnnounceDO = null;
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
@@ -179,6 +179,7 @@ public class NurseryIndexController extends BaseController implements NurseryInd
             nurseryAnnounceDO.setTime(ran_um + "");
             nurseryAnnounceDO.setDate(DateUtils.getNowDate("yyyy-MM-dd HH:mm"));
             nurseryAnnounceDO.setTableflag(tableflag);
+            nurseryAnnounceDO.setId(CommonUtil.getUUID());
             System.out.println(nurseryAnnounceDO);
             try {
                 mapper.insert(nurseryAnnounceDO);

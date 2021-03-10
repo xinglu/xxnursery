@@ -39,13 +39,15 @@
     <select id="selectAnnounceByNewDate" resultMap="announceMap">
         SELECT *
         FROM tb_announce_202101 b
-        WHERE b.`ANNOUNCETDATE` = (SELECT MAX(a.`ANNOUNCETDATE`) FROM tb_announce_202101 a);
+        WHERE b.`ANNOUNCETDATE` = (SELECT MAX(a.`ANNOUNCETDATE`) FROM tb_announce_202101 a)
+        LIMIT 1;
     </select>
 
     <select id="selectAnnounceBytime" resultMap="announceMap">
         SELECT *
         FROM tb_announce_202101 b
-        WHERE b.`ANNOUNCETTIME` = (SELECT MAX(a.`ANNOUNCETTIME`) FROM tb_announce_202101 a);
+        WHERE b.`ANNOUNCETTIME` = (SELECT MAX(a.`ANNOUNCETTIME`) FROM tb_announce_202101 a)
+        LIMIT 1;
     </select>
     <select id="selectRecommendAnnounce" resultMap="announceMap" parameterType="integer">
         SELECT *
@@ -67,14 +69,14 @@
     </select>
 
     <insert id="insert" parameterType="com.nursery.beans.NurseryAnnounceDO">
-        INSERT INTO ${tableflag} (ANNOUNCETABLE,
+        INSERT INTO ${tableflag} (ANNOUNCEID,ANNOUNCETABLE,
                                   ANNOUNCETDATE,
                                   ANNOUNCETAUTHOR,
                                   ANNOUNCETCOMPILER,
                                   ANNOUNCETTIME,
                                   ANNOUNCETSIZE,
                                   ANNOUNCETPATH)
-        values (#{table}, #{date}, #{author}, #{etcompiler}, #{time}, #{size}, #{path})
+        values (#{id},#{table}, #{date}, #{author}, #{etcompiler}, #{time}, #{size}, #{path})
     </insert>
 
     <update id="update" parameterType="com.nursery.beans.NurseryAnnounceDO">
@@ -83,5 +85,9 @@
 
     <delete id="delete" parameterType="com.nursery.beans.NurseryAnnounceDO">
 
+    </delete>
+
+    <delete id="deleteAnnounceById">
+        delete from tb_announce_202101 where ANNOUNCEID = #{id};
     </delete>
 </mapper>

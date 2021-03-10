@@ -79,6 +79,17 @@ public class DateUtils {
     }
 
 
+    public static Date parse(String date,String parse) {
+        sdf = new SimpleDateFormat(parse);
+        try {
+            return sdf.parse(date);
+        } catch (ParseException e) {
+            logger.error("转换失败,检查参数信息");
+        }
+        return null;
+    }
+
+
     //判断时间是否过期
     public static boolean verifyOverDue(String startTime, String endTime) {
         try {
@@ -95,5 +106,20 @@ public class DateUtils {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 时间以季度分割  (1,2,3,4) 对应 {'0-3','3-6','6-9','9-12'}
+     * @param date 当前时间
+     * @return 1,2,3,4
+     */
+    public static String getYearQuarter(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        String yearMonth = simpleDateFormat.format(date);
+        String year = yearMonth.substring(0, 4);
+        String month = yearMonth.substring(5, 7);
+        int intMonth = Integer.parseInt(month);
+        int quarter = intMonth % 3 == 0 ? intMonth/3 : intMonth/3+1;
+        return year+"_"+quarter;
     }
 }

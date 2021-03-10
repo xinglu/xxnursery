@@ -71,7 +71,7 @@ public class NurseryAnnounceImpl implements INurseryAnnounceSV {
 
     @Override
     public List<NurseryAnnounceDO> getNewAnnounceDO() throws SQLException {
-        return  nurseryAnnounceMapper.selectAnnounceByNewDates();
+        return nurseryAnnounceMapper.selectAnnounceByNewDates();
     }
 
     @Override
@@ -95,7 +95,14 @@ public class NurseryAnnounceImpl implements INurseryAnnounceSV {
     }
 
     @Override
-    public NurseryAnnounceDO getAnnounceById(String announceId) throws SQLException{
+    public NurseryAnnounceDO getAnnounceById(String announceId) throws SQLException {
         return nurseryAnnounceMapper.selectAnnounceById(announceId);
+    }
+
+    @Override
+    public void deleteAnnounceById(String id) throws SQLException {
+        int x = announceDetailMapper.deleteAnnounceDetailById(id);
+        int y = nurseryAnnounceMapper.deleteAnnounceById(id);
+
     }
 }

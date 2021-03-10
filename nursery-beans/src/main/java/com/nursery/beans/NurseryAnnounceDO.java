@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class NurseryAnnounceDO {
 
-    private Integer id;
+    private String id;
     private String table;//公告标题
     private String date;//公告发布时间
     private String date_YYYYMMDD;//公告发布时间

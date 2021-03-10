@@ -297,7 +297,8 @@
                     </a>
                     <ul class="sub">
                         <li><a th:href="@{/manage/recruit/pull?erId=1}">发布招聘</a></li>
-                        <li class="active"><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
+                        <li class="active"><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a>
+                        </li>
                         <li><a href="" th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
                         <li><a href="recruitInfoPage.html">招聘详情</a></li>
                     </ul>
@@ -383,7 +384,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeX" th:each="demo,stat:${announcedata}" th:object="${demo}">
+                                    <tr class="gradeX" th:each="demo,stat:${announcedata}" th:object="${demo}" th:id="${demo.id}">
                                         <td th:text="*{table}==null?'null':*{table}"></td>
                                         <td th:text="*{author}==null?'null':*{author}"></td>
                                         <td th:text="*{date}==null?'null':*{date}"></td>
@@ -392,8 +393,8 @@
                                             <div class="pull-left hidden-phone">
                                                 <a th:href="'/manage/announce/detail/1/' + ${demo.id}+'.html'"
                                                    class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                                <a th:href="'/manage/announce/delete/' + ${demo.id}"
-                                                   class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                                <a class="btn btn-danger btn-xs" th:onclick="deleteById([[${demo.id}]]);"><i
+                                                        class="fa fa-trash-o "></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -448,6 +449,18 @@
 <script src="/js/dynamic_table_init.js"></script>
 <!--common script for all pages-->
 <script src="/js/common-scripts.js"></script>
-
+<script>
+    function deleteById(id) {
+        id = id;
+        if (confirm("确定要删除通告？")){
+            $.get("/manage/announce/delete/1/"+id, function (data) {
+                alert(data.message);
+                if (data.success){
+                    $('#'+id).remove();
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>

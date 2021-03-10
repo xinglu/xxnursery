@@ -13,6 +13,12 @@
         <result column="startDate" property="date_YYYYMMDD" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--根据id删除-->
+    <delete id="deleteAnnounceDetailById">
+        delete from tb_announce_details where id = #{id};
+    </delete>
+
+    <!--根据id查询-->
     <select id="selectAnnounceDetailById" resultMap="announceDetails">
         select * from tb_announce_details where id = #{id};
     </select>

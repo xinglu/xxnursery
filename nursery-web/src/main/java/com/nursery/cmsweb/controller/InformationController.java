@@ -46,14 +46,14 @@ public class InformationController extends BaseController implements Information
         return modelAndView;
     }
 
-    @RequestMapping(value = "/zuixin/{page}.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/zuixin/{page}.html", method = RequestMethod.GET)
     @Override
-    public ModelAndView visitNewInformation(@PathVariable(value = "page",required = true) String page,String size,ModelAndView modelAndView) {
+    public ModelAndView visitNewInformation(@PathVariable(value = "page", required = true) String page, String size, ModelAndView modelAndView) {
         int ipage = 0;
         int isize = 8;
         if (!StringUtils.isEmpty(page)) ipage = Integer.parseInt(page);
         if (!StringUtils.isEmpty(size)) isize = Integer.parseInt(size);
-        PageHelper.startPage(ipage,isize);
+        PageHelper.startPage(ipage, isize);
         /*获取公告 最新*/
         List<NurseryAnnounceDO> announceDOList = null;
         try {
@@ -63,18 +63,18 @@ public class InformationController extends BaseController implements Information
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if(ipage==1) modelAndView.setViewName("information");
+        if (ipage == 1) modelAndView.setViewName("information");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/zuixin/{param}/{page}.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/zuixin/{param}/{page}.html", method = RequestMethod.GET)
     @ResponseBody
     @Override
-    public PageInfo<NurseryAnnounceDO> visitNewInformation(@PathVariable("page") String page,@PathVariable("param") String param) {
+    public PageInfo<NurseryAnnounceDO> visitNewInformation(@PathVariable("page") String page, @PathVariable("param") String param) {
         int ipage = 0;
         int isize = 8;
         if (!StringUtils.isEmpty(page)) ipage = Integer.parseInt(page);
-        PageHelper.startPage(ipage,isize);
+        PageHelper.startPage(ipage, isize);
         List<NurseryAnnounceDO> announceDOList = null;
         PageInfo<NurseryAnnounceDO> pageInfo = null;
         try {
@@ -86,14 +86,14 @@ public class InformationController extends BaseController implements Information
         return pageInfo;
     }
 
-    @RequestMapping(value = "/remen/{param}/{page}.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/remen/{param}/{page}.html", method = RequestMethod.GET)
     @ResponseBody
     @Override
-    public PageInfo<NurseryAnnounceDO> visitHotInformation(@PathVariable("page") String page,@PathVariable("param") String param) {
+    public PageInfo<NurseryAnnounceDO> visitHotInformation(@PathVariable("page") String page, @PathVariable("param") String param) {
         int ipage = 0;
         int isize = 8;
         if (!StringUtils.isEmpty(page)) ipage = Integer.parseInt(page);
-        PageHelper.startPage(ipage,isize);
+        PageHelper.startPage(ipage, isize);
         List<NurseryAnnounceDO> announceDOList = null;
         PageInfo<NurseryAnnounceDO> pageInfo = null;
         try {
@@ -105,14 +105,14 @@ public class InformationController extends BaseController implements Information
         return pageInfo;
     }
 
-    @RequestMapping(value = "/remen/{page}.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/remen/{page}.html", method = RequestMethod.GET)
     @Override
-    public ModelAndView visitHotInformation(@PathVariable(value = "page",required = true) String page,String size,ModelAndView modelAndView) {
+    public ModelAndView visitHotInformation(@PathVariable(value = "page", required = true) String page, String size, ModelAndView modelAndView) {
         int ipage = 0;
         int isize = 8;
         if (!StringUtils.isEmpty(page)) ipage = Integer.parseInt(page);
         if (!StringUtils.isEmpty(size)) isize = Integer.parseInt(size);
-        PageHelper.startPage(ipage,isize);
+        PageHelper.startPage(ipage, isize);
         /*获取公告 最热*/
         List<NurseryAnnounceDO> announceDOList = null;
         try {
@@ -128,7 +128,7 @@ public class InformationController extends BaseController implements Information
     }
 
 
-    @RequestMapping(value = "/tuijian.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/tuijian.html", method = RequestMethod.GET)
     @Override
     public ModelAndView visitRecommendInformation(ModelAndView modelAndView) {
         /*获取公告 推荐*/
@@ -143,11 +143,11 @@ public class InformationController extends BaseController implements Information
         return modelAndView;
     }
 
-    @RequestMapping(value = "/djxq/{id}.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/djxq/{id}.html", method = RequestMethod.GET)
     @Override
-    public ModelAndView visitOneInformation(@PathVariable(value = "id",required = true) String id, ModelAndView modelAndView) {
+    public ModelAndView visitOneInformation(@PathVariable(value = "id", required = true) String id, ModelAndView modelAndView) {
         NurseryAnnounceDO announceDetail = announceSV.getannounceDetailById(id);
-        modelAndView.addObject("announceDetail",announceDetail);
+        modelAndView.addObject("announceDetail", announceDetail);
         modelAndView.setViewName("informationDetail");
         return modelAndView;
     }

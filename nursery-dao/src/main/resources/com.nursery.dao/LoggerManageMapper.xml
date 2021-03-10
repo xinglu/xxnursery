@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nursery.dao.LoggerManageMapper">
+    <resultMap id="logMap1" type="com.nursery.beans.LogDO">
+        <id column="ID" property="logId" jdbcType="VARCHAR"/>
+        <result column="CLASSIFY" property="classify" jdbcType="VARCHAR"/>
+        <result column="CAOZUOTYPE" property="type" jdbcType="VARCHAR"/>
+        <result column="CAOZUODATE" property="date" jdbcType="VARCHAR"/>
+        <result column="ADMINERID" property="erId" jdbcType="VARCHAR"/>
+        <result column="SQLID" property="id" jdbcType="VARCHAR"/>
+        <result column="DOTHING" property="dothing" jdbcType="VARCHAR"/>
+    </resultMap>
+
+   <sql id="cloumn_list">
+        ID,CLASSIFY,CAOZUOTYPE,CAOZUODATE,ADMINERID,SQLID,DOTHING
+    </sql>
+
+    <insert id="insertLog">
+        INSERT INTO tb_log_manage_${tableFlag} (ID,CLASSIFY,CAOZUOTYPE,CAOZUODATE,ADMINERID,SQLID,DOTHING) VALUE (#{logId},#{classify},#{type},#{date},#{erId},#{id},#{dothing})
+    </insert>
+
+</mapper>
