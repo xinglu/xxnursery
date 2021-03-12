@@ -1,9 +1,11 @@
 package com.nursery.api.iwebm;
 
 import com.alibaba.fastjson.JSONObject;
+import com.nursery.beans.NurseryAnnounceDO;
 import com.nursery.common.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -17,6 +19,15 @@ public interface ManageAnnunceApi {
     @ApiOperation(value = "删除单个", response = ResponseResult.class, code = 200)
     public ResponseResult deleteAnnounce(String erid, String id);
 
-    @ApiOperation(value = "上传图片")
+    @ApiOperation(value = "markdown上传图片")
     public JSONObject editormdPic(MultipartFile file);
+
+    @ApiOperation(value = "上传封面图片")
+    public JSONObject uploadPicC(@RequestParam(value = "coverPic", required = true) MultipartFile file);
+
+    @ApiOperation(value = "发布招聘")
+    public ResponseResult pullAnnounce(NurseryAnnounceDO nurseryAnnounceDO);
+
+    @ApiOperation(value = "更新招聘")
+    public ResponseResult updateAnnounce(NurseryAnnounceDO nurseryAnnounceDO);
 }

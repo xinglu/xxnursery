@@ -23,7 +23,7 @@ public class NurseryAnnounceDO {
     private String time;//浏览次数
     private String size;//公告总大小
     private String path;//路径
-    private String imgPath;//表名
+    private String imgPath;//封面路径
     private String content;//缩率内容  smallContent
     private String tableflag;//
     private String title;   //表名

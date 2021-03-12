@@ -26,7 +26,8 @@
         <result column="ANNOUNCETPATH" property="path" jdbcType="VARCHAR"/><!--路径-->
         <result column="ANNOUNCEIMG" property="imgPath" jdbcType="VARCHAR"/><!--图片路径-->
         <result column="ANNOUNCCONTENT" property="content" jdbcType="VARCHAR"/><!--缩率内容-->
-        <association property="announceDetailDO" column="ANNOUNCEID" javaType="com.nursery.beans.NurseryAnnounceDetailDO">
+        <association property="announceDetailDO" column="ANNOUNCEID"
+                     javaType="com.nursery.beans.NurseryAnnounceDetailDO">
             <result column="title" property="title" jdbcType="VARCHAR"/><!--公告标题-->
             <result column="content" property="bigContent" jdbcType="VARCHAR"/><!--文本内容-->
         </association>
@@ -39,15 +40,13 @@
     <select id="selectAnnounceByNewDate" resultMap="announceMap">
         SELECT *
         FROM tb_announce_202101 b
-        WHERE b.`ANNOUNCETDATE` = (SELECT MAX(a.`ANNOUNCETDATE`) FROM tb_announce_202101 a)
-        LIMIT 1;
+        WHERE b.`ANNOUNCETDATE` = (SELECT MAX(a.`ANNOUNCETDATE`) FROM tb_announce_202101 a) LIMIT 1;
     </select>
 
     <select id="selectAnnounceBytime" resultMap="announceMap">
         SELECT *
         FROM tb_announce_202101 b
-        WHERE b.`ANNOUNCETTIME` = (SELECT MAX(a.`ANNOUNCETTIME`) FROM tb_announce_202101 a)
-        LIMIT 1;
+        WHERE b.`ANNOUNCETTIME` = (SELECT MAX(a.`ANNOUNCETTIME`) FROM tb_announce_202101 a) LIMIT 1;
     </select>
     <select id="selectRecommendAnnounce" resultMap="announceMap" parameterType="integer">
         SELECT *
@@ -56,31 +55,57 @@
         ORDER BY ANNOUNCEID LIMIT #{value}
     </select>
     <select id="selectAnnounceByNewDates" resultMap="announceMap">
-        SELECT * FROM `tb_announce_202101`  ORDER BY ANNOUNCETDATE DESC
+        SELECT *
+        FROM `tb_announce_202101`
+        ORDER BY ANNOUNCETDATE DESC
     </select>
     <select id="selectAnnounceBytimes" resultMap="announceMap">
-        SELECT * FROM `tb_announce_202101`  ORDER BY ANNOUNCETTIME DESC
+        SELECT *
+        FROM `tb_announce_202101`
+        ORDER BY ANNOUNCETTIME DESC
     </select>
     <select id="selectAnnounces" resultMap="announceMap">
-        select * from `tb_announce_202101`;
+        select *
+        from `tb_announce_202101`;
     </select>
+
     <select id="selectAnnounceById" resultMap="announceMap2">
-        SELECT a.*,b.* FROM tb_announce_202101 a , tb_announce_details b WHERE a.`ANNOUNCEID`=b.`id`=#{value};
+        SELECT a.*, b.`content`, b.`title`
+        FROM tb_announce_202101 a
+                 INNER JOIN tb_announce_details b ON a.`ANNOUNCEID` = b.`id`
+        HAVING a.`ANNOUNCEID` = #{value};
+    </select>
+
+    <select id="selectAnnouncEtcompilerById" resultType="java.lang.String">
+        select ANNOUNCETCOMPILER
+        from tb_announce_202101
+        where ANNOUNCEID = #{id};
     </select>
 
     <insert id="insert" parameterType="com.nursery.beans.NurseryAnnounceDO">
-        INSERT INTO ${tableflag} (ANNOUNCEID,ANNOUNCETABLE,
+        INSERT INTO ${tableflag} (ANNOUNCEID,
+                                  ANNOUNCETABLE,
                                   ANNOUNCETDATE,
                                   ANNOUNCETAUTHOR,
                                   ANNOUNCETCOMPILER,
                                   ANNOUNCETTIME,
                                   ANNOUNCETSIZE,
-                                  ANNOUNCETPATH)
-        values (#{id},#{table}, #{date}, #{author}, #{etcompiler}, #{time}, #{size}, #{path})
+                                  ANNOUNCETPATH,
+                                  ANNOUNCEIMG,
+                                  ANNOUNCCONTENT)
+        values (#{id}, #{table}, #{date}, #{author}, #{etcompiler}, #{time}, #{size}, #{path}, #{imgPath}, #{content});
     </insert>
 
     <update id="update" parameterType="com.nursery.beans.NurseryAnnounceDO">
-
+        update tb_announce_202101
+        <trim prefix="set" suffixOverrides=",">
+            <if test="table!=null">ANNOUNCETABLE=#{table},</if>
+            <if test="etcompiler!=null">ANNOUNCETCOMPILER=#{etcompiler},</if>
+            <if test="size!=null">ANNOUNCETSIZE=#{size},</if>
+            <if test="imgPath!=null">ANNOUNCEIMG=#{imgPath},</if>
+            <if test="content!=null">ANNOUNCCONTENT=#{content},</if>
+        </trim>
+        where ANNOUNCEID = #{id};
     </update>
 
     <delete id="delete" parameterType="com.nursery.beans.NurseryAnnounceDO">
@@ -88,6 +113,8 @@
     </delete>
 
     <delete id="deleteAnnounceById">
-        delete from tb_announce_202101 where ANNOUNCEID = #{id};
+        delete
+        from tb_announce_202101
+        where ANNOUNCEID = #{id};
     </delete>
 </mapper>

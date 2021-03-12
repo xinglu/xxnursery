@@ -51,4 +51,10 @@ public interface INurseryAnnounceSV {
 
     //根据id删除
     void deleteAnnounceById(String id) throws SQLException;
+
+    //发布公告
+    void insertAnnounce(NurseryAnnounceDO nurseryAnnounceDO) throws SQLException;
+
+    //更新
+    void updateAnnounce(NurseryAnnounceDO nurseryAnnounceDO) throws SQLException;
 }

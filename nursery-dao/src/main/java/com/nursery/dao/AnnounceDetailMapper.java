@@ -1,6 +1,7 @@
 package com.nursery.dao;
 
 import com.nursery.beans.NurseryAnnounceDO;
+import com.nursery.beans.NurseryAnnounceDetailDO;
 
 import java.sql.SQLException;
 
@@ -14,4 +15,8 @@ public interface AnnounceDetailMapper {
     NurseryAnnounceDO selectAnnounceDetailById(String id);
 
     Integer deleteAnnounceDetailById(String id) throws SQLException;
+
+    void insert(NurseryAnnounceDetailDO announceDetailDO) throws SQLException;
+
+    void update(NurseryAnnounceDetailDO detailDO) throws SQLException;
 }

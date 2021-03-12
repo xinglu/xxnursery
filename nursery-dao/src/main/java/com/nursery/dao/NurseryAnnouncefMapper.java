@@ -18,7 +18,7 @@ public interface NurseryAnnouncefMapper {
     void insert(NurseryAnnounceDO nurseryAnnounceDO) throws Exception;
 
     //更新
-    int update(DBDataParam dataParam) throws SQLException;
+    int update(NurseryAnnounceDO nurseryAnnounceDO) throws SQLException;
 
     //删除
     int delete(DBDataParam dataParam) throws SQLException;
@@ -42,4 +42,6 @@ public interface NurseryAnnouncefMapper {
     NurseryAnnounceDO selectAnnounceById(String announceId);
 
     Integer deleteAnnounceById(String id) throws SQLException;
+
+    String selectAnnouncEtcompilerById(String id) throws SQLException;
 }

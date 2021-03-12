@@ -3,23 +3,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nursery.dao.AnnounceDetailMapper">
-
     <!--tb_announce_details-->
-    <resultMap id="announceDetails" type="com.nursery.beans.NurseryAnnounceDO">
+    <resultMap id="announceDetails" type="com.nursery.beans.NurseryAnnounceDetailDO">
         <id column="id" property="id" jdbcType="VARCHAR"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="author" property="author" jdbcType="VARCHAR"/>
         <result column="content" property="bigContent" jdbcType="VARCHAR"/>
-        <result column="startDate" property="date_YYYYMMDD" jdbcType="VARCHAR"/>
+        <result column="startDate" property="startDate" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!--插入-->
+    <insert id="insert">
+        insert into tb_announce_details (id, title, author, content, startDate)
+            value (#{id},#{title},#{author},#{bigContent},#{startDate});
+    </insert>
+    <update id="update">
+        update tb_announce_details
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title!=null">title=#{title},</if>
+            <if test="bigContent!=null">content=#{bigContent},</if>
+        </trim>
+        where id = #{id};
+    </update>
 
     <!--根据id删除-->
     <delete id="deleteAnnounceDetailById">
-        delete from tb_announce_details where id = #{id};
+        delete
+        from tb_announce_details
+        where id = #{id};
     </delete>
 
     <!--根据id查询-->
     <select id="selectAnnounceDetailById" resultMap="announceDetails">
-        select * from tb_announce_details where id = #{id};
+        select *
+        from tb_announce_details
+        where id = #{id};
     </select>
 </mapper>
