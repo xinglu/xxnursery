@@ -25,17 +25,21 @@ public class DateUtils {
     public static final DateTimeFormatter FORMATTER_YYYY_MM_DD = DateTimeFormatter.ofPattern(YYYY_MM_DD);
     public static final DateTimeFormatter FORMATTER_YYYYMMDD = DateTimeFormatter.ofPattern(YYYYMMDD);
     public static final DateTimeFormatter FORMATTER_YYYYMMDDHHMMSS = DateTimeFormatter.ofPattern(YYYYMMDDHHMMSS);
+
     public static String getHH() {
         return FORMATTER_HH.format(LocalDateTime.now());
     }
+
     public static String getYYYYMMDD() {
         return FORMATTER_YYYY_MM_DD.format(LocalDateTime.now());
     }
+
     public static String YYYYMMDDHHMMSS() {
         return FORMATTER_YYYYMMDDHHMMSS.format(LocalDateTime.now());
     }
+
     //当前月份
-    public static String getNowDate(){
+    public static String getNowDate() {
         sdf = new SimpleDateFormat(YYYYMM);
         return sdf.format(new Date());
     }
@@ -50,7 +54,7 @@ public class DateUtils {
         sdf = new SimpleDateFormat(YYYYMMDDHHMMSS);
         Date birthdayDate = sdf.parse(date);
         Calendar calendar = Calendar.getInstance();
-        if (calendar.before(birthdayDate)){
+        if (calendar.before(birthdayDate)) {
             return ageStr;
         }
         int yearNow = calendar.get(Calendar.YEAR);
@@ -62,24 +66,28 @@ public class DateUtils {
         int monthBirthday = calendar.get(Calendar.MONTH);
         int dayBirthday = calendar.get(Calendar.DAY_OF_MONTH);
         int age = yearNow - yearBirthday;
-        if (monthNow <= monthBirthday){
-            if (monthNow == dayBirthday){
+        if (monthNow <= monthBirthday) {
+            if (monthNow == dayBirthday) {
                 if (dayNow < monthBirthday) age--;
-            }else {
+            } else {
                 age--;
             }
         }
-        ageStr = age+"";
+        ageStr = age + "";
         return ageStr;
     }
 
     public static Date parseYYYYMMDDHHMM(String date) throws ParseException {
-        sdf = new SimpleDateFormat(YYYYMMDDHHMM1);
-        return sdf.parse(date);
+        try {
+            sdf = new SimpleDateFormat(YYYYMMDDHHMM1);
+            return sdf.parse(date);
+        } catch (ParseException e) {
+            sdf = new SimpleDateFormat(YYYYMMDDHHMM);
+            return sdf.parse(date);
+        }
     }
 
-
-    public static Date parse(String date,String parse) {
+    public static Date parse(String date, String parse) {
         sdf = new SimpleDateFormat(parse);
         try {
             return sdf.parse(date);
@@ -97,11 +105,11 @@ public class DateUtils {
             Date startDate = sdf.parse(startTime);
             Date endDate = sdf.parse(endTime);
             int i = endDate.compareTo(startDate);
-            if (i <= 0){
+            if (i <= 0) {
                 logger.info("结束时间不得小于等于开始时间");
                 return false;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.info("时间格式不正确！！！");
             return false;
         }
@@ -110,8 +118,9 @@ public class DateUtils {
 
     /**
      * 时间以季度分割  (1,2,3,4) 对应 {'0-3','3-6','6-9','9-12'}
+     *
      * @param date 当前时间
-     * @return 1,2,3,4
+     * @return 1, 2, 3, 4
      */
     public static String getYearQuarter(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
@@ -119,7 +128,7 @@ public class DateUtils {
         String year = yearMonth.substring(0, 4);
         String month = yearMonth.substring(5, 7);
         int intMonth = Integer.parseInt(month);
-        int quarter = intMonth % 3 == 0 ? intMonth/3 : intMonth/3+1;
-        return year+"_"+quarter;
+        int quarter = intMonth % 3 == 0 ? intMonth / 3 : intMonth / 3 + 1;
+        return year + "_" + quarter;
     }
 }

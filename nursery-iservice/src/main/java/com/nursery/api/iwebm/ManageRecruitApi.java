@@ -5,6 +5,7 @@ import com.nursery.beans.bo.RecruitBO;
 import com.nursery.common.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -18,6 +19,6 @@ public interface ManageRecruitApi {
     public ResponseResult putRecruitInfo(RecruitBO recruitBO);
 
     @ApiOperation(value = "发布招聘信息",httpMethod = "POST",response = ResponseResult.class)
-    public ResponseResult postRecruitInfo(RecruitmentDO recruitmentDO);
+    public ResponseResult postRecruitInfo(RecruitmentDO recruitmentDO, @PathVariable("erId")String erId);
 
 }

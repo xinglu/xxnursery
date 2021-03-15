@@ -3,26 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <meta name="author" content="meishiqiang">
     <link rel="shortcut icon" href="/img/favicon.png">
-
     <title>招聘详情页面</title>
-
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
     <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
-
     <!--right slidebar-->
     <link href="/css/slidebars.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet"/>
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
     <script src="/js/html5shiv.js"></script>
@@ -31,7 +24,6 @@
 </head>
 
 <body>
-
 <section id="container" class="">
     <!--头部 start-->
     <header class="header white-bg">
@@ -300,8 +292,9 @@
                         <span>招聘中心</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
-                        <li><a href="" th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
+                        <li><a th:href="@{/manage/recruit/pull?erId=1}">发布招聘</a></li>
+                        <li><a th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
+                        <li><a th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
                         <li class="active"><a href="#">招聘详情</a></li>
                     </ul>
                 </li>
@@ -315,13 +308,20 @@
                         <li><a th:href="@{/manage/consumer/visit}">显示</a></li>
                         <li><a href="buttons.html">Buttons</a></li>
                         <li><a href="modal.html">Modal</a></li>
-                        <li><a href="toastr.html">Toastr Notifications</a></li>
-                        <li><a href="widget.html">Widget</a></li>
-                        <li><a href="slider.html">Slider</a></li>
-                        <li><a href="nestable.html">Nestable</a></li>
-                        <li><a href="font_awesome.html">Font Awesome</a></li>
                     </ul>
                 </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>通告中心</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a th:href="@{/manage/pullAnnouncement/1.html}">发布通告</a></li>
+                        <li><a th:href="@{/manage/announcement/1.html}">通告管理</a></li>
+                    </ul>
+                </li>
+
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-glass"></i>
@@ -332,14 +332,6 @@
                         <li><a href="sidebar_closed.html">Sidebar Closed</a></li>
                         <li><a href="people_directory.html">People Directory</a></li>
                         <li><a href="coming_soon.html">Coming Soon</a></li>
-                        <li><a href="lock_screen.html">Lock Screen</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="invoice.html">Invoice</a></li>
-                        <li><a href="project_list.html">Project List</a></li>
-                        <li><a href="project_details.html">Project Details</a></li>
-                        <li><a href="search_result.html">Search Result</a></li>
-                        <li><a href="pricing_table.html">Pricing Table</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
                         <li><a href="fb_wall.html">FB Wall</a></li>
                         <li><a href="404.html">404 Error</a></li>
                         <li><a href="500.html">500 Error</a></li>
@@ -351,15 +343,15 @@
             <!-- sidebar menu end-->
         </div>
     </aside>
-    <!--侧边栏 end-->
-    <!--主体内容 start-->
+    <!--侧边栏 -->
+    <!--主体内容-->
     <section id="main-content">
         <section class="wrapper site-min-height">
             <section class="panel">
                 <header class="panel-heading">
-                    <th:block th:text="${data.queryResult.object.recruittablename}"></th:block>
+                    <th:block th:text="${data.title}"></th:block>
                     <span class="pull-right">
-                          <a type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> 删除</a>
+                          <a type="button" id="loading-btn" class="btn btn-info btn-xs"><i class="fa fa-refresh"></i> 刷新</a>
                     </span>
                 </header>
             </section>
@@ -374,216 +366,100 @@
                             <!--<h1>New Dashboard BS3 </h1>-->
                             <div class="row p-details">
                                 <div class="bio-row">
-                                    <p><span class="bold">发布者 </span>: <span> 梅士强</span></p>
+                                    <p><span class="bold">发布者 </span>: <span th:text="${data.authorEr}"> 梅士强</span></p>
                                 </div>
-                                <th:block th:object="${data.queryResult.object}">
-                                    <div class="bio-row">
-                                        <th:block th:if="*{types == null}">
-                                            <p><span class="bold">类型 </span>: <span
-                                                    th:text="*{classify}"
-                                                    class="label label-primary label-block"></span></p>
-                                        </th:block>
-                                        <th:block th:if="*{types !=null}">
-                                            <p><span class="bold">类型 </span>:
-                                                <span th:each="type:*{types}"
-                                                      th:text="${type}"
-                                                      class="label label-primary label-block"></span></p>
-                                        </th:block>
-                                    </div>
 
-                                    <div class="bio-row">
-                                        <p><span class="bold">创建时间 </span>: <span
-                                                th:text="*{starttime}"></span></p>
-                                    </div>
-                                    <div class="bio-row">
-                                        <p><span class="bold">结束时间</span>: <span
-                                                th:text="*{#dates.format(endTime,'yyyy年MM月dd日 HH:mm')}"></span></p>
-                                    </div>
-                                    <div class="bio-row">
-                                        <p><span class="bold">人数 </span>: <span
-                                                th:text="*{manNumbers}"></span></p>
-                                    </div>
+                                <div class="bio-row">
+                                    <th:block th:if="${data.types == null}">
+                                        <p><span class="bold">类型 </span>: <span
+                                                class="label label-primary label-block">类型</span></p>
+                                    </th:block>
+                                    <th:block th:if="${data.types !=null}">
+                                        <p><span class="bold">类型 </span>:
+                                            <span th:each="type:${data.types}"
+                                                  th:text="${type}"
+                                                  class="label label-primary label-block"></span></p>
+                                    </th:block>
+                                </div>
 
-                                    <div class="bio-row">
-                                        <th:block th:if="*{labels == null}">
-                                            <p><span class="bold">标签 </span>: <span
-                                                    th:text="*{requireExperience}"></span></p>
-                                        </th:block>
-                                        <th:block th:if="*{labels !=null}">
-                                            <p><span class="bold">标签 </span>:
-                                                <span class="label label-primary label-block"
-                                                    th:each="label:*{labels}"
-                                                    th:text="${label}"></span></p>
-                                        </th:block>
-                                    </div>
+                                <div class="bio-row">
+                                    <p><span class="bold">创建时间 </span>: <span
+                                            th:text="${data.startDate}"></span></p>
+                                </div>
+                                <div class="bio-row">
+                                    <p><span class="bold">结束时间</span>: <span
+                                            th:text="${data.endDate}"></span></p>
+                                </div>
+                                <div class="bio-row">
+                                    <p><span class="bold">人数 </span>: <span
+                                            th:text="${data.number}"></span></p>
+                                </div>
+
+                                <div class="bio-row">
+                                    <p><span class="bold">工作经验 </span>: <span
+                                            th:text="${data.experience}"></span></p>
+                                </div>
 
 
-                                    <div class="bio-row">
-                                        <p><span class="bold">地址 </span>: <span
-                                                th:text="*{place}"></span></p>
-                                    </div>
+                                <div class="bio-row">
+                                    <p><span class="bold">地址 </span>: <span
+                                            th:text="${data.place}"></span></p>
+                                </div>
 
-                                    <div class="col-lg-12">
-                                        <dl class="dl-horizontal mtop20 p-progress">
-                                            <dt>完成度:</dt>
-                                            <dd>
-                                                <div class="progress progress-striped active ">
-                                                    <div style="width: 80%;"
-                                                         class="progress-bar progress-bar-success"></div>
-                                                </div>
-                                                <small>招聘已经进行 <strong>80%</strong>. </small>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </th:block>
+                                <div class="col-lg-12">
+                                    <dl class="dl-horizontal mtop20 p-progress">
+                                        <dt>完成度:</dt>
+                                        <dd>
+                                            <div class="progress progress-striped active ">
+                                                <div style="width: 80%;"
+                                                     th:style="'width:'+${data.degreeCompletion}+'%'"
+                                                     class="progress-bar progress-bar-success"></div>
+                                            </div>
+                                            <small>招聘已经进行 <strong>
+                                                <th:block th:text="${data.degreeCompletion}"></th:block>
+                                                %</strong>. </small>
+                                        </dd>
+                                    </dl>
+                                </div>
                             </div>
-
                         </div>
-
                     </section>
 
                     <section class="panel">
                         <header class="panel-heading">
-                            Last Activity
+                            应聘者 信息
                         </header>
                         <div class="panel-body">
                             <table class="table table-hover p-table">
                                 <thead>
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Commnets</th>
-                                    <th>Status</th>
+                                    <th>应聘者</th>
+                                    <th>投递时间</th>
+                                    <th>年龄</th>
+                                    <th>个人简介</th>
+                                    <th>投递状态</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        Project analysis
-                                    </td>
-                                    <td>
-                                        18/11/2014 9:28:23
-                                    </td>
-                                    <td>
-                                        28/11/2014 12:23:03
-                                    </td>
-                                    <td>
-                                        Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as
-                                        opposed to using
-                                    </td>
-                                    <td>
-                                        <span class="label label-info">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Requirement Collection
-                                    </td>
-                                    <td>
-                                        10/11/2014 9:28:23
-                                    </td>
-                                    <td>
-                                        22/11/2014 12:23:03
-                                    </td>
-                                    <td>
-                                        Tawseef Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a
-                                        as opposed to using
-                                    </td>
-                                    <td>
-                                        <span class="label label-info">Reported</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Design Implement
-                                    </td>
-                                    <td>
-                                        18/11/2014 9:28:23
-                                    </td>
-                                    <td>
-                                        28/11/2014 12:23:03
-                                    </td>
-                                    <td>
-                                        Dism Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as
-                                        opposed to using
-                                    </td>
-                                    <td>
-                                        <span class="label label-info">Accepted</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Widget Management
-                                    </td>
-                                    <td>
-                                        18/11/2014 9:28:23
-                                    </td>
-                                    <td>
-                                        28/11/2014 12:23:03
-                                    </td>
-                                    <td>
-                                        Cosm Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as
-                                        opposed to using
-                                    </td>
-                                    <td>
-                                        <span class="label label-info">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Contact Info
-                                    </td>
-                                    <td>
-                                        18/11/2014 9:28:23
-                                    </td>
-                                    <td>
-                                        28/11/2014 12:23:03
-                                    </td>
-                                    <td>
-                                        Hello that it has a as opposed to using Lorem Ipsum is that it has a as opposed
-                                        to using
-                                    </td>
-                                    <td>
-                                        <span class="label label-info">Sent</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Project analysis
-                                    </td>
-                                    <td>
-                                        18/11/2014 9:28:23
-                                    </td>
-                                    <td>
-                                        28/11/2014 12:23:03
-                                    </td>
-                                    <td>
-                                        Ipsum is that it has a as opposed to using Lorem Ipsum is that it has a as
-                                        opposed to using
-                                    </td>
-                                    <td>
-                                        <span class="label label-info">Completed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Project analysis
-                                    </td>
-                                    <td>
-                                        18/11/2014 9:28:23
-                                    </td>
-                                    <td>
-                                        28/11/2014 12:23:03
-                                    </td>
-                                    <td>
-                                        Orem psum is that it has a as opposed to using Lorem Ipsum is that it has a as
-                                        opposed to using
-                                    </td>
-                                    <td>
-                                        <span class="label label-info">Completed</span>
-                                    </td>
-                                </tr>
+                                <th:block th:if="${data.recruitAndConsumerDOS!=null}" th:each="rc,star:${data.recruitAndConsumerDOS}">
+                                    <tr>
+                                        <td>
+                                            <th:block th:text="${rc.consumerName}"></th:block>
+                                        </td>
+                                        <td>
+                                            <th:block th:text="${rc.consuemrToudiDate}"></th:block>
+                                        </td>
+                                        <td>
+                                            <th:block th:text="${rc.consumerAge}"></th:block>
+                                        </td>
+                                        <td>
+                                            <th:block th:text="${rc.consuemrResume}"></th:block>
+                                        </td>
+                                        <td>
+                                            <span class="label label-info" th:text="${rc.toudiStatus=='0'?'在审核':'已通过'}">Completed</span>
+                                        </td>
+                                    </tr>
+                                </th:block>
                                 </tbody>
                             </table>
                         </div>
@@ -594,40 +470,28 @@
                 <div class="col-md-4">
                     <section class="panel">
                         <header class="panel-heading">
-                            招聘详细要求
+                            <h3><strong>招聘详细要求</strong></h3>
                         </header>
-
                         <div class="panel-body">
                             <a href="#"><img src="/img/XINXING.png" alt="新星幼儿园"/></a>
 
-                            <p th:utext="${data.queryResult.object.jobdesciption}"></p>
+                            <h4><b>职责描述</b></h4>
+                            <p th:utext="${data.responsibility}"></p>
                             <br/>
-
+                            <h4><b>职位要求</b></h4>
+                            <p th:utext="${data.require}"></p>
                             <br/>
-                            <h5 class="bold">Project files</h5>
-                            <ul class="list-unstyled p-files">
-                                <li><a href=""><i class="fa fa-file-text"></i> Project-document.docx</a></li>
-                                <li><a href=""><i class="fa fa-picture-o"></i> Logo-company.jpg</a></li>
-                                <li><a href=""><i class="fa fa-mail-forward"></i> Email-from-flatbal.mln</a></li>
-                                <li><a href=""><i class="fa fa-file"></i> Contract-10_12_2014.docx</a></li>
-                            </ul>
                             <br/>
 
                             <h5 class="bold">Project Tags</h5>
                             <ul class="p-tag-list">
                                 <li><a href=""><i class="fa fa-tag"></i> Dlor</a></li>
                                 <li><a href=""><i class="fa fa-tag"></i> Lorem ipsum</a></li>
-                                <li><a href=""><i class="fa fa-tag"></i> Google</a></li>
-                                <li><a href=""><i class="fa fa-tag"></i> Excellent</a></li>
-                                <li><a href=""><i class="fa fa-tag"></i> Dlor</a></li>
-                                <li><a href=""><i class="fa fa-tag"></i> Lorem ipsum</a></li>
-                                <li><a href=""><i class="fa fa-tag"></i> Google</a></li>
-                                <li><a href=""><i class="fa fa-tag"></i> Excellent</a></li>
                             </ul>
 
                             <div class="text-center mtop20">
-                                <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                                <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+                                <a href="#" class="btn btn-sm btn-primary">发布招聘</a>
+                                <a href="#" class="btn btn-sm btn-warning">更改招聘</a>
                             </div>
                         </div>
 
@@ -637,157 +501,7 @@
             </div>
         </section>
     </section>
-    <!--main content end-->
-
-    <!-- Right Slidebar start -->
-    <div class="sb-slidebar sb-right sb-style-overlay">
-        <h5 class="side-title">Online Customers</h5>
-        <ul class="quick-chat-list">
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/chat-avatar2.jpg" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <strong>John Doe</strong>
-                        <small>Dream Land, AU</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/chat-avatar.jpg" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <div class="media-status">
-                            <span class=" badge bg-important">3</span>
-                        </div>
-                        <strong>Jonathan Smith</strong>
-                        <small>United States</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/pro-ac-1.png" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <div class="media-status">
-                            <span class=" badge bg-success">5</span>
-                        </div>
-                        <strong>Jane Doe</strong>
-                        <small>ABC, USA</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/avatar1.jpg" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <strong>Anjelina Joli</strong>
-                        <small>Fockland, UK</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/mail-avatar.jpg" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <div class="media-status">
-                            <span class=" badge bg-warning">7</span>
-                        </div>
-                        <strong>Mr Tasi</strong>
-                        <small>Dream Land, USA</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-        </ul>
-        <h5 class="side-title"> pending Task</h5>
-        <ul class="p-task tasks-bar">
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Dashboard v1.3</div>
-                        <div class="percent">40%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40"
-                             role="progressbar" class="progress-bar progress-bar-success">
-                            <span class="sr-only">40% Complete (success)</span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Database Update</div>
-                        <div class="percent">60%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60"
-                             role="progressbar" class="progress-bar progress-bar-warning">
-                            <span class="sr-only">60% Complete (warning)</span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Iphone Development</div>
-                        <div class="percent">87%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 87%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20"
-                             role="progressbar" class="progress-bar progress-bar-info">
-                            <span class="sr-only">87% Complete</span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Mobile App</div>
-                        <div class="percent">33%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80"
-                             role="progressbar" class="progress-bar progress-bar-danger">
-                            <span class="sr-only">33% Complete (danger)</span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Dashboard v1.3</div>
-                        <div class="percent">45%</div>
-                    </div>
-                    <div class="progress progress-striped active">
-                        <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45"
-                             role="progressbar" class="progress-bar">
-                            <span class="sr-only">45% Complete</span>
-                        </div>
-                    </div>
-
-                </a>
-            </li>
-            <li class="external">
-                <a href="#">See All Tasks</a>
-            </li>
-        </ul>
-    </div>
-    <!-- Right Slidebar end -->
+    <!--主体内容-->
 
     <!--footer start-->
     <footer class="site-footer">

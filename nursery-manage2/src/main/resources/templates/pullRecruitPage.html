@@ -297,14 +297,20 @@
                     <ul class="sub">
                         <li><a th:href="@{/manage/consumer/visit}">显示</a></li>
                         <li><a href="buttons.html">Buttons</a></li>
-                        <li><a href="modal.html">Modal</a></li>
-                        <li><a href="toastr.html">Toastr Notifications</a></li>
-                        <li><a href="widget.html">Widget</a></li>
-                        <li><a href="slider.html">Slider</a></li>
-                        <li><a href="nestable.html">Nestable</a></li>
-                        <li><a href="font_awesome.html">Font Awesome</a></li>
                     </ul>
                 </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>通告中心</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a th:href="@{/manage/pullAnnouncement/1.html}">发布通告</a></li>
+                        <li><a th:href="@{/manage/announcement/1.html}">通告管理</a></li>
+                    </ul>
+                </li>
+
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-glass"></i>
@@ -409,7 +415,7 @@
                     <div class="col-lg-6">
                         <section class="panel">
                             <header class="panel-heading">
-                                职位要求
+                                福利待遇
                             </header>
                             <div class="panel-body">
                                 <div class="panel-body">
@@ -558,8 +564,9 @@
                 ['para', ['ul', 'ol', 'paragraph']]
             ]
         });
+        // http://localhost:32227/manage/recruit/pull?erId=1
         $("#btn_sub").click(function () {
-            $.post("/manage/postRecruitment", $("#fabuForm").serialize(), function (data) {
+            $.post("/manage/postRecruitment/1", $("#fabuForm").serialize(), function (data) {
                 if (data.success) {
                     //更新成功
                     if (confirm(data.message + "!" +

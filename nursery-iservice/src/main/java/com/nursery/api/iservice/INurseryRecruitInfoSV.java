@@ -70,5 +70,8 @@ public interface INurseryRecruitInfoSV {
     List<RecruitmentDO> getRecruitByTypeId(String typeId) throws SQLException;
 
     //插入一行招聘信息
-    void insertRecruitInfo(RecruitmentDO recruitmentDO);
+    void insertRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException;
+
+    //根据erid删除招牌信息
+    int deleteRecruitById(String erId);
 }

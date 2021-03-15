@@ -13,7 +13,8 @@
         <result column="recruitplace" property="place" jdbcType="VARCHAR"/>
         <result column="recruitrequire_experience" property="requireExperience" jdbcType="VARCHAR"/>
         <result column="recruitrequire_edubg" property="requireEduDB" jdbcType="VARCHAR"/>
-        <result column="recruitnumbers" property="manNumbers" jdbcType="INTEGER"/> <!--Mybatis的JdbcType全是大写，而且没有INT，只有INTEGER-->
+        <result column="recruitnumbers" property="manNumbers"
+                jdbcType="INTEGER"/> <!--Mybatis的JdbcType全是大写，而且没有INT，只有INTEGER-->
         <result column="companyresume" property="companyresume" jdbcType="VARCHAR"/>
         <result column="jobdesciption" property="jobdesciption" jdbcType="VARCHAR"/>
         <result column="responsibility" property="responsibility" jdbcType="VARCHAR"/><!--职位描述-->
@@ -26,29 +27,39 @@
     </resultMap>
 
     <sql id="recruitsql">
-        id,recruittablename,recruitclassify,recruitclassify,recruitpay,recruitstarttime,recruitendtime,
+        id
+        ,recruittablename,recruitclassify,recruitclassify,recruitpay,recruitstarttime,recruitendtime,
         recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers,companyresume,jobdesciption
     </sql>
 
     <select id="selectByclassify" resultMap="recruitment" parameterType="string">
-        SELECT * FROM tb_nursery_recruitinfo WHERE recruitclassify = #{classify}
+        SELECT *
+        FROM tb_nursery_recruitinfo
+        WHERE recruitclassify = #{classify}
     </select>
 
     <select id="selectByrecruittablename" resultMap="recruitment" parameterType="string">
-        SELECT * FROM tb_nursery_recruitinfo WHERE recruittablename = #{recruittablename}
+        SELECT *
+        FROM tb_nursery_recruitinfo
+        WHERE recruittablename = #{recruittablename}
     </select>
 
 
     <select id="selectRecruitmentDOsByRecruiterID" resultMap="recruitment" parameterType="string">
-        SELECT * FROM tb_nursery_recruitinfo WHERE id IN (SELECT infoid FROM tb_middle_recruiter_info WHERE RECRUITERID = #{recruiterID})
+        SELECT *
+        FROM tb_nursery_recruitinfo
+        WHERE id IN (SELECT infoid FROM tb_middle_recruiter_info WHERE RECRUITERID = #{recruiterID})
     </select>
 
     <select id="selectRecruitmentDOs" resultMap="recruitment">
-        SELECT * FROM tb_nursery_recruitinfo
+        SELECT *
+        FROM tb_nursery_recruitinfo
     </select>
 
     <select id="selectByclassAndName" resultMap="recruitment" parameterType="com.nursery.beans.DBDataParam">
-        SELECT id,recruittablename,recruitclassify,recruitpay,recruitstarttime,recruitendtime,recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers FROM tb_nursery_recruitinfo WHERE 1 = 1
+        SELECT
+        id,recruittablename,recruitclassify,recruitpay,recruitstarttime,recruitendtime,recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers
+        FROM tb_nursery_recruitinfo WHERE 1 = 1
         <if test="param1 != null and param1 != ''">
             AND recruitclassify = #{param1}
         </if>
@@ -57,72 +68,88 @@
         </if>
     </select>
 
-    <select id="selectRecruitInfoByrecruitid" resultMap="recruitment" >
-        SELECT * FROM tb_nursery_recruitinfo WHERE id = #{id}
+    <select id="selectRecruitInfoByrecruitid" resultMap="recruitment">
+        SELECT *
+        FROM tb_nursery_recruitinfo
+        WHERE id = #{id}
     </select>
 
 
-    <select id="randomSelectRecruit" resultMap="recruitment" >
-        SELECT *  FROM
-            `tb_nursery_recruitinfo` AS t1
-                JOIN (
-                SELECT
-                    ROUND(
-                            RAND() * (
-                                    (SELECT MAX(id) FROM `tb_nursery_recruitinfo`) - (SELECT MIN(id) FROM `tb_nursery_recruitinfo`)
-                            ) + (SELECT MIN(id) FROM `tb_nursery_recruitinfo`)
-                        ) AS id
-            ) AS t2
-        WHERE
-            t1.id >= t2.id
-        ORDER BY
-            t1.id
-            LIMIT 12;
+    <select id="randomSelectRecruit" resultMap="recruitment">
+        SELECT *
+        FROM `tb_nursery_recruitinfo` AS t1
+                 JOIN (
+            SELECT ROUND(
+                                   RAND() * (
+                                           (SELECT MAX(id) FROM `tb_nursery_recruitinfo`) -
+                                           (SELECT MIN(id) FROM `tb_nursery_recruitinfo`)
+                                   ) + (SELECT MIN(id) FROM `tb_nursery_recruitinfo`)
+                       ) AS id
+        ) AS t2
+        WHERE t1.id >= t2.id
+        ORDER BY t1.id LIMIT 12;
     </select>
     <select id="selectRecruitinfoByType" resultMap="recruitment">
-        SELECT * FROM tb_nursery_recruitinfo WHERE recruitclassify like #{value}
+        SELECT *
+        FROM tb_nursery_recruitinfo
+        WHERE recruitclassify like #{value}
     </select>
     <select id="selectRecruitByNewDateAndDesc" resultMap="recruitment">
-        SELECT * FROM tb_nursery_recruitinfo ORDER BY tb_nursery_recruitinfo.`recruitstarttime` DESC LIMIT 12
+        SELECT *
+        FROM tb_nursery_recruitinfo
+        ORDER BY tb_nursery_recruitinfo.`recruitstarttime` DESC LIMIT 12
     </select>
 
     <insert id="insert" parameterType="com.nursery.beans.RecruitmentDO">
-        insert into tb_nursery_recruitinfo (
-            id,recruittablename,recruitclassify,recruitpay,recruitstarttime,recruitendtime,
-            recruitplace,recruitrequire_experience,recruitrequire_edubg,recruitnumbers,
-            companyresume,jobdesciption
-        ) values (
-            #{id},#{recruittablename},#{classify},#{pay},#{starttime},#{endtime},#{place},#{requireExperience},
-            #{requireEduDB},#{manNumbers},#{companyresume},#{jobdesciption}
-        );
+        insert into tb_nursery_recruitinfo (id, recruittablename, recruitclassify, recruitpay, recruitstarttime,
+                                            recruitendtime,
+                                            recruitplace, recruitrequire_experience, recruitrequire_edubg,
+                                            recruitnumbers,
+                                            companyresume, jobdesciption)
+        values (#{id}, #{recruittablename}, #{classify}, #{pay}, #{starttime}, #{endtime}, #{place},
+                #{requireExperience},
+                #{requireEduDB}, #{manNumbers}, #{companyresume}, #{jobdesciption});
     </insert>
     <insert id="insertRecruitInfo" parameterType="com.nursery.beans.RecruitmentDO">
-        insert  into `tb_nursery_recruitinfo`
-            (`id`,`recruittablename`,`recruitclassify`,`recruitpay`,`recruitstarttime`,`recruitendtime`,`recruitplace`,`recruitrequire_experience`,`recruitrequire_edubg`,`recruitnumbers`,`companyresume`,`jobdesciption`,`responsibility`,`require`,`treatment`,`applynum`,`cutoff`,`enrollFull`,`authorId`)
-        values
-            (#{id},#{recruittablename},#{classify},#{pay},#{starttime},#{endtime},#{place},#{requireExperience},#{requireEduDB},#{manNumbers},#{companyresume},#{jobdesciption},#{responsibility},#{require},#{treatment},#{applynum},#{cutoff},#{enrollFull},#{authorId});
+        insert into `tb_nursery_recruitinfo`
+        (`id`, `recruittablename`, `recruitclassify`, `recruitpay`, `recruitstarttime`, `recruitendtime`,
+         `recruitplace`, `recruitrequire_experience`, `recruitrequire_edubg`, `recruitnumbers`, `companyresume`,
+         `jobdesciption`, `responsibility`, `require`, `treatment`, `applynum`, `cutoff`, `enrollFull`, `authorId`)
+        values (#{id}, #{recruittablename}, #{classify}, #{pay}, #{starttime}, #{endtime}, #{place},
+                #{requireExperience}, #{requireEduDB}, #{manNumbers}, #{companyresume}, #{jobdesciption},
+                #{responsibility}, #{require}, #{treatment}, #{applynum}, #{cutoff}, #{enrollFull}, #{authorId});
 
 
+    </insert>
+    <insert id="insertRecruitMeddleEr" parameterType="com.nursery.beans.RecruitmentDO">
+        INSERT INTO `tb_middle_recruiter_info` (RECRUITERID, INFOID, DATE)
+        VALUES (#{authorId}, #{id}, #{starttime});
     </insert>
 
     <delete id="delete" parameterType="string">
-      DELETE from tb_nursery_recruitinfo where id = #{id}
+        DELETE
+        from tb_nursery_recruitinfo
+        where id = #{id}
+    </delete>
+    <delete id="deleteRecruitById">
+        DELETE
+        from tb_nursery_recruitinfo
+        where id = #{id}
     </delete>
 
     <update id="updateRecruitInfo" parameterType="com.nursery.beans.RecruitmentDO">
-        update tb_nursery_recruitinfo set
-            recruittablename = #{recruittablename},
-            recruitclassify = #{classify},
-            recruitpay = #{pay},
-            recruitendtime = #{endtime},
-            recruitplace = #{place},
+        update tb_nursery_recruitinfo
+        set recruittablename          = #{recruittablename},
+            recruitclassify           = #{classify},
+            recruitpay                = #{pay},
+            recruitendtime            = #{endtime},
+            recruitplace              = #{place},
             recruitrequire_experience = #{requireExperience},
-            recruitrequire_edubg = #{requireEduDB},
-            recruitnumbers = #{manNumbers},
-            companyresume = #{companyresume},
-            jobdesciption = #{jobdesciption}
-        WHERE
-            id = #{id}
+            recruitrequire_edubg      = #{requireEduDB},
+            recruitnumbers            = #{manNumbers},
+            companyresume             = #{companyresume},
+            jobdesciption             = #{jobdesciption}
+        WHERE id = #{id}
     </update>
 
 </mapper>

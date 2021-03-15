@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nursery.dao.RecruitAndConsumerMapper">
+
+    <resultMap id="demo1" type="com.nursery.beans.RecruitAndConsumerDO">
+        <id column="CONSUMER_ID" property="consumerId" jdbcType="VARCHAR"/><!--应聘者id-->
+        <id column="RECRUIT_ID" property="recruitId" jdbcType="VARCHAR"/><!--招聘信息id-->
+        <result column="CONSUEMR_NAME" property="consumerName" jdbcType="VARCHAR"/><!--应聘者 (姓名)-->
+        <result column="CONSUMER_TOUDIDATE" property="consuemrToudiDate" jdbcType="VARCHAR"/><!--应聘者(投递时间)-->
+        <result column="CONSUEMR_AGE" property="consumerAge" jdbcType="INTEGER"/><!--应聘者(年龄)-->
+        <result column="CONSUEMR_RESUME" property="consuemrResume" jdbcType="VARCHAR"/><!--应聘者(个人简介)-->
+        <result column="TOUDI_STATUS" property="toudiStatus" jdbcType="VARCHAR"/><!--投递状态(0未通过 , 1通过)-->
+        <result column="RECRUIT_TILTE" property="recruitTitle" jdbcType="VARCHAR"/><!--招聘标题-->
+        <result column="RECRUIT_CLASSIFY" property="recruitClassify" jdbcType="VARCHAR"/><!--招聘类型-->
+        <result column="RECRUIT_PAY" property="recruitPay" jdbcType="VARCHAR"/><!--薪资-->
+        <result column="RECRUIRECRUIT_PLACET_PAY" property="recruitPlace" jdbcType="VARCHAR"/><!--地点-->
+    </resultMap>
+
+    <select id="selectDomeByRecruitId" resultMap="demo1">
+        SELECT * FROM tb_middle_consuemr_recruit WHERE recruit_id = #{id};
+    </select>
+</mapper>

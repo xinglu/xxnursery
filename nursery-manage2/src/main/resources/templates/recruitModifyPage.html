@@ -8,7 +8,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="/img/favicon.png">
 
-    <title>Advanced Form Components</title>
+    <title>招聘详细内容</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +17,7 @@
     <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 
     <link rel="stylesheet" type="text/css" href="/assets/bootstrap-fileupload/bootstrap-fileupload.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/summernote/dist/summernote.min.css"/>
     <link rel="stylesheet" type="text/css" href="/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css"/>
     <link rel="stylesheet" type="text/css" href="/assets/bootstrap-datepicker/css/datepicker.css"/>
     <link rel="stylesheet" type="text/css" href="/assets/bootstrap-timepicker/compiled/timepicker.css"/>
@@ -24,8 +25,6 @@
     <link rel="stylesheet" type="text/css" href="/assets/bootstrap-datetimepicker/css/datetimepicker.css"/>
     <link rel="stylesheet" type="text/css" href="/assets/jquery-multi-select/css/multi-select.css"/>
 
-    <!--right slidebar-->
-    <link href="/css/slidebars.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet"/>
@@ -40,7 +39,7 @@
 <body>
 
 <section id="container" class="">
-    <!--header start-->
+    <!--头部-导航栏-->
     <header class="header white-bg">
         <div class="sidebar-toggle-box">
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
@@ -288,9 +287,9 @@
             <!--search & user info end-->
         </div>
     </header>
-    <!--header end-->
+    <!--头部-导航栏-->
 
-    <!--sidebar start-->
+    <!--左侧侧边栏-->
     <aside>
         <div id="sidebar" class="nav-collapse ">
             <!-- 侧边栏菜单 start-->
@@ -360,9 +359,9 @@
             <!-- sidebar menu end-->
         </div>
     </aside>
-    <!--sidebar end-->
+    <!--左侧侧边栏-->
 
-    <!--main content start-->
+    <!--文本内容-->
     <section id="main-content">
         <section class="wrapper">
             <div class="row">
@@ -379,14 +378,6 @@
                                     <div class="col-sm-6">
                                         <input class="form-control" id="employment" name="employment" type="text"
                                                th:value="*{recruittablename}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2 col-sm-2 ">公司简介</label>
-                                    <div class="col-md-6">
-                                        <textarea class="wysihtml5 form-control" id="companyProfile"
-                                                  name="companyProfile" rows="10"
-                                                  th:text="*{companyresume}"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -452,25 +443,56 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label">学历 </label>
+                                    <label class="col-sm-2 col-sm-2 control-label">需要学历 </label>
                                     <div class="col-sm-6">
                                         <input class="form-control" id="educationBg" name="educationBg" type="text"
                                                th:value="*{requireEduDB}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 col-sm-2 control-label">label </label>
+                                    <label class="col-sm-2 col-sm-2 control-label">工作经验 </label>
                                     <div class="col-sm-6">
                                         <input name="label" id="label" class="tagsinput form-control"
-                                               th:value="*{requireExperience}" value="Flat,Design,Lab,Clean"/>
+                                               th:value="*{requireExperience}"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2 col-sm-2 ">职责描述</label>
+                                    <div class="col-lg-6">
+                                        <section class="panel">
+                                            <div class="panel-body">
+                                                <div class="panel-body">
+                                                    <textarea class="responsibility" id="responsibility" name="responsibility" th:utext="*{responsibility}">
+                                                        职责描述。。。。。。
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                        </section>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2 col-sm-2 ">职位描述</label>
-                                    <div class="col-md-6">
-                                        <textarea class="wysihtml5 form-control" id="jobDescription"
-                                                  name="jobDescription" rows="10"
-                                                  th:text="*{jobdesciption}"></textarea>
+                                    <label class="control-label col-sm-2 col-sm-2 ">职位要求</label>
+                                    <div class="col-lg-6">
+                                        <section class="panel">
+                                            <div class="panel-body">
+                                                <div class="panel-body">
+                                                    <textarea class="require" id="require" name="require" th:utext="*{require}">职位要求。。。。。。</textarea>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2 col-sm-2 ">福利待遇</label>
+                                    <div class="col-lg-6">
+                                        <section class="panel">
+                                            <div class="panel-body">
+                                                <div class="panel-body">
+                                                    <textarea class="treatment" id="treatment" name="treatment" th:utext="*{treatment}">福利待遇。。。。。。</textarea>
+                                                </div>
+                                            </div>
+                                        </section>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -489,159 +511,9 @@
 
         </section>
     </section>
-    <!--main content end-->
+    <!--文本内容-->
 
-    <!-- Right Slidebar start -->
-    <div class="sb-slidebar sb-right sb-style-overlay">
-        <h5 class="side-title">Online Customers</h5>
-        <ul class="quick-chat-list">
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/chat-avatar2.jpg" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <strong>John Doe</strong>
-                        <small>Dream Land, AU</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/chat-avatar.jpg" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <div class="media-status">
-                            <span class=" badge bg-important">3</span>
-                        </div>
-                        <strong>Jonathan Smith</strong>
-                        <small>United States</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/pro-ac-1.png" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <div class="media-status">
-                            <span class=" badge bg-success">5</span>
-                        </div>
-                        <strong>Jane Doe</strong>
-                        <small>ABC, USA</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/avatar1.jpg" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <strong>Anjelina Joli</strong>
-                        <small>Fockland, UK</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-            <li class="online">
-                <div class="media">
-                    <a href="#" class="pull-left media-thumb">
-                        <img alt="" src="/img/mail-avatar.jpg" class="media-object">
-                    </a>
-                    <div class="media-body">
-                        <div class="media-status">
-                            <span class=" badge bg-warning">7</span>
-                        </div>
-                        <strong>Mr Tasi</strong>
-                        <small>Dream Land, USA</small>
-                    </div>
-                </div><!-- media -->
-            </li>
-        </ul>
-        <h5 class="side-title"> pending Task</h5>
-        <ul class="p-task tasks-bar">
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Dashboard v1.3</div>
-                        <div class="percent">40%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40"
-                             role="progressbar" class="progress-bar progress-bar-success">
-                            <span class="sr-only">40% Complete (success)</span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Database Update</div>
-                        <div class="percent">60%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60"
-                             role="progressbar" class="progress-bar progress-bar-warning">
-                            <span class="sr-only">60% Complete (warning)</span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Iphone Development</div>
-                        <div class="percent">87%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 87%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20"
-                             role="progressbar" class="progress-bar progress-bar-info">
-                            <span class="sr-only">87% Complete</span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Mobile App</div>
-                        <div class="percent">33%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80"
-                             role="progressbar" class="progress-bar progress-bar-danger">
-                            <span class="sr-only">33% Complete (danger)</span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Dashboard v1.3</div>
-                        <div class="percent">45%</div>
-                    </div>
-                    <div class="progress progress-striped active">
-                        <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45"
-                             role="progressbar" class="progress-bar">
-                            <span class="sr-only">45% Complete</span>
-                        </div>
-                    </div>
-
-                </a>
-            </li>
-            <li class="external">
-                <a href="#">See All Tasks</a>
-            </li>
-        </ul>
-    </div>
-    <!-- Right Slidebar end -->
-
-    <!--footer start-->
+    <!--页脚-->
     <footer class="site-footer">
         <div class="text-center">
             2021 &copy; FlatLab by VectorLab.
@@ -671,6 +543,7 @@
 <script type="text/javascript" src="/js/ga.js"></script>
 
 <!--this page plugins-->
+<script src="/assets/summernote/dist/summernote.min.js" type="text/javascript"></script><!--富文本编辑框-->
 <script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
 <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
@@ -691,5 +564,78 @@
 <script src="/js/advanced-form-components.js"></script>
 <!--script for this page-->
 <script src="/js/form-component.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        // Switch
+        $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
+        $(".form_datetime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            autoclose: true,
+            todayBtn: true,
+            pickerPosition: "bottom-left"
+        });
+        //summernote
+        $('.responsibility').summernote({
+            disableDragAndDrop: true,
+            height: 200,
+            minHeight: 200,
+            maxHeight: 200,
+            focus: true,
+            title: false,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+            ]
+        });
+        $('.require').summernote({
+            disableDragAndDrop: true,//禁用拉动状态
+            height: 200,
+            minHeight: 200,
+            maxHeight: 200,
+            focus: true,
+            title: false,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+            ]
+        });
+        $('.treatment').summernote({
+            disableDragAndDrop: true, //禁用拉动状态
+            height: 200,
+            minHeight: 200,
+            maxHeight: 200,
+            focus: true,
+            title: false,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+            ]
+        });
+        // http://localhost:32227/manage/recruit/pull?erId=1
+        $("#btn_sub").click(function () {
+            $.post("/manage/postRecruitment/1", $("#fabuForm").serialize(), function (data) {
+                if (data.success) {
+                    //更新成功
+                    if (confirm(data.message + "!" +
+                        "是否继续发布？")) {
+                        //清空当前form表格
+                        // $("#fabuForm").reset();
+                    } else {
+                        window.history.go(-1);
+                    }
+                } else {
+                    //更新失败
+                    alert(data.message + "");
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

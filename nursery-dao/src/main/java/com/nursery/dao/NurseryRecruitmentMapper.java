@@ -48,6 +48,16 @@ public interface NurseryRecruitmentMapper {
     //更加最新时间排序获取职位
     List<RecruitmentDO> selectRecruitByNewDateAndDesc() throws SQLException;
 
-    //查询一条数据
-    void insertRecruitInfo(RecruitmentDO recruitmentDO);
+    //插入一条数据
+    void insertRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException;
+
+    //插入一条中间表数据 tb_middle_recruiter_info
+    void insertRecruitMeddleEr(RecruitmentDO recruitmentDO) throws SQLException;
+
+    /**
+     * 根据id删除招聘信息
+     * @param erId 招聘id
+     * @return 影响行数
+     */
+    int deleteRecruitById(String erId);
 }

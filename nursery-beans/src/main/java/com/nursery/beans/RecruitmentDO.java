@@ -264,4 +264,6 @@ public class RecruitmentDO {
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
     }
+
+
 }

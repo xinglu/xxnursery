@@ -16,10 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -119,10 +116,16 @@ public class ManageRecruitController extends BaseController implements ManageRec
         return responseResult;
     }
 
-    @RequestMapping(value = "/postRecruitment", method = RequestMethod.POST)
+    /**
+     * 发布招聘
+     * @param recruitmentDO
+     * @param erId
+     * @return
+     */
+    @RequestMapping(value = "/postRecruitment/{erId}", method = RequestMethod.POST)
     @ResponseBody
     @Override
-    public ResponseResult postRecruitInfo(RecruitmentDO recruitmentDO) {
+    public ResponseResult postRecruitInfo(RecruitmentDO recruitmentDO, @PathVariable("erId")String erId) {
         ResponseResult responseResult = ResponseResult.SUCCESS();
         String id = CommonUtil.getUUID();
         String authorId = recruitmentDO.getAuthorId();  //发布者id
@@ -164,6 +167,9 @@ public class ManageRecruitController extends BaseController implements ManageRec
             }
             recruitmentDO.setCutoff("no");
             recruitmentDO.setEnrollFull("no");
+            if(StringUtils.isEmpty(authorId)){
+                recruitmentDO.setAuthorId(erId);
+            }
             nurseryRecruitInfoSV.insertRecruitInfo(recruitmentDO);
             logger.info("招聘信息recruitmentDO "+ JSON.toJSONString(recruitmentDO));
         }catch (Exception e){
@@ -173,4 +179,9 @@ public class ManageRecruitController extends BaseController implements ManageRec
         return responseResult;
     }
 
+    @RequestMapping(value = "/manage/recruit/delete/{erId}/{recruitId}")
+    public ResponseResult deleteRecruit(@PathVariable(value = "erId",required = true) String erId,@PathVariable(value = "recruitId",required = true) String recruitId){
+        int i = nurseryRecruitInfoSV.deleteRecruitById(erId);
+        return null;
+    }
 }

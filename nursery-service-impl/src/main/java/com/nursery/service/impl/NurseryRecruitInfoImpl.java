@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -106,8 +107,16 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
         return hotDate;
     }
 
+    @Transactional
     @Override
-    public void insertRecruitInfo(RecruitmentDO recruitmentDO) {
-        mapper.insertRecruitInfo(recruitmentDO);
+    public void insertRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException{
+            mapper.insertRecruitInfo(recruitmentDO);
+            mapper.insertRecruitMeddleEr(recruitmentDO);
+    }
+
+    @Override
+    public int deleteRecruitById(String erId) {
+        int num = mapper.deleteRecruitById(erId);
+        return 0;
     }
 }
