@@ -280,7 +280,7 @@
             <!-- 侧边栏菜单 start-->
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a href="index.html">
+                    <a href="index.html" th:href="'/index'">
                         <i class="fa fa-university"></i>
                         <span>新星</span>
                     </a>
@@ -306,8 +306,6 @@
                     </a>
                     <ul class="sub">
                         <li><a th:href="@{/manage/consumer/visit}">显示</a></li>
-                        <li><a href="buttons.html">Buttons</a></li>
-                        <li><a href="modal.html">Modal</a></li>
                     </ul>
                 </li>
 
@@ -329,18 +327,12 @@
                     </a>
                     <ul class="sub">
                         <li><a href="blank.html">Blank Page</a></li>
-                        <li><a href="sidebar_closed.html">Sidebar Closed</a></li>
-                        <li><a href="people_directory.html">People Directory</a></li>
-                        <li><a href="coming_soon.html">Coming Soon</a></li>
                         <li><a href="fb_wall.html">FB Wall</a></li>
                         <li><a href="404.html">404 Error</a></li>
                         <li><a href="500.html">500 Error</a></li>
                     </ul>
                 </li>
-                <!--multi level menu end-->
-
             </ul>
-            <!-- sidebar menu end-->
         </div>
     </aside>
     <!--侧边栏 -->
@@ -351,7 +343,7 @@
                 <header class="panel-heading">
                     <th:block th:text="${data.title}"></th:block>
                     <span class="pull-right">
-                          <a type="button" id="loading-btn" class="btn btn-info btn-xs"><i class="fa fa-refresh"></i> 刷新</a>
+                          <a th:href="'/manage/recruit/getRecruitInfo/'+${data.id}" type="button" id="loading-btn" class="btn btn-info btn-xs"><i class="fa fa-refresh"></i> 刷新</a>
                     </span>
                 </header>
             </section>
@@ -438,27 +430,35 @@
                                     <th>年龄</th>
                                     <th>个人简介</th>
                                     <th>投递状态</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <th:block th:if="${data.recruitAndConsumerDOS!=null}" th:each="rc,star:${data.recruitAndConsumerDOS}">
-                                    <tr>
-                                        <td>
-                                            <th:block th:text="${rc.consumerName}"></th:block>
-                                        </td>
-                                        <td>
-                                            <th:block th:text="${rc.consuemrToudiDate}"></th:block>
-                                        </td>
-                                        <td>
-                                            <th:block th:text="${rc.consumerAge}"></th:block>
-                                        </td>
-                                        <td>
-                                            <th:block th:text="${rc.consuemrResume}"></th:block>
-                                        </td>
-                                        <td>
-                                            <span class="label label-info" th:text="${rc.toudiStatus=='0'?'在审核':'已通过'}">Completed</span>
-                                        </td>
-                                    </tr>
+                                <th:block th:if="${data.recruitAndConsumerDOS!=null}"
+                                          th:each="rc,star:${data.recruitAndConsumerDOS}">
+
+                                        <tr> <!--data-toggle="modal" th:attrappend="data-target=${'#'+rc.consumerId}"-->
+                                            <td>
+                                                <th:block th:text="${rc.consumerName}"></th:block>
+                                            </td>
+                                            <td>
+                                                <th:block th:text="${rc.consuemrToudiDate}"></th:block>
+                                            </td>
+                                            <td>
+                                                <th:block th:text="${rc.consumerAge}"></th:block>
+                                            </td>
+                                            <td>
+                                                <th:block th:text="${rc.consuemrResume}"></th:block>
+                                            </td>
+                                            <td>
+                                                <span class="label label-info" th:text="${rc.toudiStatus=='0'?'在审核':'已通过'}">Completed</span>
+                                            </td>
+                                            <td>
+                                                <a th:href="'/manage/recruit/resume/download/'+${rc.consumerId}+'/'+${rc.recruitId}">下载</a>
+                                                <a th:href="'/manage/recruit/resume/look'+${rc.consumerId}+'/'+${rc.recruitId}">查看</a>
+                                            </td>
+                                        </tr>
+
                                 </th:block>
                                 </tbody>
                             </table>
@@ -483,15 +483,18 @@
                             <br/>
                             <br/>
 
-                            <h5 class="bold">Project Tags</h5>
+                            <h5 class="bold">标签</h5>
                             <ul class="p-tag-list">
-                                <li><a href=""><i class="fa fa-tag"></i> Dlor</a></li>
-                                <li><a href=""><i class="fa fa-tag"></i> Lorem ipsum</a></li>
+                                <th:block th:if="${data.types !=null}">
+                                    <li th:each="type:${data.types}"><a href=""><i class="fa fa-tag"></i>
+                                        <th:block th:text="${type}"></th:block>
+                                    </a></li>
+                                </th:block>
                             </ul>
 
                             <div class="text-center mtop20">
-                                <a href="#" class="btn btn-sm btn-primary">发布招聘</a>
-                                <a href="#" class="btn btn-sm btn-warning">更改招聘</a>
+                                <a th:href="'/manage/recruit/pull?erId=1'" class="btn btn-sm btn-primary">发布招聘</a>
+                                <a th:href="'/manage/recruit/modify/page/'+ ${data.id}" class="btn btn-sm btn-warning">更改招聘</a>
                             </div>
                         </div>
 
@@ -502,6 +505,37 @@
         </section>
     </section>
     <!--主体内容-->
+
+    <!--模态框-->
+    <!--<th:block th:if="${data.recruitAndConsumerDOS!=null}" th:each="rc,star:${data.recruitAndConsumerDOS}">
+        &lt;!&ndash; 模态框（Modal） &ndash;&gt;
+        <div class="modal fade" th:id="${rc.consumerId}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <b>&times;</b>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            简历名称
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        简历内容
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            yes
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            no
+                        </button>
+                    </div>
+                </div>&lt;!&ndash; /.modal-content &ndash;&gt;
+            </div>&lt;!&ndash; /.modal &ndash;&gt;
+        </div>
+    </th:block>-->
+    <!--模态框-->
 
     <!--footer start-->
     <footer class="site-footer">

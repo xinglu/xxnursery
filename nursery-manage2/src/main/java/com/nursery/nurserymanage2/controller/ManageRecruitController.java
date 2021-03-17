@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -34,7 +35,10 @@ public class ManageRecruitController extends BaseController implements ManageRec
     @Autowired
     private INurseryRecruitInfoSV nurseryRecruitInfoSV;
 
-    // 获取公钥
+    /**
+     * 获取公钥
+     * @return
+     */
     @PostMapping("/recruit/getPublicKey")
     @ResponseBody
     public String getPublicKey() {
@@ -43,7 +47,11 @@ public class ManageRecruitController extends BaseController implements ManageRec
         return publicKey;
     }
 
-    // 模仿前端传来的数据
+    /**
+     * 模仿前端传来的数据
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/recruit/getModol")
     @ResponseBody
     public String getModol() throws Exception {
@@ -62,7 +70,6 @@ public class ManageRecruitController extends BaseController implements ManageRec
      * @param recruitBO 招聘内容
      * @return 提示信息
      */
-//    @PutMapping("")
     @RequestMapping(value = "/recruit/recruitInfo", method = RequestMethod.POST)
     @ResponseBody
     @Override
@@ -178,6 +185,34 @@ public class ManageRecruitController extends BaseController implements ManageRec
         }
         return responseResult;
     }
+
+    /**
+     * 下载简历
+     * @param consumerId
+     * @param recruitId
+     * @return
+     */
+    @RequestMapping(value = {"/manage/recruit/resume/download/{consumerId}/{recruitId}"})
+    @Override
+    public ModelAndView downloadResume(String consumerId, String recruitId) {
+        return null;
+    }
+
+    /**
+     * 查询简历
+     * @param consumerId
+     * @param recruitId
+     * @return
+     */
+    @RequestMapping(value = {"/manage/recruit/resume/look/{consumerId}/{recruitId}"})
+    @Override
+    public ModelAndView lookResume(String consumerId, String recruitId) {
+
+        return null;
+    }
+
+
+
 
     @RequestMapping(value = "/manage/recruit/delete/{erId}/{recruitId}")
     public ResponseResult deleteRecruit(@PathVariable(value = "erId",required = true) String erId,@PathVariable(value = "recruitId",required = true) String recruitId){

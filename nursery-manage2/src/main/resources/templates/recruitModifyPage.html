@@ -295,7 +295,7 @@
             <!-- 侧边栏菜单 start-->
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a href="index.html">
+                    <a href="index.html" th:href="'/index'">
                         <i class="fa fa-university"></i>
                         <span>新星</span>
                     </a>
@@ -307,10 +307,9 @@
                         <span>招聘中心</span>
                     </a>
                     <ul class="sub">
-                        <li class="active"><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a>
-                        </li>
+                        <li><a th:href="@{/manage/recruit/pull?erId=1}">发布招聘</a></li>
+                        <li class="active"><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
                         <li><a href="" th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
-                        <li><a href="recruitInfoPage.html">招聘详情</a></li>
                     </ul>
                 </li>
 
@@ -321,13 +320,16 @@
                     </a>
                     <ul class="sub">
                         <li><a th:href="@{/manage/consumer/visit}">显示</a></li>
-                        <li><a href="buttons.html">Buttons</a></li>
-                        <li><a href="modal.html">Modal</a></li>
-                        <li><a href="toastr.html">Toastr Notifications</a></li>
-                        <li><a href="widget.html">Widget</a></li>
-                        <li><a href="slider.html">Slider</a></li>
-                        <li><a href="nestable.html">Nestable</a></li>
-                        <li><a href="font_awesome.html">Font Awesome</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>通告中心</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a th:href="@{/manage/pullAnnouncement/1.html}">发布通告</a></li>
+                        <li><a th:href="@{/manage/announcement/1.html}">通告管理</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -337,26 +339,13 @@
                     </a>
                     <ul class="sub">
                         <li><a href="blank.html">Blank Page</a></li>
-                        <li><a href="sidebar_closed.html">Sidebar Closed</a></li>
-                        <li><a href="people_directory.html">People Directory</a></li>
-                        <li><a href="coming_soon.html">Coming Soon</a></li>
-                        <li><a href="lock_screen.html">Lock Screen</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="invoice.html">Invoice</a></li>
-                        <li><a href="project_list.html">Project List</a></li>
-                        <li><a href="project_details.html">Project Details</a></li>
-                        <li><a href="search_result.html">Search Result</a></li>
-                        <li><a href="pricing_table.html">Pricing Table</a></li>
                         <li><a href="faq.html">FAQ</a></li>
                         <li><a href="fb_wall.html">FB Wall</a></li>
                         <li><a href="404.html">404 Error</a></li>
                         <li><a href="500.html">500 Error</a></li>
                     </ul>
                 </li>
-                <!--multi level menu end-->
-
             </ul>
-            <!-- sidebar menu end-->
         </div>
     </aside>
     <!--左侧侧边栏-->

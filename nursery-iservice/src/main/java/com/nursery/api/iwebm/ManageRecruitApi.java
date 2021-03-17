@@ -21,4 +21,10 @@ public interface ManageRecruitApi {
     @ApiOperation(value = "发布招聘信息",httpMethod = "POST",response = ResponseResult.class)
     public ResponseResult postRecruitInfo(RecruitmentDO recruitmentDO, @PathVariable("erId")String erId);
 
+    @ApiOperation(value = "下载简历表")
+    public ModelAndView downloadResume(String consumerId,String recruitId);
+
+    @ApiOperation(value = "查询简历表")
+    public ModelAndView lookResume(String consumerId,String recruitId);
+
 }

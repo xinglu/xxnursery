@@ -120,6 +120,7 @@ public class VisitRecruitController extends BaseController implements VisitRecru
             RecruitmentDO recruitmentDO = nurseryRecruitInfoSV.selectRecruitInfoByrecruitid(recruitid);
             returnMap.put("title", recruitmentDO.getRecruittablename());//标题
             returnMap.put("pay", recruitmentDO.getPay());//薪资
+            returnMap.put("id", recruitmentDO.getId());//薪资
             RecruiterManagmentDO recruiterManagmentDO = new RecruiterManagmentDO();
             recruiterManagmentDO.setId(recruitmentDO.getAuthorId());
             try {
