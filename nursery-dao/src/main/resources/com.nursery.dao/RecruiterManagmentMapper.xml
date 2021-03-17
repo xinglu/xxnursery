@@ -4,8 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nursery.dao.RecruiterManagmentMapper">
 
+    <resultMap id="role" type="com.nursery.beans.RoleDO">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="ROLENAME" property="name" jdbcType="VARCHAR"/>
+        <result column="ROLEEN" property="role" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <select id="selectRealName" resultType="java.lang.String" parameterType="com.nursery.beans.RecruiterManagmentDO">
         SELECT realName FROM  `tb_er_recruit` WHERE id = #{id}
+    </select>
+
+    <select id="selectByUsername" resultType="com.nursery.beans.RecruiterManagmentDO">
+        SELECT * FROM  `tb_er_recruit` WHERE recruitName = #{value}
+    </select>
+
+    <select id="selectRolesByUsername" resultMap="role">
+        SELECT * FROM `tb_role` WHERE ID IN (SELECT a.`ROLEID`  FROM  `tb_middle_recruiter_role` a WHERE `RECRUITERID` = #{recruitID});
     </select>
 </mapper>

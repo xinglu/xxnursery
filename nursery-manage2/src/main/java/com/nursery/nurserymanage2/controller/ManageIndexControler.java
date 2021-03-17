@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ManageIndexControler {
     private static final Logger log = LoggerFactory.getLogger(ManageIndexControler.class);
 
-    @GetMapping(value = {"/index","/index.html"})
+    @GetMapping(value = {"/index","/index.html","/"})
     public String index(){
         return "index";
     }

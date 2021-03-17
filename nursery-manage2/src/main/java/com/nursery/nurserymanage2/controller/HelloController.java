@@ -7,12 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/manage")
 public class HelloController extends BaseController {
 
     private static final Logger log = LoggerFactory.getLogger(HelloController.class);
 
-    @RequestMapping(value = {"/login","/login.html","/login/","/nursery/login","/nursery/login/","/nursery/login.html"})
+    @RequestMapping(value = {"/login","/login.html"})
     public String loginPage(){
         return "main_login";
     }

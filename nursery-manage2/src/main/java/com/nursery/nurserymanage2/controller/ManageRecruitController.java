@@ -192,7 +192,7 @@ public class ManageRecruitController extends BaseController implements ManageRec
      * @param recruitId
      * @return
      */
-    @RequestMapping(value = {"/manage/recruit/resume/download/{consumerId}/{recruitId}"})
+    @RequestMapping(value = {"/recruit/resume/download/{consumerId}/{recruitId}"})
     @Override
     public ModelAndView downloadResume(String consumerId, String recruitId) {
         return null;
@@ -204,7 +204,7 @@ public class ManageRecruitController extends BaseController implements ManageRec
      * @param recruitId
      * @return
      */
-    @RequestMapping(value = {"/manage/recruit/resume/look/{consumerId}/{recruitId}"})
+    @RequestMapping(value = {"/recruit/resume/look/{consumerId}/{recruitId}"})
     @Override
     public ModelAndView lookResume(String consumerId, String recruitId) {
 
@@ -214,7 +214,7 @@ public class ManageRecruitController extends BaseController implements ManageRec
 
 
 
-    @RequestMapping(value = "/manage/recruit/delete/{erId}/{recruitId}")
+    @RequestMapping(value = "/recruit/delete/{erId}/{recruitId}")
     public ResponseResult deleteRecruit(@PathVariable(value = "erId",required = true) String erId,@PathVariable(value = "recruitId",required = true) String recruitId){
         int i = nurseryRecruitInfoSV.deleteRecruitById(erId);
         return null;
