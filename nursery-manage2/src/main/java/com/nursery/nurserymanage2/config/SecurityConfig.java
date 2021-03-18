@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -14,10 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ import java.util.Collection;
  *  * rememberMe() 开启记住我功能
  *  * csrf()       配置CSRF跨站请求伪造防护功能
  */
-@Component
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -50,12 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //静态资源放行
                 .antMatchers("/assets/**","/css/**","/fonts/**","/img/**","/js/**","/lib/**").permitAll()
                 //登录链接放行
-                .antMatchers("/login","/login.html").permitAll()
+                .antMatchers("/login","/login.html","/error_404.html","error_500.html").permitAll()
                 //ADMIN放行
-                .antMatchers("/manage/announcement/*","/manage/pullAnnouncement/*","/manage/announce/detail/**").hasRole("ADMIN")
-                .antMatchers("/manage/consumer/visit","/manage/consumer/visitConsumerInfo/*","/manage/consumer/visitConsumerEdit/*").hasRole("ADMIN")
-                .antMatchers("/manage/recruit/**","/manage/announce/**","/manage/consumer/**","/manage/recruit/**","/manage/postRecruitment/*").hasRole("ADMIN")
-                .antMatchers("/manage/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         /**
@@ -82,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         String url = request.getParameter("url");
+                        System.out.println(url);
                         RequestCache requestCache = new HttpSessionRequestCache();
                         SavedRequest savedRequest = requestCache.getRequest(request, response);
                         if(savedRequest != null){
@@ -105,19 +103,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
                         String url = request.getParameter("url");
-                        response.sendRedirect("/login?error&url="+url);
+                        response.sendRedirect("/login?error");
                     }
                 });
         http.rememberMe().alwaysRemember(true).tokenValiditySeconds(60*30);
-        http.logout().logoutUrl("/logout").logoutSuccessUrl("/");
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/login");
         http.exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
             @Override
             public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-                request.getRequestDispatcher("/error_403").forward(request,response);
+                request.getRequestDispatcher("/error_404").forward(request,response);
             }
         });
-        http.headers().frameOptions().sameOrigin();
-        http.csrf().disable();
+        http.headers()
+                .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                .and().csrf().disable();
     }
 
     @Override

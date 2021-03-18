@@ -8,7 +8,6 @@ public class Java02 {
 
     public static void main(String[] args) {
         add();
-//        drop();
     }
     public static void add(){
         String[] provs = new String[]{
@@ -50,9 +49,9 @@ public class Java02 {
             for (int i = 1; i <= 12; i++) {
                 String sql = "";
                 if(i<10){
-                    sql = "ALTER TABLE `t_reg_rgsh_prov_inter_log_"+prov+"_20210"+i+"` MODIFY COLUMN  `CUT_PORTRT_PATH_BAK` VARCHAR (255) COMMENT 'rgsh选择图片后，备份cutPortrtStoinPath原始值';";
+                    sql = "ALTER TABLE `t_reg_rgsh_prov_inter_log_"+prov+"_20210"+i+"` MODIFY COLUMN  `SECD_CUT_PORTRT_PATH_BAK` VARCHAR (155) COMMENT 'rgsh选择图片后，备份secdCutPortrtStoinPath原始值';";
                 }else{
-                    sql = "ALTER TABLE `t_reg_rgsh_prov_inter_log_"+prov+"_2021"+i+"` MODIFY COLUMN  `CUT_PORTRT_PATH_BAK` VARCHAR (255) COMMENT 'rgsh选择图片后，备份cutPortrtStoinPath原始值';";
+                    sql = "ALTER TABLE `t_reg_rgsh_prov_inter_log_"+prov+"_2021"+i+"` MODIFY COLUMN  `SECD_CUT_PORTRT_PATH_BAK` VARCHAR (155) COMMENT 'rgsh选择图片后，备份secdCutPortrtStoinPath原始值';";
                 }
                 count++;
                 System.out.println(sql);

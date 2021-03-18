@@ -21,4 +21,14 @@ public class HelloController extends BaseController {
     public String recruitPage(){
         return "recruitManagePage";
     }
+
+    @RequestMapping(value = {"/error_404.html"})
+    public String error_404(){
+        return "404";
+    }
+
+    @RequestMapping(value = {"/error_500.html"})
+    public String error_500(){
+        return "500";
+    }
 }

@@ -278,7 +278,7 @@
                         <span>新星</span>
                     </a>
                 </li>
-
+                <!--招聘-->
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-laptop"></i>
@@ -290,7 +290,7 @@
                         <li><a th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
                     </ul>
                 </li>
-
+                <!--用户-->
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
@@ -302,7 +302,7 @@
                         <li><a href="modal.html">Modal</a></li>
                     </ul>
                 </li>
-
+                <!--通告-->
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
@@ -313,19 +313,15 @@
                         <li><a th:href="@{/manage/announcement/1.html}">通告管理</a></li>
                     </ul>
                 </li>
-
+                <!--日志-->
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-glass"></i>
-                        <span>Extra</span>
+                        <span>日志中心</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="blank.html">Blank Page</a></li>
-                        <li><a href="sidebar_closed.html">Sidebar Closed</a>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="fb_wall.html">FB Wall</a></li>
-                        <li><a href="404.html">404 Error</a></li>
-                        <li><a href="500.html">500 Error</a></li>
+                        <li><a th:href="'/manage/consumer/log.html'">用户日志</a></li>
+                        <li><a th:href="'/manage/admin/log.html'">管理人员日志</a>
                     </ul>
                 </li>
             </ul>

@@ -24,4 +24,8 @@ public class LogDO {
         private String logId;
         private String date;
         private String tableFlag;
+        private String startDate;
+        private String endDate;
+        private String consumerName;
+        private String consumerId;
 }

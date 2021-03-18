@@ -20,5 +20,11 @@
     <insert id="insertLog">
         INSERT INTO tb_log_manage_${tableFlag} (ID,CLASSIFY,CAOZUOTYPE,CAOZUODATE,ADMINERID,SQLID,DOTHING) VALUE (#{logId},#{classify},#{type},#{date},#{erId},#{id},#{dothing})
     </insert>
+    <select id="selectLogs" resultType="com.nursery.beans.LogDO">
+        SELECT * FROM tb_log_manage_${tableFlag} WHERE `CLASSIFY` LIKE #{consumerName} AND `CAOZUODATE`  BETWEEN  #{startDate}  AND #{endDate};
+    </select>
+    <select id="selectAdminLogs" resultType="com.nursery.beans.LogDO">
+
+    </select>
 
 </mapper>

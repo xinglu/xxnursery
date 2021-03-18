@@ -3,6 +3,7 @@ package com.nursery.dao;
 import com.nursery.beans.LogDO;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * author:MeiShiQiang
@@ -13,4 +14,7 @@ public interface LoggerManageMapper {
 
     void insertLog(LogDO logDO) throws SQLException;
 
+    List<LogDO> selectLogs(LogDO logDO);
+
+    List<LogDO> selectAdminLogs(LogDO logDO);
 }
