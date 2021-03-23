@@ -14,37 +14,143 @@
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet"/>
 </head>
+<style>
+    body {
+        background: #f9f9f9;
+    }
+
+    h1, h2, h3, h4, h5, b, strong {
+        color: black;
+    }
+
+    #container {
+        font-family: "楷体", "楷体_GB2312";
+    }
+
+    .navbar-inverse {
+        background-color: #8a0c0c;;
+        border-bottom: 1px solid #8a0c0c;;
+        border-color: #8a0c0c;;
+        font-weight: 400;
+    }
+
+    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus {
+        background-color: #4c1414;
+    }
+
+    .btn-default {
+        background-color: #596167;
+    }
+
+    .new_job_b b {
+        font-size: 16px;
+    }
+
+    .new_job_b li a {
+        margin-top: -0;
+        text-shadow: 1px 1px 1px black;
+    }
+
+    .site-footer {
+        background: black;
+        padding: 30px 0;
+    }
+
+    .new-out img {
+        width: 85%;
+        height: 60px;
+    }
+
+    .new-out h2 {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .new-out h2 span {
+        border-right: 3px solid #436849;
+        padding-right: 10px;
+    }
+
+    .new-out p {
+        padding-right: 20px;
+    }
+
+</style>
 <body>
 <section id="container" class="">
+    <th:block th:if="${param.error != null}">
+        <script>
+            if (confirm("参数信息不正确,请先登录!!")) {
+                window.location.href = '/login';
+            } else {
+                window.location.href = '/discover';
+            }
+        </script>
+    </th:block>
     <!--头部-->
     <header class="">
         <!--导航栏-->
-        <div class="navbar navbar-inverse navbar-fixed-top bg-discover1">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
-                            data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand hidden-sm" href="http://www.bootcss.com">新星幼儿园</a>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <th:block th:if="${param.number != null}">
+                <span th:text="${param.number}" hidden></span>
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand hidden-sm" th:href="'/index?number='+${param.number}">新星幼儿园</a>
+                    </div>
+                    <div class="navbar-collapse collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/index" th:href="'/index?number='+${param.number}">首页</a></li>
+                            <li><a href="/job_detail" th:href="'/job_detail?number='+${param.number}">职位</a></li>
+                            <li class="active"><a href="/discover" th:href="'/discover?number='+${param.number}">发现</a>
+                            </li>
+                            <li><a href="/information" th:href="'/information?number='+${param.number}">咨询</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right hidden-sm">
+                            <li><a href="/resume">简历</a></li>
+                            <span th:text="${param.number}" hidden></span>
+                            <li><a href="/consumer/personal/1" th:href="'/logout/'+${param.number}">退出</a></li>
+                            <li><a href="/consumer/personal/1"
+                                   th:href="'/consumer/personal/'+${param.number}">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i><span></span>:个人中心
+                            </a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="navbar-collapse collapse" role="navigation">
-                    <ul class="nav navbar-nav">
-                        <li><a th:href="'/index'" target="_blank">首页</a></li>
-                        <li><a th:href="'/job_detail'" target="_blank">职位</a></li>
-                        <li class="discover1-active"><a th:href="'/discover'" target="_blank">发现</a></li>
-                        <li><a th:href="'/information'" target="_blank">咨询</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right hidden-sm">
-                        <li><a href="/about/">简历</a></li>
-                        <li><a href="/about/">上传</a></li>
-                        <li><a th:href="'/consumer/personal/1'">个人中心</a></li>
-                    </ul>
+            </th:block>
+            <th:block th:if="${param.number == null}">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand hidden-sm" th:href="'/index'">新星幼儿园</a>
+                    </div>
+                    <div class="navbar-collapse collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/index" th:href="'/index'">首页</a></li>
+                            <li><a href="/job_detail" th:href="'/job_detail'">职位</a></li>
+                            <li class="active"><a href="/discover" th:href="'/discover'">发现</a></li>
+                            <li><a href="/information" th:href="'/information'">咨询</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right hidden-sm">
+                            <li><a href="/resume">简历</a></li>
+                            <li><a th:href="'/login.html'">用户！请登录</a></li>
+                            <li><a th:href="'/register.html'">快捷注册</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </th:block>
         </div>
     </header>
     <!--头部-->
@@ -63,6 +169,7 @@
                     </div>
                 </div>
             </div>
+            <div style="margin-top: 36px;"></div>
             <!--faxian-content-->
             <div class="container">
                 <div class="row faxian-content">
@@ -85,10 +192,22 @@
                                    class="topic-link">#<span th:text="${topic.tag}">标签内容</span></a>
                                 <div class="faxian-answer">
                                     <div class="like-wrap">
-                                        <button class="btn btn-primary" type="button" data-toggle="collapse"
-                                                th:attrappend="data-target=${'#' + topic.id}" aria-expanded="false">
-                                            回答
-                                        </button>
+
+                                        <th:block th:if="${param.number!=null}">
+                                            <!--用户已经登录-->
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                    th:attrappend="data-target=${'#' + topic.id}" aria-expanded="false"
+                                                    th:onclick="answer([[${param.number}]]);">
+                                                回答
+                                            </button>
+                                        </th:block>
+                                        <th:block th:unless="${param.number!=null}">
+                                            <!--用户还未登录-->
+                                            <button class="btn btn-primary" type="button" data-toggle="modal"
+                                                    data-target="#loginModal">
+                                                回答
+                                            </button>
+                                        </th:block>
                                     </div>
                                     <div class="get-wrap">
                                         <a class="btn btn-primary" th:href="'/discover/wenti/'+${topic.id}">
@@ -178,6 +297,61 @@
 
     </section>
     <!--正文-->
+    <!--登录模态框-->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        快捷 登录
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <strong>您还没有登录，请先登录后发表品论哦！！</strong>
+                    <hr/>
+                    <div>
+                        <form class="form-horizontal" method="post" id="loginForm">
+                            <div class="form-group">
+                                <label for="username" class="col-sm-2 control-label">手机号/邮箱</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="username" placeholder="手机号/邮箱">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-2 control-label">密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="password" placeholder="密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> 记住我
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning alert-dismissible" role="alert" id="loginWarn" hidden="hidden">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>错误信息!</strong> 密码或者手机号/邮箱错误!!
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">登录</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <!--页脚-->
     <footer class="site-footer">
         <div class="text-center">
@@ -200,10 +374,57 @@
 <script src="/js/slidebars.min.js"></script>
 <script src="/js/common-scripts.js"></script>
 <script>
-    function publish(tableid) {
-        var content = $("#"+"input"+tableid).val();
-        window.href.location = "/wenti/"+tableid+'/'+content;
+    var todayDate = new Date();
+    var year = todayDate.getFullYear();
+    var date = todayDate.getDate() + "";
+    if (date.length == 1) {
+        date = "0" + date;
     }
+    var month = todayDate.getMonth() + 1 + "";
+    if (month.length == 1) {
+        month = "0" + month;
+    }
+    var hour = todayDate.getHours() + "";
+    if (hour.length == 1) {
+        hour = "0" + hour;
+    }
+    var mininutes = todayDate.getMinutes() + "";
+    if (mininutes.length == 1) {
+        mininutes = "0" + mininutes;
+    }
+    var seconds = todayDate.getSeconds() + "";
+    if (seconds.length == 1) {
+        seconds = "0" + seconds;
+    }
+    var ran = Math.round((Math.random()) * 10000);
+    var liushui = "" + year + "" + month + "" + date + "" + hour + "" + mininutes + "" + seconds + "" + ran;
+
+    /**
+     * @param tableId  标题id
+     */
+    function publish(tableId) {
+        var content = $("#" + "input" + tableId).val();
+        window.href.location = "/wenti/" + tableId + '/' + content;
+    }
+
+    /**
+     * 提交登录表单
+     */
+    $("#loginForm").submit(function () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var params = "yhu=" + username + "&pass=" + password + "&liushui=" + liushui;
+        $.post("/consumer/login", params, function (data) {
+            var message =  data.message;
+            var code = data.code;
+            var success = data.success;
+            if (message=="操作成功！" || code == 10000 || success == true) {
+                window.location.href = message+"?number="+liushui;
+            } else {
+                $("#loginWarn").removeAttr("hidden")
+            }
+        });
+    });
 </script>
 </body>
 </html>

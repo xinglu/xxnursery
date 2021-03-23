@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HelloController extends BaseController {
 
-    @RequestMapping(value = {"/register","/register/","/register.html","/nursery/register","/nursery/register/","/nursery/register.html"})
+    @RequestMapping(value = {"/register","/register.html","/nursery/register","/nursery/register/","/nursery/register.html"})
     public String register(){
         return "registration";
     }

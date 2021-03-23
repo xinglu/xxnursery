@@ -16,38 +16,159 @@
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet"/>
 </head>
+<style>
+    body{
+        background: #f9f9f9;
+    }
+    h1,h2,h3,h4,h5,b,strong{
+        color:black;
+    }
+    #container{
+        font-family: "楷体","楷体_GB2312";
+    }
+    .navbar-inverse {
+        background-color:black;
+        border-bottom:1px solid black;
+        border-color: black;
+        font-weight:400;
+    }
+    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus {
+        background-color: #3c3c3e;
+    }
+    .inner{
+        padding: 0 0 0 0;
+    }
+    .myCarousel{
+        padding-left:16px;
+        padding-right:16px;
+    }
+    .job_block{
+        margin-bottom:10px;
+    }
+    .btn-default {
+        background-color: #596167;
+    }
+    .btn-success {
+        background-color: #27381f;
+        border-color: #ffffff;
+    }
+    .new_job_b b{
+        font-size:16px;
+    }
+    .new_job_b  li  a{
+        margin-top:-0;
+        text-shadow:1px 1px 1px black;
+    }
+    .position-body{
+        border-radius:5px;
+    }
+    .position-block{
+        padding:0 9px;
+    }
+    .site-footer{
+        background:black;
+        padding:30px 0;
+    }
+    .filter-flex{
+        align-items:space-between;
+    }
+    .new-out{
+        width: 388px;
+        max-width: 388px;
+        box-shadow: 0px 0px 5px black;
+        padding: 20px 0 30px 30px;
+    }
+    .new-out img{
+        width: 85%;
+        height: 60px;
+    }
+    .new-out h2{
+        margin-top: 0;
+        padding: 0;
+    }
+    .new-out h2 span{
+        border-right: 3px solid #436849;
+        padding-right: 10px;
+    }
+    .new-out p{
 
+        padding-right: 20px;
+    }
+    .new-out-s{
+        margin-top: 20px;
+    }
+    .job_detail_m{
+        margin-top: 20px;
+    }
+    .job-detail-bottom{
+        margin-top: 50px;
+    }
+</style>
 <body class="mega-nav">
 <section id="container">
     <!--头部-->
     <header class="">
         <!--导航栏-->
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
-                            data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand hidden-sm" href="http://www.bootcss.com">新星幼儿园</a>
+            <th:block th:if="${param.number != null}">
+                <span th:text="${param.number}" hidden></span>
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand hidden-sm" th:href="'/index?number='+${param.number}">新星幼儿园</a>
+                    </div>
+                    <div class="navbar-collapse collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/index" th:href="'/index?number='+${param.number}">首页</a></li>
+                            <li class="active"><a href="/job_detail" th:href="'/job_detail?number='+${param.number}">职位</a></li>
+                            <li><a href="/discover" th:href="'/discover?number='+${param.number}">发现</a></li>
+                            <li><a href="/information" th:href="'/information?number='+${param.number}">咨询</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right hidden-sm">
+                            <li><a href="/resume">简历</a></li>
+                            <span th:text="${param.number}" hidden></span>
+                            <li><a href="/consumer/personal/1" th:href="'/logout/'+${param.number}">退出</a></li>
+                            <li><a href="/consumer/personal/1"
+                                   th:href="'/consumer/personal/'+${param.number}">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i><span></span>:个人中心
+                            </a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="navbar-collapse collapse" role="navigation">
-                    <ul class="nav navbar-nav">
-                        <li><a th:href="'/index'" target="_blank">首页</a></li>
-                        <li class="active"><a th:href="'/job_detail'" target="_blank">职位</a></li>
-                        <li><a th:href="'/discover'" target="_blank">发现</a></li>
-                        <li><a th:href="'/information'" target="_blank">咨询</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right hidden-sm">
-                        <li><a href="/about/">简历</a></li>
-                        <li><a href="/about/">上传</a></li>
-                        <li><a href="/about/">个人中心</a></li>
-                    </ul>
+            </th:block>
+            <th:block th:if="${param.number == null}">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand hidden-sm" th:href="'/index'">新星幼儿园</a>
+                    </div>
+                    <div class="navbar-collapse collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/index" th:href="'/index'">首页</a></li>
+                            <li class="active"><a href="/job_detail" th:href="'/job_detail'">职位</a></li>
+                            <li><a href="/discover" th:href="'/discover'">发现</a></li>
+                            <li><a href="/information" th:href="'/information'">咨询</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right hidden-sm">
+                            <li><a href="/resume">简历</a></li>
+                            <li><a th:href="'/login.html'">用户！请登录</a></li>
+                            <li><a th:href="'/register.html'">快捷注册</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </th:block>
         </div>
         <!--搜索框-->
         <div class="row inner search-inner">
@@ -93,72 +214,75 @@
             </dl>
         </div>
         <!--条件筛选-->
-        <div class="row inner filter_area text-center">
-            <div class="filter-select-box">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        工作经验 <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="/c101180100/" id="sel-exp-0" rel="nofollow">不限</a></li>
-                        <li><a href="/c101180100/e_108/" id="sel-exp-108" rel="nofollow">在校生</a></li>
-                        <li><a href="/c101180100/e_102/" id="sel-exp-102" rel="nofollow">应届生</a></li>
-                        <li><a href="/c101180100/e_103/" id="sel-exp-103" rel="nofollow">1年以内</a></li>
-                        <li><a href="/c101180100/e_104/" id="sel-exp-104" rel="nofollow">1-3年</a></li>
-                        <li><a href="/c101180100/e_105/" id="sel-exp-105" rel="nofollow">3-5年</a></li>
-                        <li><a href="/c101180100/e_106/" id="sel-exp-106" rel="nofollow">5-10年</a></li>
-                        <li><a href="/c101180100/e_107/" id="sel-exp-107" rel="nofollow">10年以上</a></li>
-                    </ul>
+        <div class="row inner filter_area">
+            <div class="filter-select-box  col-lg-10 col-sm-10">
+                <div class="text-left">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            工作经验 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/c101180100/" id="sel-exp-0" rel="nofollow">不限</a></li>
+                            <li><a href="/c101180100/e_108/" id="sel-exp-108" rel="nofollow">在校生</a></li>
+                            <li><a href="/c101180100/e_102/" id="sel-exp-102" rel="nofollow">应届生</a></li>
+                            <li><a href="/c101180100/e_103/" id="sel-exp-103" rel="nofollow">1年以内</a></li>
+                            <li><a href="/c101180100/e_104/" id="sel-exp-104" rel="nofollow">1-3年</a></li>
+                            <li><a href="/c101180100/e_105/" id="sel-exp-105" rel="nofollow">3-5年</a></li>
+                            <li><a href="/c101180100/e_106/" id="sel-exp-106" rel="nofollow">5-10年</a></li>
+                            <li><a href="/c101180100/e_107/" id="sel-exp-107" rel="nofollow">10年以上</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            学历要求 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/c101180100/" id="sel-degree-0" rel="nofollow">不限</a></li>
+                            <li><a href="/c101180100/d_209/" id="sel-degree-209" rel="nofollow">初中及以下</a></li>
+                            <li><a href="/c101180100/d_208/" id="sel-degree-208" rel="nofollow">中专/中技</a></li>
+                            <li><a href="/c101180100/d_206/" id="sel-degree-206" rel="nofollow">高中</a></li>
+                            <li><a href="/c101180100/d_202/" id="sel-degree-202" rel="nofollow">大专</a></li>
+                            <li><a href="/c101180100/d_203/" id="sel-degree-203" rel="nofollow">本科</a></li>
+                            <li><a href="/c101180100/d_204/" id="sel-degree-204" rel="nofollow">硕士</a></li>
+                            <li><a href="/c101180100/d_205/" id="sel-degree-205" rel="nofollow">博士</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            薪资要求 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/c101180100/" id="sel-salary-0" rel="nofollow">不限</a></li>
+                            <li><a href="/c101180100/y_1/" id="sel-salary-1" rel="nofollow">3K以下</a></li>
+                            <li><a href="/c101180100/y_2/" id="sel-salary-2" rel="nofollow">3-5K</a></li>
+                            <li><a href="/c101180100/y_3/" id="sel-salary-3" rel="nofollow">5-10K</a></li>
+                            <li><a href="/c101180100/y_4/" id="sel-salary-4" rel="nofollow">10-15K</a></li>
+                            <li><a href="/c101180100/y_5/" id="sel-salary-5" rel="nofollow">15-20K</a></li>
+                            <li><a href="/c101180100/y_6/" id="sel-salary-6" rel="nofollow">20-30K</a></li>
+                            <li><a href="/c101180100/y_7/" id="sel-salary-7" rel="nofollow">30-50K</a></li>
+                            <li><a href="/c101180100/y_8/" id="sel-salary-8" rel="nofollow">50K以上</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            发布时间 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/c101180100/" id="sel-scale-0">不限</a></li>
+                            <li><a href="/c101180100/?period=1" id="sel-scale-1">一天以内</a></li>
+                            <li><a href="/c101180100/?period=2" id="sel-scale-2">三天以内</a></li>
+                            <li><a href="/c101180100/?period=3" id="sel-scale-3">七天以内</a></li>
+                            <li><a href="/c101180100/?period=4" id="sel-scale-4">十五天以内</a></li>
+                            <li><a href="/c101180100/?period=5" id="sel-scale-5">一个月以内</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        学历要求 <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="/c101180100/" id="sel-degree-0" rel="nofollow">不限</a></li>
-                        <li><a href="/c101180100/d_209/" id="sel-degree-209" rel="nofollow">初中及以下</a></li>
-                        <li><a href="/c101180100/d_208/" id="sel-degree-208" rel="nofollow">中专/中技</a></li>
-                        <li><a href="/c101180100/d_206/" id="sel-degree-206" rel="nofollow">高中</a></li>
-                        <li><a href="/c101180100/d_202/" id="sel-degree-202" rel="nofollow">大专</a></li>
-                        <li><a href="/c101180100/d_203/" id="sel-degree-203" rel="nofollow">本科</a></li>
-                        <li><a href="/c101180100/d_204/" id="sel-degree-204" rel="nofollow">硕士</a></li>
-                        <li><a href="/c101180100/d_205/" id="sel-degree-205" rel="nofollow">博士</a></li>
-                    </ul>
-                </div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        薪资要求 <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="/c101180100/" id="sel-salary-0" rel="nofollow">不限</a></li>
-                        <li><a href="/c101180100/y_1/" id="sel-salary-1" rel="nofollow">3K以下</a></li>
-                        <li><a href="/c101180100/y_2/" id="sel-salary-2" rel="nofollow">3-5K</a></li>
-                        <li><a href="/c101180100/y_3/" id="sel-salary-3" rel="nofollow">5-10K</a></li>
-                        <li><a href="/c101180100/y_4/" id="sel-salary-4" rel="nofollow">10-15K</a></li>
-                        <li><a href="/c101180100/y_5/" id="sel-salary-5" rel="nofollow">15-20K</a></li>
-                        <li><a href="/c101180100/y_6/" id="sel-salary-6" rel="nofollow">20-30K</a></li>
-                        <li><a href="/c101180100/y_7/" id="sel-salary-7" rel="nofollow">30-50K</a></li>
-                        <li><a href="/c101180100/y_8/" id="sel-salary-8" rel="nofollow">50K以上</a></li>
-                    </ul>
-                </div>
-
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        发布时间 <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="/c101180100/" id="sel-scale-0">不限</a></li>
-                        <li><a href="/c101180100/?period=1" id="sel-scale-1">一天以内</a></li>
-                        <li><a href="/c101180100/?period=2" id="sel-scale-2">三天以内</a></li>
-                        <li><a href="/c101180100/?period=3" id="sel-scale-3">七天以内</a></li>
-                        <li><a href="/c101180100/?period=4" id="sel-scale-4">十五天以内</a></li>
-                        <li><a href="/c101180100/?period=5" id="sel-scale-5">一个月以内</a></li>
-                    </ul>
-                </div>
+            </div>
+            <div class="col-lg-2 col-sm-2  text-right">
                 <a href="/c101180100/?query=" id="empty-filter" class="btn btn-danger" rel="nofollow">清空筛选条件</a>
             </div>
         </div>
@@ -169,12 +293,15 @@
     <section>
         <section class="container">
             <div class="row">
+                <div class="job_detail_m">
+
+                </div>
                 <div class="col-md-8">
                     <div class="row">
                         <th:block th:if="${recommendData!=null}" th:each="data,star:${recommendData}"
                                   th:object="${data}">
-                            <div class="col-md-5" th:classappend="${star.odd}?' ':'col-md-offset-2'">
-                                <div class="job-primary" th:classappend="${star.odd}?'job-odd'">
+                            <div class="col-md-12">
+                                <div class="job-primary">
                                     <div class="info-primary">
                                         <div class="primary-wrapper">
                                             <div class="primary-box"
@@ -187,7 +314,7 @@
 
                                                     <span class="job-area-wrapper">
                                                         <span class="job-area"
-                                                                          th:text="*{#strings.abbreviate(place,12)}">地址信息</span>
+                                                              th:text="*{#strings.abbreviate(place,12)}">地址信息</span>
                                                     </span>
                                                     <span class="job-pub-time" th:text="*{#strings.substring(starttime,5,#strings.length(starttime))}">发布时间</span>
                                                 </div>
@@ -215,11 +342,30 @@
                         </th:block>
                     </div>
                 </div>
-            </div>
+                <div class="col-md-4 hidden-sm">
+                    <div class="row">
+                        <div class="new-out-s">
+                            <div class="new-out">
+                                <div>
+                                    <img src="./img/404_icon.png" alt="服务器错误"/>
+                                    <h2><span>新闻标题</span></h2>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;基本内容,内容显示河南省郑州市管城河南省郑州市管城回...
+                                        基本内容,内容显示河南省郑州市管城河南省郑州市管城回...
+                                        基本内容,内容显示河南省郑州市管城河南省郑州市管城回...
+                                        基本内容,内容显示河南省郑州市管城河南省郑州市管城回...。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </section>
     </section>
     <!--正文-->
+    <div class="job-detail-bottom">
+
+    </div>
     <!--页脚-->
     <footer class="site-footer">
         <div class="text-center">

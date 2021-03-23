@@ -2,6 +2,7 @@ package com.nursery.api.iservice;
 
 import com.nursery.beans.DBDataParam;
 import com.nursery.beans.NurseryAnnounceDO;
+import com.nursery.beans.NurseryAnnounceDetailDO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -42,7 +43,7 @@ public interface INurseryAnnounceSV {
     List<NurseryAnnounceDO> getRecommendAnnounceDO() throws SQLException;
 
     //根据id获取announce的详细页面
-    NurseryAnnounceDO getannounceDetailById(String id);
+    NurseryAnnounceDetailDO getannounceDetailById(String id) throws SQLException;
 
     //获取所有的公告信息
     List<NurseryAnnounceDO> selectAnnunces() throws SQLException;

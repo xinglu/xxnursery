@@ -130,8 +130,13 @@ public interface DomesticConsumerMapper {
             "where consumer_id = #{consumerID}")
     int updateConsumer(DomesticConsumerDO consumerDO);
 
-    //查询当前月份新增用户，
-    @Select("select * from tb_consumer where consumer_email = #{param1} AND consumer_password = #{param2}")
+    //根据mail查询
+    @Select("select * from tb_consumer where consumer_email = #{param1}")
     @ResultMap("domesticConsumer")
     List<DomesticConsumerDO> findByMailAndPass(String mail, String pass)throws SQLException;
+
+    //根据cellphone
+    @Select("select * from tb_consumer where consumer_cellphone = #{param1}")
+    @ResultMap("domesticConsumer")
+    List<DomesticConsumerDO> findByCellAndPass(String cellPhone, String pass) throws SQLException;
 }

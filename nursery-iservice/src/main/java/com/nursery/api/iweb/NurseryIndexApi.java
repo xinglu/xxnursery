@@ -3,7 +3,6 @@ package com.nursery.api.iweb;
 import com.nursery.beans.RecruitmentDO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -15,20 +14,7 @@ import java.util.List;
 public interface NurseryIndexApi {
 
     @ApiOperation("首页")
-    public ModelAndView index(ModelAndView modelAndView);
-
-    /**
-     * 测试
-     *  添加数据
-     */
-    @PutMapping("/insertAnnounce")
-    void insertAnnounce();
-    /**
-     * 测试
-     *  添加数据
-     */
-    @PutMapping("/insertlunbotu")
-    void insertlunbotu();
+    public ModelAndView index(ModelAndView modelAndView,String lishui);
 
     //获取最新数据
     @ApiOperation("获取最新数据")

@@ -1,4 +1,29 @@
 var Script = function () {
+    var todayDate = new Date();
+    var year = todayDate.getFullYear();
+    var date = todayDate.getDate() + "";
+    if (date.length == 1) {
+        date = "0" + date;
+    }
+    var month = todayDate.getMonth() + 1 + "";
+    if (month.length == 1) {
+        month = "0" + month;
+    }
+    var hour = todayDate.getHours() + "";
+    if (hour.length == 1) {
+        hour = "0" + hour;
+    }
+    var mininutes = todayDate.getMinutes() + "";
+    if (mininutes.length == 1) {
+        mininutes = "0" + mininutes;
+    }
+    var seconds = todayDate.getSeconds() + "";
+    if (seconds.length == 1) {
+        seconds = "0" + seconds;
+    }
+    var ran = Math.round((Math.random()) * 10000);
+    var liushui = "" + year + "" + month + "" + date + "" + hour + "" + mininutes + "" + seconds +""+ ran;
+    $("input[name='liushui']").val(liushui);
     //校验密码
     function checkPassword() {
         //1.获取密码值
@@ -56,10 +81,13 @@ var Script = function () {
 
     //登录
     $("#loginForm").submit(function () {
+        var liushui = $("input[name='liushui']").val();
         $.post("/consumer/login", $("#loginForm").serialize(), function (data) {
-            if (data.success) {
-                // window
-                alert("跳转到登录页面")
+            var message =  data.message;
+            var code = data.code;
+            var success = data.success;
+            if (message=="操作成功！" || code == 10000 || success == true) {
+                location.href = '/index?number='+liushui;
             } else {
                 alert(data.message);
             }

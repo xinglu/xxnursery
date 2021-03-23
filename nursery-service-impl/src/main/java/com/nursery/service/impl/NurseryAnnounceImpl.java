@@ -92,7 +92,7 @@ public class NurseryAnnounceImpl implements INurseryAnnounceSV {
     }
 
     @Override
-    public NurseryAnnounceDO getannounceDetailById(String id) {
+    public NurseryAnnounceDetailDO getannounceDetailById(String id) throws SQLException {
         return announceDetailMapper.selectAnnounceDetailById(id);
     }
 
@@ -123,6 +123,7 @@ public class NurseryAnnounceImpl implements INurseryAnnounceSV {
         String id = CommonUtil.getUUID();
         String author = nurseryAnnounceDO.getAuthor();
         String startDate = DateUtils.getNowDate("yyyy-MM-dd");
+        String content = nurseryAnnounceDO.getContent();
         try {
             nurseryAnnounceDO.setId(id);
             nurseryAnnounceDO.setDate(DateUtils.getNowDate("yyyy-MM-dd HH:mm"));
@@ -134,6 +135,8 @@ public class NurseryAnnounceImpl implements INurseryAnnounceSV {
             nurseryAnnounceDO.setPath("/information/djxq/" + id + ".html");
             nurseryAnnounceDO.setTitle(nurseryAnnounceDO.getTable());
             nurseryAnnounceDO.setTableflag(CommonAttrs.TB_ANNOUNCE + "202101");
+            content = content.replaceAll("[^\\u4e00-\\u9fa5]", "");
+            nurseryAnnounceDO.setContent(content);
             nurseryAnnounceMapper.insert(nurseryAnnounceDO);
             announceDetailDO = new NurseryAnnounceDetailDO();
             announceDetailDO.setTitle(title);

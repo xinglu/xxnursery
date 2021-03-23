@@ -34,14 +34,14 @@
                 <div class="navbar-collapse collapse" role="navigation">
                     <ul class="nav navbar-nav">
                         <li><a th:href="'/index'" target="_blank">首页</a></li>
-                        <li><a th:href="'/job_detail'" target="_blank">职位</a></li>
-                        <li><a href="https://www.sasscss.com/" target="_blank">发现</a></li>
-                        <li><a th:href="'/information'" target="_blank">咨询</a></li>
+                        <li><a href="/job_detail" th:href="'/job_detail'">职位</a></li>
+                        <li><a href="/discover" th:href="'/discover'">发现</a></li>
+                        <li><a href="/information" th:href="'/information'">咨询</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right hidden-sm">
+                        <li><a href="/consumer/personal/1" th:href="'/logout/'+${#strings.substring(#httpServletRequest.requestURL,45)}">退出</a></li>
                         <li><a href="/about/">简历</a></li>
-                        <li><a href="/about/">上传</a></li>
-                        <li class="active"><a th:href="'/consumer/personal/1'">个人中心</a></li>
+                        <li class="active"><a th:href="'/consumer/personalEdit/'+${#strings.substring(#httpServletRequest.requestURL,45)}">个人中心</a></li>
                     </ul>
                 </div>
             </div>
@@ -74,9 +74,9 @@
                             </div>
 
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a th:href="'/consumer/personal/1'"> <i class="fa fa-user"></i> 个人资料</a></li>
-                                <li class="active"><a th:href="'/manage/consumer/visitConsumerEdit/1'"> <i
-                                        class="fa fa-edit"></i> 编辑个人资料</a></li>
+                                <li><a th:href="'/consumer/personal/'+${#strings.substring(#httpServletRequest.requestURL,45)}"> <i class="fa fa-user"></i> 个人资料</a></li>
+                                <li class="active"><a th:href="'/consumer/personalEdit/'+${#strings.substring(#httpServletRequest.requestURL,45)}">
+                                    <i class="fa fa-edit"></i> 编辑个人资料</a></li>
                             </ul>
                         </section>
                     </aside>
@@ -257,10 +257,6 @@
 <script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <script src="/js/slidebars.min.js"></script>
 <script src="/js/common-scripts.js"></script>
-
-<script>
-
-</script>
 
 </body>
 </html>

@@ -32,14 +32,14 @@
                 <div class="navbar-collapse collapse" role="navigation">
                     <ul class="nav navbar-nav">
                         <li><a th:href="'/index'" target="_blank">首页</a></li>
-                        <li><a th:href="'/job_detail'" target="_blank">职位</a></li>
-                        <li><a href="https://www.sasscss.com/" target="_blank">发现</a></li>
-                        <li><a th:href="'/information'" target="_blank">咨询</a></li>
+                        <li><a href="/job_detail" th:href="'/job_detail'">职位</a></li>
+                        <li><a href="/discover" th:href="'/discover'">发现</a></li>
+                        <li><a href="/information" th:href="'/information'">咨询</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right hidden-sm">
+                        <li><a href="/consumer/personal/1" th:href="'/logout/'+${#strings.substring(#httpServletRequest.requestURL,41)}">退出</a></li>
                         <li><a href="/about/">简历</a></li>
-                        <li><a href="/about/">上传</a></li>
-                        <li class="active"><a th:href="'/consumer/personal/1'">个人中心</a></li>
+                        <li class="active"><a th:href="'/consumer/personal/'+${#strings.substring(#httpServletRequest.requestURL,41)}">个人中心</a></li>
                     </ul>
                 </div>
             </div>
@@ -73,8 +73,8 @@
                                 </div>
 
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li class="active"><a th:href="'/consumer/personal/1'"> <i class="fa fa-user"></i> 个人资料</a></li>
-                                    <li><a th:href="'/consumer/personalEdit/1'"> <i class="fa fa-edit"></i> 编辑个人资料</a></li>
+                                    <li class="active"><a th:href="'/consumer/personal/'+${#strings.substring(#httpServletRequest.requestURL,41)}"> <i class="fa fa-user"></i> 个人资料</a></li>
+                                    <li><a th:href="'/consumer/personalEdit/'+${#strings.substring(#httpServletRequest.requestURL,41)}"> <i class="fa fa-edit"></i> 编辑个人资料</a></li>
                                 </ul>
                             </section>
                         </aside>
@@ -241,8 +241,7 @@
     </footer>
     <!--页脚-->
 </section>
-
-<!-- js placed at the end of the document so the pages load faster -->
+<!--js文件-->
 <script src="/js/jquery.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script class="include" type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
@@ -253,7 +252,6 @@
 <script src="/js/common-scripts.js"></script>
 
 <script>
-
     //knob
     $(".knob").knob();
 

@@ -1,27 +1,27 @@
 package com.nursery.cmsweb.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.nursery.api.iservice.*;
 import com.nursery.api.iweb.NurseryIndexApi;
-import com.nursery.beans.*;
-import com.nursery.common.model.CommonString;
+import com.nursery.beans.RecruitmentDO;
+import com.nursery.beans.RecruitmentTypesDO;
+import com.nursery.beans.SlideshowDO;
+import com.nursery.beans.bo.ConsumerBO;
 import com.nursery.common.web.BaseController;
 import com.nursery.dao.NurseryAnnouncefMapper;
 import com.nursery.dao.SlideshowMapper;
-import com.nursery.utils.CommonUtil;
-import com.nursery.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * author:MeiShiQiang
@@ -52,9 +52,9 @@ public class NurseryIndexController extends BaseController implements NurseryInd
 
     private String hotjob = "RANKED_FIRST_HOT_JOB";
 
-    @GetMapping("/index")
+    @GetMapping(value = {"/index","/","/index.html","/index/","/index.html/"})
     @ResponseBody
-    public ModelAndView index(ModelAndView modelAndView) {
+    public ModelAndView index(ModelAndView modelAndView,@RequestParam(value = "number",required = false) String param) {
         try {
             //1. 获取热门信息
             String[] sordStr = searchInfoSV.getSordStr();
@@ -72,14 +72,19 @@ public class NurseryIndexController extends BaseController implements NurseryInd
             modelAndView.addObject("hotData",recruitmentDOList1);
             modelAndView.addObject("sordStr", sordStr);
             modelAndView.addObject("classStr",recruitmentTypesDOList);
+            if (!StringUtils.isEmpty(param)){
+                ConsumerBO attribute = (ConsumerBO) session.getAttribute(param);
+                modelAndView.addObject("consuerBO",attribute);
+            }
         } catch (Exception e) {
+            modelAndView.setViewName("404");
             return modelAndView;
         }
         modelAndView.setViewName("index");
         return modelAndView;
     }
 
-    @GetMapping("/index/newJob")
+    @RequestMapping(value = {"/index/newJob"},method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getNewJob(ModelAndView model){
         //. 获取最新职位
@@ -94,8 +99,7 @@ public class NurseryIndexController extends BaseController implements NurseryInd
         return model;
     }
 
-
-    @GetMapping("/index/hotJob/{typeId}/{typename}")
+    @RequestMapping(value = {"/index/hotJob/{typeId}/{typename}"},method = RequestMethod.GET)
     @ResponseBody
     public List<RecruitmentDO> getHotJob(@PathVariable("typeId") String typeId,@PathVariable("typename") String typename){
         //. 获取最新职位
@@ -106,6 +110,21 @@ public class NurseryIndexController extends BaseController implements NurseryInd
             throwables.printStackTrace();
         }
         return recruitmentDOList;
+    }
+
+    /**
+     * 退出 根据id退出
+     * @param id
+     */
+    @RequestMapping(value = {"/logout/{param}"},method = RequestMethod.GET)
+    public String logout(@PathVariable(value = "param",required = true) String id){
+        try {
+            session.removeAttribute(id);
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
+            return "500";
+        }
+        return "redirect:/index";
     }
 
     /**
@@ -125,92 +144,4 @@ public class NurseryIndexController extends BaseController implements NurseryInd
         }
         return slideMap;
     }
-
-    /**
-     * 查询公告
-     * @param
-     * @return
-     */
-    public Map<String, String> announceeList() {
-        Map<String, String> announceMap = new LinkedHashMap<>();
-        //传入参数
-        DBDataParam dbDataParam = new DBDataParam();
-        String table_prefix = CommonString.TB_ANNOUNCE;
-        String table_flag = table_prefix.concat(DateUtils.getNowDate());
-        dbDataParam.setTable_flag(table_flag);
-        List<NurseryAnnounceDO> nurseryAnnounceDOList = null;
-        try {
-            nurseryAnnounceDOList = nurseryAnnounceSV.getAnnounceeList(dbDataParam);
-            for (NurseryAnnounceDO nurseryAnnounceDO : nurseryAnnounceDOList) {
-                String id = nurseryAnnounceDO.getId();
-                String author = nurseryAnnounceDO.getAuthor();
-                String etcompiler = nurseryAnnounceDO.getEtcompiler();
-                String date = nurseryAnnounceDO.getDate();
-                String table = nurseryAnnounceDO.getTable();
-                String path = nurseryAnnounceDO.getPath();
-                String time = nurseryAnnounceDO.getTime();
-                String size = nurseryAnnounceDO.getSize();
-                // 公告名 ; 时间 * id ; path
-                // 作者名 / 编辑 / 时间
-                announceMap.put(table + ";" + date + "*" + id + ";" + path, author + "/" + etcompiler + "/" + time);
-            }
-        } catch (Exception e) {
-            System.out.println("公告查询错误");
-            e.printStackTrace();
-        }
-        return announceMap;
-    }
-
-
-    @PutMapping("/insertAnnounce")
-    public void insertAnnounce() {
-        String nowDate = DateUtils.getNowDate();
-        String tableflag = CommonString.TB_ANNOUNCE.concat("202101");
-        NurseryAnnounceDO nurseryAnnounceDO = null;
-        Random random = new Random();
-        for (int i = 0; i < 10; i++) {
-            int ran_um = random.nextInt(200) + 50;
-            nurseryAnnounceDO = new NurseryAnnounceDO();
-            nurseryAnnounceDO.setTable("测试通告标题111111111111111::" + i);
-            nurseryAnnounceDO.setAuthor("管理员");
-            nurseryAnnounceDO.setEtcompiler("管理员");
-            nurseryAnnounceDO.setPath("http://测试通告标题111111111111111.html");
-            nurseryAnnounceDO.setSize("230");
-            nurseryAnnounceDO.setTime(ran_um + "");
-            nurseryAnnounceDO.setDate(DateUtils.getNowDate("yyyy-MM-dd HH:mm"));
-            nurseryAnnounceDO.setTableflag(tableflag);
-            nurseryAnnounceDO.setId(CommonUtil.getUUID());
-            System.out.println(nurseryAnnounceDO);
-            try {
-                mapper.insert(nurseryAnnounceDO);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            }
-
-        }
-    }
-
-
-    @PutMapping("/insertlunbotu")
-    public void insertlunbotu() {
-        SlideshowDO slideshowDO = null;
-        for (int i = 0; i < 10; i++) {
-            slideshowDO = new SlideshowDO();
-            slideshowDO.setId(CommonUtil.getUUID());
-            slideshowDO.setClassify(NurseryIndexController.class.getName());
-            slideshowDO.setName("轮播图" + i);
-            slideshowDO.setWidth("400");
-            slideshowDO.setHeight("400");
-            slideshowDO.setPath("https://轮播图" + i + ".png");
-            System.out.println(slideshowDO);
-            try {
-                slideshowMapper.insert(slideshowDO);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
 }

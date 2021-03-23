@@ -39,7 +39,6 @@ public class EmailUtils {
      * @return
      */
     public static boolean verify(String consumerEmail) {
-        System.out.println("123456");
         return Pattern.matches(EMAIL_REGEX, consumerEmail.trim());
     }
 

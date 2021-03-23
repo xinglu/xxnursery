@@ -15,38 +15,141 @@
     <link href="/css/yamm.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet"/>
+    <style></style>
 </head>
+<style>
+    body {
+        background: #f9f9f9;
+    }
 
+    h1, h2, h3, h4, h5, b, strong {
+        color: black;
+    }
+
+    #container {
+        font-family: "楷体", "楷体_GB2312";
+    }
+
+    .navbar-inverse {
+        background-color: black;
+        border-bottom: 1px solid black;
+        border-color: black;
+        font-weight: 400;
+    }
+
+    .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus {
+        background-color: #3c3c3e;
+    }
+
+    .inner {
+        padding: 0 0 0 0;
+    }
+
+    .myCarousel {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .job_block {
+        margin-bottom: 10px;
+    }
+
+    .btn-default {
+        background-color: #596167;
+    }
+
+    .btn-success {
+        background-color: #27381f;
+        border-color: #ffffff;
+    }
+
+    .new_job_b b {
+        font-size: 16px;
+    }
+
+    .new_job_b li a {
+        margin-top: -0;
+        text-shadow: 1px 1px 1px black;
+    }
+
+    .position-body {
+        border-radius: 5px;
+    }
+
+    .position-block {
+        padding: 0 9px;
+    }
+
+    .site-footer {
+        background: black;
+        padding: 30px 0;
+    }
+</style>
 <body class="mega-nav">
 <section id="container">
     <!--头部-->
     <header class="">
         <!--导航栏-->
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
-                            data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand hidden-sm" href="#">新星幼儿园</a>
+            <th:block th:if="${param.number != null}">
+                <span th:text="${param.number}" hidden></span>
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand hidden-sm" th:href="'/index?number='+${param.number}">新星幼儿园</a>
+                    </div>
+                    <div class="navbar-collapse collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/index" th:href="'/index?number='+${param.number}">首页</a></li>
+                            <li><a href="/job_detail" th:href="'/job_detail?number='+${param.number}">职位</a></li>
+                            <li><a href="/discover" th:href="'/discover?number='+${param.number}">发现</a></li>
+                            <li><a href="/information" th:href="'/information?number='+${param.number}">咨询</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right hidden-sm">
+                            <li><a href="/resume">简历</a></li>
+                            <span th:text="${param.number}" hidden></span>
+                            <li><a href="/consumer/personal/1" th:href="'/logout/'+${param.number}">退出</a></li>
+                            <li><a href="/consumer/personal/1"
+                                   th:href="'/consumer/personal/'+${param.number}">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i><span></span>:个人中心
+                            </a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="navbar-collapse collapse" role="navigation">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a th:href="'/index'">首页</a></li>
-                        <li><a th:href="'/job_detail'">职位</a></li>
-                        <li><a th:href="'/discover'">发现</a></li>
-                        <li><a th:href="'/information'">咨询</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right hidden-sm">
-                        <li><a th:href="'/resume'">简历</a></li>
-                        <li><a th:href="'/consumer/personal/1'">个人中心</a></li>
-                    </ul>
+            </th:block>
+            <th:block th:if="${param.number == null}">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand hidden-sm" th:href="'/index'">新星幼儿园</a>
+                    </div>
+                    <div class="navbar-collapse collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/index" th:href="'/index'">首页</a></li>
+                            <li><a href="/job_detail" th:href="'/job_detail'">职位</a></li>
+                            <li><a href="/discover" th:href="'/discover'">发现</a></li>
+                            <li><a href="/information" th:href="'/information'">咨询</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right hidden-sm">
+                            <li><a href="/resume">简历</a></li>
+                            <li><a th:href="'/login.html'">用户！请登录</a></li>
+                            <li><a th:href="'/register.html'">快捷注册</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </th:block>
         </div>
         <!--搜索框-->
         <div class="row inner search-inner">
@@ -74,25 +177,51 @@
         <!--热门职位-->
         <div class="row inner">
             <div class="navbar navbar-inner btn-group">
-                <ol class="breadcrumb" style="background-color: rgba(0,0,0,0)">
+                <ol class="breadcrumb new_job_b" style="background-color: rgba(0,0,0,0)">
                     <b>热门职位 : &nbsp;&nbsp;&nbsp;&nbsp;</b>
 
-                    <li th:if="${sordStr!=null}" th:each="str: ${sordStr}"><a href="#" th:text="${str}"></a></li>
-                    <th:block th:unless="${sordStr!=null}">
-                        <li><a href="#">音乐</a></li>
-                        <li><a href="#">舞蹈</a></li>
-                        <li><a href="#">门卫</a></li>
-                        <li><a href="#">后台管理员</a></li>
-                        <li><a href="#">院长</a></li>
-                        <li><a href="#">院长</a></li>
-                    </th:block>
+                    <li><a href="#">美术老师</a></li>
+
+                    <li><a href="#">班主任</a></li>
+
+                    <li><a href="#">美术</a></li>
+
+                    <li><a href="#">音乐</a></li>
+
+                    <li><a href="#">后台管理员 </a></li>
+
+                    <li><a href="#">数学</a></li>
+
                     <li>......</li>
                 </ol>
             </div>
         </div>
-        <!--分类导航-->
-        <div class="row">
-
+        <!--轮播图-->
+        <div class="row inner myCarousel">
+            <div id="myCarousel" class="carousel slide">
+                <!-- 轮播（Carousel）指标 -->
+                <!-- 轮播（Carousel）项目 -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="https://static.runoob.com/images/mix/img_fjords_wide.jpg">
+                    </div>
+                    <div class="item">
+                        <img src="https://static.runoob.com/images/mix/img_nature_wide.jpg">
+                    </div>
+                    <div class="item">
+                        <img src="https://static.runoob.com/images/mix/img_mountains_wide.jpg">
+                    </div>
+                </div>
+                <!-- 轮播（Carousel）导航 -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">上</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">下</span>
+                </a>
+            </div>
         </div>
     </header>
     <!--头部-->
@@ -104,11 +233,14 @@
             <div class="row position">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="text-center bold"><h3 class="box-title">职位推荐</h3></div>
-                    <div class="jumbotron position-body">
-                        <ul id="myTab" class="nav nav-tabs">
-                            <li class="active"><a href="#home" data-toggle="tab">推荐职位</a></li>
-                            <li><a href="#new_job" data-toggle="tab" onclick="newJob()">最新职位</a></li>
-                        </ul>
+
+                    <div class="position-block">
+                        <div class="jumbotron position-body">
+                            <ul id="myTab" class="nav nav-tabs">
+                                <li class="active"><a href="#home" data-toggle="tab">推荐职位</a></li>
+                                <li><a href="#new_job" data-toggle="tab" onclick="newJob()">最新职位</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="jumbotron position-body position-bg">
                         <div id="myTabContent" class="tab-content">
@@ -118,15 +250,19 @@
                                     <div class="row">
                                         <th:block th:if="${recommendData!=null}" th:each="date:${recommendData}"
                                                   th:object="${date}">
-                                            <div class="col-sm-6 col-md-4">
+                                            <div class="col-sm-6 col-md-4 job_block">
                                                 <div class="position-thumbnail">
                                                     <div class="row">
                                                         <div class="col-md-5">
-                                                            <a class="title" th:href="'/job_detail/'+*{id}+'.html'"><p th:text="*{recruittablename}">数学老师</p></a>
-                                                            <span th:text="*{requireEduDB}">大专</span>
+                                                            <a class="title" th:href="'/job_detail/'+*{id}+'.html'"><p
+                                                                    th:text="*{recruittablename}">数学老师</p></a>
+                                                            <span th:text="*{requireEduDB=='0' ? '不限':requireEduDB=='1' ?'大专':requireEduDB=='2'?'本科':requireEduDB=='3'?'硕士':'博士'}"></span>
                                                         </div>
                                                         <div class="col-md-4 col-md-offset-2">
-                                                            <p th:text="*{pay}">4k-6k.13薪资</p>
+                                                            <p>
+                                                                <th:block th:text="*{pay}">4k-6k.13</th:block>
+                                                                薪资
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <hr/>
@@ -138,32 +274,39 @@
                                 </div>
                             </div>
                             <!--最新职位-->
-                            <div class="tab-pane fade" id="new_job">
-                                <div class="row">
-                                    <th:block th:fragment="new_job" th:each="date:${newData}" th:object="${date}">
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="position-thumbnail">
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <a class="title" th:href="*{'/recruit/detail/'+id+'.html'}"><p th:text="*{recruittablename}">数学老师</p></a>
-                                                        <span th:text="*{requireEduDB}">大专</span>
+                            <div class="tab-pane fade row" id="new_job">
+                                <div>
+                                    <div class="row">
+                                        <th:block th:fragment="new_job" th:each="date:${newData}" th:object="${date}">
+                                            <div class="col-sm-6 col-md-4  job_block">
+                                                <div class="position-thumbnail">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <a class="title" th:href="*{'/recruit/detail/'+id+'.html'}">
+                                                                <p th:text="*{recruittablename}">数学老师</p></a>
+                                                            <span th:text="*{requireEduDB=='0' ? '不限':requireEduDB=='1' ?'大专':requireEduDB=='2'?'本科':requireEduDB=='3'?'硕士':'博士'}"></span>
+                                                        </div>
+                                                        <div class="col-md-4 col-md-offset-2">
+                                                            <p>
+                                                                <th:block th:text="*{pay}">4k-6k.13</th:block>
+                                                                薪资
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-4 col-md-offset-2">
-                                                        <p th:text="*{pay}">4k-6k.13薪资</p>
-                                                    </div>
+                                                    <hr/>
+                                                    <p th:text="*{place}">郑州市高新区祝福红城校区</p>
                                                 </div>
-                                                <hr/>
-                                                <p th:text="*{place}">郑州市高新区祝福红城校区</p>
                                             </div>
-                                        </div>
-                                    </th:block>
+                                        </th:block>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="text-center bold"><h4><a type="button" class="btn btn-primary"
-                                                             href="#">&nbsp;查看更多&nbsp;</a></h4></div>
+                        <div class="text-center bold"><h4>
+                            <a type="button" class="btn btn-primary" th:href="'/job_detail'">&nbsp;查看更多&nbsp;</a></h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,18 +314,21 @@
             <div class="row position">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="text-center bold"><h3 class="box-title">热招职位</h3></div>
-                    <div class="jumbotron position-body">
-                        <ul id="hotjob" class="nav nav-tabs">
-                            <th:block th:if="${classStr!=null}" th:each="str,star:${classStr}" th:object="${str}">
-                                <li th:if="${star.index==0}" th:classappend="active"><a th:href="'#'+*{type_id}"
-                                                                                        data-toggle="tab"
-                                                                                        th:text="*{type_name}"></a></li>
-                                <li th:unless="${star.index==0}"><a th:href="'#'+*{type_id}" data-toggle="tab"
-                                                                    th:text="*{type_name}"
-                                                                    th:onclick="hotJob([[${str.type_id}]],[[${str.type_name}]]);"></a>
-                                </li>
-                            </th:block>
-                        </ul>
+                    <div class="position-block">
+                        <div class="jumbotron position-body">
+                            <ul id="hotjob" class="nav nav-tabs">
+                                <th:block th:if="${classStr!=null}" th:each="str,star:${classStr}" th:object="${str}">
+                                    <li th:if="${star.index==0}" th:classappend="active"><a th:href="'#'+*{type_id}"
+                                                                                            data-toggle="tab"
+                                                                                            th:text="*{type_name}"></a>
+                                    </li>
+                                    <li th:unless="${star.index==0}"><a th:href="'#'+*{type_id}" data-toggle="tab"
+                                                                        th:text="*{type_name}"
+                                                                        th:onclick="hotJob([[${str.type_id}]],[[${str.type_name}]]);"></a>
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div>
                     </div>
                     <div class="jumbotron position-body position-bg">
                         <div id="hotContent" class="tab-content">
@@ -193,15 +339,19 @@
                                         <div class="row">
                                             <th:block th:if="${hotData!=null}" th:each="date:${hotData}"
                                                       th:object="${date}">
-                                                <div class="col-sm-6 col-md-4">
+                                                <div class="col-sm-6 col-md-4  job_block">
                                                     <div class="position-thumbnail">
                                                         <div class="row">
                                                             <div class="col-md-5">
-                                                                <a class="title" th:href="'/job_detail/'+*{id}+'.html'"><p th:text="*{recruittablename}">数学老师</p></a>
-                                                                <span th:text="*{requireEduDB}">大专</span>
+                                                                <a class="title" th:href="'/job_detail/'+*{id}+'.html'">
+                                                                    <p th:text="*{recruittablename}">数学老师</p></a>
+                                                                <span th:text="*{requireEduDB=='0' ? '不限':requireEduDB=='1' ?'大专':requireEduDB=='2'?'本科':requireEduDB=='3'?'硕士':'博士'}"></span>
                                                             </div>
                                                             <div class="col-md-4 col-md-offset-2">
-                                                                <p th:text="*{pay}">4k-6k.13薪资</p>
+                                                                <p>
+                                                                    <th:block th:text="*{pay}">4k-6k.13</th:block>
+                                                                    薪资
+                                                                </p>
                                                             </div>
                                                         </div>
                                                         <hr/>
@@ -219,8 +369,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="text-center bold"><h4><a type="button" class="btn btn-primary"
-                                                             href="#">&nbsp;查看更多&nbsp;</a></h4></div>
+                        <div class="text-center bold"><h4>
+                            <a type="button" class="btn btn-primary" th:href="'/job_detail'">&nbsp;查看更多&nbsp;</a></h4>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,11 @@
 package com.nursery.cmsweb.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.nursery.api.iservice.IDomesticConsumerSV;
 import com.nursery.api.iweb.UserCenterApi;
 import com.nursery.beans.DomesticConsumerDO;
 import com.nursery.beans.UserInfo;
+import com.nursery.beans.bo.ConsumerBO;
 import com.nursery.common.model.response.CommonCode;
 import com.nursery.common.model.response.QueryResponseResult;
 import com.nursery.common.model.response.QueryResult;
@@ -35,10 +37,24 @@ public class UserCenterController extends BaseController implements UserCenterAp
     @Autowired
     IDomesticConsumerSV domesticConsumerSV;
 
-    @RequestMapping(value = "/personal/{userid}",method = RequestMethod.GET)
-    public ModelAndView visitUserInfoPage(@PathVariable("userid") String userid, ModelAndView modelAndView) {
-        logger.info("visitUserInfoPage==>"+userid);
+    @RequestMapping(value = "/personal/{param}",method = RequestMethod.GET)
+    public ModelAndView visitUserInfoPage(@PathVariable(value = "param",required = true) String param, ModelAndView modelAndView) {
+
         QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
+        String liushui = param;
+        String userid = "";
+        if(StringUtils.isEmpty(liushui)){
+            modelAndView.setViewName("404");
+            return modelAndView;
+        }
+        try {
+            ConsumerBO attribute = (ConsumerBO) session.getAttribute(liushui);
+            userid = attribute.getId();
+        }catch (Exception e){
+            modelAndView.setViewName("500");
+            return modelAndView;
+        }
+
         try {
             DomesticConsumerDO consumerDO = domesticConsumerSV.selectConsumerByConsumerID(userid);
             if (consumerDO!=null){
@@ -58,10 +74,22 @@ public class UserCenterController extends BaseController implements UserCenterAp
         return modelAndView;
     }
 
-    @RequestMapping(value = "/personalEdit/{userid}",method = RequestMethod.GET)
-    public ModelAndView visitUserEditByID(@PathVariable("userid") String userid, ModelAndView modelAndView) {
-        logger.info(" visitUserEditByID==>"+userid);
+    @RequestMapping(value = "/personalEdit/{param}",method = RequestMethod.GET)
+    public ModelAndView visitUserEditByID(@PathVariable(value = "param",required = true) String param, ModelAndView modelAndView) {
         QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
+        String liushui = param;
+        String userid = "";
+        if(StringUtils.isEmpty(liushui)){
+            modelAndView.setViewName("404");
+            return modelAndView;
+        }
+        try {
+            ConsumerBO attribute = (ConsumerBO) session.getAttribute(liushui);
+            userid = attribute.getId();
+        }catch (Exception e){
+            modelAndView.setViewName("500");
+            return modelAndView;
+        }
         try {
             DomesticConsumerDO consumerDO = domesticConsumerSV.selectConsumerByConsumerID(userid);
             if (consumerDO!=null){

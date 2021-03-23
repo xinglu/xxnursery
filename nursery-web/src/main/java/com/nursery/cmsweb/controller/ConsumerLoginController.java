@@ -4,7 +4,6 @@ import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.nursery.api.iservice.IDomesticConsumerSV;
 import com.nursery.api.iweb.ConsumerLoginApi;
-import com.nursery.beans.DomesticConsumerDO;
 import com.nursery.beans.bo.ConsumerBO;
 import com.nursery.beans.code.ConsumerCode;
 import com.nursery.common.model.response.CommonCode;
@@ -18,11 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
@@ -43,10 +40,8 @@ public class ConsumerLoginController extends BaseController implements ConsumerL
 
     /**
      * 登录-发送验证码
-     *
      * @param accountNum 账号
      * @param channel    1 邮箱 2  手机号
-     * @return
      */
     @Override
     @GetMapping("/login/sendCheckCode")
@@ -84,33 +79,63 @@ public class ConsumerLoginController extends BaseController implements ConsumerL
     }
 
     /**
-     * @param consumerBO
-     * @return
+     * 登录
+     * @param consumerBO 用户参数
      */
-    @PostMapping("/login")
+    @RequestMapping(value = {"/login"},method = RequestMethod.POST)
     @ResponseBody
     @Override
     public ResponseResult login(ConsumerBO consumerBO) {
+        //获取前端url
+        String referer = request.getHeader("referer");
+        System.out.println(referer);
         ResponseResult responseResult = new ResponseResult();
         responseResult.setCommonCode(ConsumerCode.CONSUMER_CREDENTIAL_ERROR);
-        String mail = consumerBO.getMail();
+        String mail = "";
+        String cellPhone = "";
         String pass = consumerBO.getPass();
-        DomesticConsumerDO consumerDO = null;
-        try {
-            consumerDO = domesticConsumer.findByMailAndPass(mail, pass);
-            if (consumerDO==null){
-                logger.warn(JSON.toJSONString(responseResult));
+        String username = consumerBO.getYhu();
+        String liushui  = consumerBO.getLiushui();
+        //判断yhu登录方式 手机号/邮箱
+        if (!CellUtils.verify(username) && EmailUtils.verify(username)) {
+            mail = username;
+            try {
+                consumerBO = domesticConsumer.findByMailAndPass(mail, pass);
+            } catch (SQLException throwables) {
+                logger.error("sql错误： " + throwables.getSQLState());
                 return responseResult;
             }
-            HttpSession session = request.getSession();
-            session.setAttribute("user_", consumerDO);
-        } catch (SQLException throwables) {
-            logger.error(JSON.toJSONString(responseResult));
-            return responseResult;
+            if (consumerBO == null) {
+                logger.warn("前端用于查询为空");
+                return responseResult;
+            }
         }
-        responseResult.setCommonCode(CommonCode.SUCCESS);
-        logger.info(JSON.toJSONString(responseResult));
-        logger.info(JSON.toJSONString(consumerDO));
+        if (!EmailUtils.verify(username) && CellUtils.verify(username)) {
+            cellPhone = username;
+            try {
+                consumerBO = domesticConsumer.findByCellAndPass(cellPhone, pass);
+            } catch (SQLException throwables) {
+                logger.error("sql错误： " + throwables.getSQLState());
+                return responseResult;
+            }
+            if (consumerBO == null) {
+                logger.warn("前端用户查询为空");
+                return responseResult;
+            }
+        }
+        //session
+        HttpSession session = request.getSession();
+        session.setAttribute(liushui, consumerBO);
+        //cookie
+        Cookie cookie = new Cookie("number",liushui);
+        cookie.setPath(request.getContextPath());
+        response.addCookie(cookie);
+        //设置返回值
+        responseResult.setSuccess(true);
+        responseResult.setCode(200);
+        String url = CommonUtil.getUrlByReferer(referer);
+        responseResult.setMessage(url);
+        logger.info(liushui+"返回值"+JSON.toJSONString(responseResult));
         return responseResult;
     }
 }

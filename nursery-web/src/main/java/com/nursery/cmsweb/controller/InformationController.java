@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.nursery.api.iservice.INurseryAnnounceSV;
 import com.nursery.api.iweb.InformationApi;
 import com.nursery.beans.NurseryAnnounceDO;
+import com.nursery.beans.NurseryAnnounceDetailDO;
 import com.nursery.common.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,10 +144,17 @@ public class InformationController extends BaseController implements Information
         return modelAndView;
     }
 
+    //http://localhost:32226/information/djxq/09513254fcf5460b92b2f3ea4ce07fdf.html
     @RequestMapping(value = "/djxq/{id}.html", method = RequestMethod.GET)
     @Override
     public ModelAndView visitOneInformation(@PathVariable(value = "id", required = true) String id, ModelAndView modelAndView) {
-        NurseryAnnounceDO announceDetail = announceSV.getannounceDetailById(id);
+        NurseryAnnounceDetailDO announceDetail = null;
+        try {
+            announceDetail = announceSV.getannounceDetailById(id);
+        } catch (SQLException throwables) {
+            String sqlState = throwables.getSQLState();
+            logger.error("错误sql: "+sqlState);
+        }
         modelAndView.addObject("announceDetail", announceDetail);
         modelAndView.setViewName("informationDetail");
         return modelAndView;

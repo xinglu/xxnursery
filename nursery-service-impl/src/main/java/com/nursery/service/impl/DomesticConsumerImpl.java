@@ -2,6 +2,7 @@ package com.nursery.service.impl;
 
 import com.nursery.api.iservice.IDomesticConsumerSV;
 import com.nursery.beans.DomesticConsumerDO;
+import com.nursery.beans.bo.ConsumerBO;
 import com.nursery.beans.vo.MailVo;
 import com.nursery.dao.DomesticConsumerMapper;
 import com.nursery.utils.EmailUtils;
@@ -166,10 +167,31 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
     }
 
     @Override
-    public DomesticConsumerDO findByMailAndPass(String mail, String pass) throws SQLException {
+    public ConsumerBO findByMailAndPass(String mail, String pass) throws SQLException {
+        ConsumerBO consumerBO = new ConsumerBO();
         List<DomesticConsumerDO> consumerDOList = mapper.findByMailAndPass(mail,pass);
         if (consumerDOList!=null && consumerDOList.size()>0){
-            return consumerDOList.get(0);
+            DomesticConsumerDO consumerDO = consumerDOList.get(0);
+            if (consumerDO.getConsumerPass().equals(pass)){
+                consumerBO.setId(consumerDO.getConsumerID());
+                consumerBO.setYhu(consumerDO.getConsumerNickname());
+                return consumerBO;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public ConsumerBO findByCellAndPass(String cellPhone, String pass) throws SQLException {
+        ConsumerBO consumerBO = new ConsumerBO();
+        List<DomesticConsumerDO> consumerDOList = mapper.findByCellAndPass(cellPhone,pass);
+        if (consumerDOList!=null && consumerDOList.size()>0){
+            DomesticConsumerDO consumerDO = consumerDOList.get(0);
+            if (consumerDO.getConsumerPass().equals(pass)){
+                consumerBO.setId(consumerDO.getConsumerID());
+                consumerBO.setYhu(consumerDO.getConsumerNickname());
+                return consumerBO;
+            }
         }
         return null;
     }

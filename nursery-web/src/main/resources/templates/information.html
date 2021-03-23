@@ -15,37 +15,77 @@
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet"/>
 </head>
+<style>
+    .site-footer{
+        background:black;
+        padding:30px 0;
+    }
+</style>
 <body>
 <section id="container" class="">
     <!--头部-->
     <header class="">
         <!--导航栏-->
-        <div class="navbar navbar-inverse navbar-fixed-top bg-discover">
-            <div class="container">
-                <div class="navbar-header">
-                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
-                            data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand hidden-sm" href="http://www.bootcss.com">新星幼儿园</a>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <th:block th:if="${param.number != null}">
+                <span th:text="${param.number}" hidden></span>
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand hidden-sm" th:href="'/index?number='+${param.number}">新星幼儿园</a>
+                    </div>
+                    <div class="navbar-collapse collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/index" th:href="'/index?number='+${param.number}">首页</a></li>
+                            <li><a href="/job_detail" th:href="'/job_detail?number='+${param.number}">职位</a></li>
+                            <li><a href="/discover" th:href="'/discover?number='+${param.number}">发现</a></li>
+                            <li class="active"><a href="/information" th:href="'/information?number='+${param.number}">咨询</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right hidden-sm">
+                            <li><a href="/resume">简历</a></li>
+                            <span th:text="${param.number}" hidden></span>
+                            <li><a href="/consumer/personal/1" th:href="'/logout/'+${param.number}">退出</a></li>
+                            <li><a href="/consumer/personal/1"
+                                   th:href="'/consumer/personal/'+${param.number}">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i><span></span>:个人中心
+                            </a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="navbar-collapse collapse" role="navigation">
-                    <ul class="nav navbar-nav">
-                        <li><a th:href="'/index'" target="_blank">首页</a></li>
-                        <li><a th:href="'/job_detail'" target="_blank">职位</a></li>
-                        <li><a th:href="'/discover'" target="_blank">发现</a></li>
-                        <li class="discover-active"><a th:href="'/information'" target="_blank">咨询</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right hidden-sm">
-                        <li><a href="/about/">简历</a></li>
-                        <li><a href="/about/">上传</a></li>
-                        <li><a th:href="'/consumer/personal/1'">个人中心</a></li>
-                    </ul>
+            </th:block>
+            <th:block th:if="${param.number == null}">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand hidden-sm" th:href="'/index'">新星幼儿园</a>
+                    </div>
+                    <div class="navbar-collapse collapse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/index" th:href="'/index'">首页</a></li>
+                            <li><a href="/job_detail" th:href="'/job_detail'">职位</a></li>
+                            <li><a href="/discover" th:href="'/discover'">发现</a></li>
+                            <li class="active"><a href="/information" th:href="'/information'">咨询</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right hidden-sm">
+                            <li><a href="/resume">简历</a></li>
+                            <li><a th:href="'/login.html'">用户！请登录</a></li>
+                            <li><a th:href="'/register.html'">快捷注册</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </th:block>
         </div>
     </header>
     <!--头部-->
@@ -56,7 +96,7 @@
             <!--头部标题-->
             <div class="row">
                 <div class="bg-success">
-                    <div class="bs-docs-header" id="content">
+                    <div class="bs-detail-header" id="content">
                         <div class="container text-center">
                             <h3>新星幼儿园-新闻发现和跟踪</h3>
                             <p>New Star Kindergarten - News Discovery and Tracking</p>
@@ -89,7 +129,7 @@
                                     </div>
                                 </th:block>
                                 <th:block th:if="*{imgPath!=null}">
-                                    <img class="image" th:href="*{imgPath}" alt="...">
+                                    <img class="image" th:src="*{imgPath}" alt="...">
                                 </th:block>
                                 <th:block th:unless="*{imgPath!=null}">
                                     <img class="image"
@@ -121,7 +161,7 @@
                                 </th:block>
                                 <div class="notice-bottom">
                                     <h3><a th:text="*{table}" th:href="*{path}">标题</a></h3>
-                                    <p class="text-info" th:text="*{content}">内容</p>
+                                    <p class="text-info" th:text="${#strings.abbreviate(data.content,300)}">内容</p>
                                     <p class="btn-detail"><span th:text="*{author}">作者</span>·<span th:text="*{date}">发布时间</span>
                                     </p>
                                 </div>
@@ -169,10 +209,11 @@
     <!--页脚-->
     <footer class="site-footer">
         <div class="text-center">
-            2013 &copy; FlatLab by VectorLab.
+            2021 &copy; 新乡学院-计算机与信息工程学院.
             <a href="#" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>
+            <p class="text-center">软件工程</p>
         </div>
     </footer>
     <!--页脚-->

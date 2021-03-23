@@ -164,6 +164,11 @@ public class ManageAnnunceController extends BaseController implements ManageAnn
         return responseResult;
     }
 
+    /**
+     * 发布通告
+     * @param nurseryAnnounceDO
+     * @return
+     */
     @RequestMapping(value = {"/manage/announce/pull/"},method = RequestMethod.POST)
     @ResponseBody
     @Override
@@ -181,6 +186,11 @@ public class ManageAnnunceController extends BaseController implements ManageAnn
         return responseResult;
     }
 
+    /**
+     * 修改公告
+     * @param nurseryAnnounceDO
+     * @return
+     */
     @RequestMapping(value = {"/manage/announce/put"},method = RequestMethod.POST)
     @ResponseBody
     @Override

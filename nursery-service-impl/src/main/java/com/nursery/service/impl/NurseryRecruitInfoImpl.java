@@ -1,5 +1,6 @@
 package com.nursery.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.nursery.api.iservice.INurseryRecruitInfoSV;
 import com.nursery.beans.DBDataParam;
@@ -102,6 +103,9 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
 
     @Override
     public List<RecruitmentDO> getRecruitByTypeId(String typeId) throws SQLException {
+        if (!StringUtils.isEmpty(typeId)) {
+            typeId = "%"+typeId+"%";
+        }
         List<RecruitmentDO> hotDate = mapper.selectRecruitinfoByType(typeId);
         logger.info("热门职位:" + JSONObject.toJSONString(hotDate));
         return hotDate;

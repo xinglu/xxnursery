@@ -1,5 +1,7 @@
 package com.nursery.utils;
 
+import com.alibaba.druid.util.StringUtils;
+
 import java.util.Random;
 import java.util.UUID;
 
@@ -64,5 +66,12 @@ public class CommonUtil {
                 return "博士";
         }
         return "不限";
+    }
+
+    public static String getUrlByReferer(String referer) {
+        if(StringUtils.isEmpty(referer)){
+            return "/index";
+        }
+        return referer.substring(22,referer.length());
     }
 }

@@ -1,6 +1,7 @@
 package com.nursery.api.iservice;
 
 import com.nursery.beans.DomesticConsumerDO;
+import com.nursery.beans.bo.ConsumerBO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -42,5 +43,7 @@ public interface IDomesticConsumerSV {
     void addPassword(String id,String password) throws Exception ;
 
     //登录
-    DomesticConsumerDO findByMailAndPass(String mail, String pass) throws SQLException;
+    ConsumerBO findByMailAndPass(String mail, String pass) throws SQLException;
+
+    ConsumerBO findByCellAndPass(String cellPhone, String pass) throws SQLException;
 }

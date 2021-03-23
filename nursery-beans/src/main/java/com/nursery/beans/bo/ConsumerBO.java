@@ -25,7 +25,9 @@ public class ConsumerBO {
     @ApiModelProperty("验证码")
     private String verifyCode;//验证码
     private String pass;//
-    @ApiModelProperty("标识-（0用户名|密码 ，1邮箱|验证码， 2手机号|验证码）")
+    @ApiModelProperty("标识-（1邮箱|验证码， 2手机号|验证码）")
     private String channel;//
+    @ApiModelProperty("流水号")
+    private String liushui;
 
 }
