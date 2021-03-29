@@ -210,9 +210,16 @@
                                         </th:block>
                                     </div>
                                     <div class="get-wrap">
-                                        <a class="btn btn-primary" th:href="'/discover/wenti/'+${topic.id}">
-                                            所有回答
-                                        </a>
+                                        <th:block th:if="${param.number != null}">
+                                            <a class="btn btn-primary" th:href="'/discover/wenti/'+${topic.id}+'?number='+${param.number}">
+                                                所有回答
+                                            </a>
+                                        </th:block>
+                                        <th:block th:if="${param.number == null}">
+                                            <a class="btn btn-primary" th:href="'/discover/wenti/'+${topic.id}">
+                                                所有回答
+                                            </a>
+                                        </th:block>
                                     </div>
                                 </div>
                             </div>
@@ -336,8 +343,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="alert alert-warning alert-dismissible" role="alert" id="loginWarn" hidden="hidden">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <div class="alert alert-warning alert-dismissible" role="alert" id="loginWarn"
+                                 hidden="hidden">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
                                 <strong>错误信息!</strong> 密码或者手机号/邮箱错误!!
                             </div>
                             <div class="form-group">
@@ -415,16 +424,73 @@
         var password = $("#password").val();
         var params = "yhu=" + username + "&pass=" + password + "&liushui=" + liushui;
         $.post("/consumer/login", params, function (data) {
-            var message =  data.message;
+            var message = data.message;
             var code = data.code;
             var success = data.success;
-            if (message=="操作成功！" || code == 10000 || success == true) {
-                window.location.href = message+"?number="+liushui;
+            if (message == "操作成功！" || code == 10000 || success == true) {
+                window.location.href = message + "?number=" + liushui;
             } else {
                 $("#loginWarn").removeAttr("hidden")
             }
         });
     });
+
+    function publish(id) {
+        var liushui = getQueryVariable("number");//流水id
+        var tableId = id;//
+        var answer = $("#input" + tableId).val();
+        var params = "param1=" + liushui + "&param2=" + tableId + "&param3=" + answer;
+        $.post("/discover/answer/", params, function (data) {
+            var message = data.message;
+            var code = data.code;
+            var success = data.success;
+            var yhu = getMapBykey("yhu",data.bean);
+            if (message == "发表成功！" || code == 10000 || success == true) {
+                //    http://localhost:32226/discover/wenti/2 ?number=202103261535228918
+                var child = "<div class=\"media\">\n" +
+                    "    <div class=\"media-left media-middle\">\n" +
+                    "        <img class=\"header-img\"\n" +
+                    "             src=\"https://img.bosszhipin.com/beijin/upload/avatar/20201223/bcad5b10df6fc6011080e01473e559219e8464193ee4e7857ba3fa53894d1194_s.jpg\">\n" +
+                    "    </div>\n" +
+                    "    <div class=\"media-body\">\n" +
+                    "        <h4 class=\"media-heading\">" + yhu + "</h4>\n" +
+                    "        <th:block>" + answer + "</th:block>\n" +
+                    "    </div>\n" +
+                    "</div>"
+                $("#" + tableId).append(child);
+                $("#input"+tableId).val("");
+            } else {
+                alert(success + " , " + message)
+            }
+        });
+
+    }
+
+
+    function getMapBykey(x,data) {
+        for (var key in data) {
+            if (key==x){
+                return data[x];
+            }
+        }
+    }
+
+    /**
+     * 根据属性获取url参数
+     * @param variable 属性名称
+     * @returns {string|boolean} 返回值
+     */
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (false);
+    }
 </script>
 </body>
 </html>

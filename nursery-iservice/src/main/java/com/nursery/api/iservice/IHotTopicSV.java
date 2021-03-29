@@ -4,6 +4,7 @@ import com.nursery.beans.HotTopicDO;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author:MeiShiQiang
@@ -20,4 +21,11 @@ public interface IHotTopicSV {
      * @param tableid
      */
     HotTopicDO getTopic(String tableid) throws SQLException;
+
+
+    /**
+     * 存储话题相关评论
+     * @param map
+     */
+    void insertTopicComment(Map<String, String> map) throws SQLException;
 }

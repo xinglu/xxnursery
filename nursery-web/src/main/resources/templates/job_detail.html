@@ -17,90 +17,113 @@
     <link href="/css/style-responsive.css" rel="stylesheet"/>
 </head>
 <style>
-    body{
+    body {
         background: #f9f9f9;
     }
-    h1,h2,h3,h4,h5,b,strong{
-        color:black;
+
+    h1, h2, h3, h4, h5, b, strong {
+        color: black;
     }
-    #container{
-        font-family: "楷体","楷体_GB2312";
+
+    #container {
+        font-family: "楷体", "楷体_GB2312";
     }
+
     .navbar-inverse {
-        background-color:black;
-        border-bottom:1px solid black;
+        background-color: black;
+        border-bottom: 1px solid black;
         border-color: black;
-        font-weight:400;
+        font-weight: 400;
     }
+
     .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus {
         background-color: #3c3c3e;
     }
-    .inner{
+
+    .inner {
         padding: 0 0 0 0;
     }
-    .myCarousel{
-        padding-left:16px;
-        padding-right:16px;
+
+    .myCarousel {
+        padding-left: 16px;
+        padding-right: 16px;
     }
-    .job_block{
-        margin-bottom:10px;
+
+    .job_block {
+        margin-bottom: 10px;
     }
+
     .btn-default {
         background-color: #596167;
     }
+
     .btn-success {
         background-color: #27381f;
         border-color: #ffffff;
     }
-    .new_job_b b{
-        font-size:16px;
+
+    .new_job_b b {
+        font-size: 16px;
     }
-    .new_job_b  li  a{
-        margin-top:-0;
-        text-shadow:1px 1px 1px black;
+
+    .new_job_b li a {
+        margin-top: -0;
+        text-shadow: 1px 1px 1px black;
     }
-    .position-body{
-        border-radius:5px;
+
+    .position-body {
+        border-radius: 5px;
     }
-    .position-block{
-        padding:0 9px;
+
+    .position-block {
+        padding: 0 9px;
     }
-    .site-footer{
-        background:black;
-        padding:30px 0;
+
+    .site-footer {
+        background: black;
+        padding: 30px 0;
     }
-    .filter-flex{
-        align-items:space-between;
+
+    .filter-flex {
+        align-items: space-between;
     }
-    .new-out{
+
+    .new-out {
         width: 388px;
         max-width: 388px;
         box-shadow: 0px 0px 5px black;
         padding: 20px 0 30px 30px;
     }
-    .new-out img{
+
+    .new-out img {
         width: 85%;
         height: 60px;
     }
-    .new-out h2{
+
+    .new-out h2 {
         margin-top: 0;
         padding: 0;
     }
-    .new-out h2 span{
+
+    .new-out h2 span {
         border-right: 3px solid #436849;
         padding-right: 10px;
     }
-    .new-out p{
+
+    .new-out p {
 
         padding-right: 20px;
     }
-    .new-out-s{
+
+    .new-out-s {
         margin-top: 20px;
     }
-    .job_detail_m{
+
+    .job_detail_m {
         margin-top: 20px;
     }
-    .job-detail-bottom{
+
+    .job-detail-bottom {
         margin-top: 50px;
     }
 </style>
@@ -126,7 +149,8 @@
                     <div class="navbar-collapse collapse" role="navigation">
                         <ul class="nav navbar-nav">
                             <li><a href="/index" th:href="'/index?number='+${param.number}">首页</a></li>
-                            <li class="active"><a href="/job_detail" th:href="'/job_detail?number='+${param.number}">职位</a></li>
+                            <li class="active"><a href="/job_detail"
+                                                  th:href="'/job_detail?number='+${param.number}">职位</a></li>
                             <li><a href="/discover" th:href="'/discover?number='+${param.number}">发现</a></li>
                             <li><a href="/information" th:href="'/information?number='+${param.number}">咨询</a></li>
                         </ul>
@@ -174,21 +198,10 @@
         <div class="row inner search-inner">
             <div class="col-md-12">
                 <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-lg dropdown-toggle " data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">职位类型 <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">教师</a></li>
-                            <li><a href="#">职工</a></li>
-                            <li><a href="#">门卫</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">院长</a></li>
-                        </ul>
-                    </div><!-- /btn-group -->
                     <input type="text" class="form-control input-lg" placeholder="搜索职位"
-                           aria-describedby="sizing-addon1">
+                           aria-describedby="sizing-addon1" id="input_search_content" required>
                     <span class="input-group-btn">
-                        <button class="btn btn-success btn-lg" type="button">搜索框</button>
+                        <button class="btn btn-success btn-lg" type="button" id="btn_search">搜索框</button>
                     </span>
                 </div>
             </div>
@@ -197,19 +210,19 @@
         <div class="row inner filter_area text-left">
             <dl class='condition-district  show-condition-district '>
                 <dd>
-                    <a class="selected" id="sel-business">不限</a>
-                    <a id="sel-business-0">金水区</a>
-                    <a id="sel-business-1">管城回族区</a>
-                    <a id="sel-business-2">中原区</a>
-                    <a id="sel-business-3">二七区</a>
-                    <a id="sel-business-4">新郑市</a>
-                    <a id="sel-business-5">惠济区</a>
-                    <a id="sel-business-6">中牟县</a>
-                    <a id="sel-business-7">荥阳市</a>
-                    <a id="sel-business-8">新密市</a>
-                    <a id="sel-business-9">巩义市</a>
-                    <a id="sel-business-10">上街区</a>
-                    <a id="sel-business-11">登封市</a>
+                    <a class="place active" id="sel-business-12">不限</a>
+                    <a class="place" id="sel-business-0">金水区</a>
+                    <a class="place" id="sel-business-1">管城回族区</a>
+                    <a class="place" id="sel-business-2">中原区</a>
+                    <a class="place" id="sel-business-3">二七区</a>
+                    <a class="place" id="sel-business-4">新郑市</a>
+                    <a class="place" id="sel-business-5">惠济区</a>
+                    <a class="place" id="sel-business-6">中牟县</a>
+                    <a class="place" id="sel-business-7">荥阳市</a>
+                    <a class="place" id="sel-business-8">新密市</a>
+                    <a class="place" id="sel-business-9">巩义市</a>
+                    <a class="place" id="sel-business-10">上街区</a>
+                    <a class="place" id="sel-business-11">登封市</a>
                 </dd>
             </dl>
         </div>
@@ -308,7 +321,7 @@
                                                  href="/job_detail/dcc6a6adfe92bdc81nVz3dm5F1dV.html">
                                                 <div class="job-title">
                                                     <span class="job-name">
-                                                        <a href="/job_detail/dcc6a6adfe92bdc81nVz3dm5F1dV.html"
+                                                        <a th:href="'/job_detail/'+*{id}+'.html'"
                                                            th:title="*{recruittablename}" target="_blank"
                                                            th:text="*{recruittablename}+'&nbsp;&nbsp;&nbsp;&nbsp;'">招聘标题</a></span>
 
@@ -316,14 +329,24 @@
                                                         <span class="job-area"
                                                               th:text="*{#strings.abbreviate(place,12)}">地址信息</span>
                                                     </span>
-                                                    <span class="job-pub-time" th:text="*{#strings.substring(starttime,5,#strings.length(starttime))}">发布时间</span>
+                                                    <span class="job-pub-time"
+                                                          th:text="*{#strings.substring(starttime,5,#strings.length(starttime))}">发布时间</span>
                                                 </div>
                                                 <div class="job-limit clearfix">
                                                     <span class="red" th:text="*{pay}">薪资情况</span>
                                                     <p>
-                                                        <th:block th:text="*{experience}">工作经验</th:block>
                                                         <em class="vline"></em>
-                                                        <th:block th:text="*{requireEduDB}">学历要求</th:block>
+                                                        工作经验:
+                                                        <th:block
+                                                                th:text="*{requireExperience=='0' ? '不限':requireExperience=='1' ?'在校生':requireExperience=='2'?'应届生':requireExperience=='3'?'1年以内':requireExperience=='4'?'1-3年':requireExperience=='5'?'3-5年':requireExperience=='6'?'5-10年':'10年以上'}">
+                                                            工作经验
+                                                        </th:block>
+                                                        <em class="vline"></em>
+                                                        学历要求:
+                                                        <th:block
+                                                                th:text="*{requireEduDB=='0' ? '不限':requireEduDB=='1' ?'大专':requireEduDB=='2'?'本科':requireEduDB=='3'?'硕士':'博士'}">
+                                                            学历要求
+                                                        </th:block>
                                                     </p>
                                                 </div>
                                             </div>
@@ -381,11 +404,30 @@
 <!-- js placed at the end of the document so the pages load faster -->
 <script src="/js/jquery.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/index.js"></script>
 <script>
     $(document).on('click', '.yamm .dropdown-menu', function (e) {
         e.stopPropagation()
     })
+    $(".place").click(function (data) {
+        // 1. 获取参数值
+        var placeId = data.currentTarget.id;// 1.1 获取地点筛选id
+        var url = window.location.href;// 1.2 获取当前url值
+        var param = "";// 1.3 参数
+        // 判断是否含有参数
+        if (url.indexOf("?") != -1) {
+            var start = url.indexOf("?")
+            param = url.substring(start + 1);
+            if (param.indexOf("placeId:") != -1) {
+                var start = param.indexOf("placeId:")
+                param = param.substring(0, start);
+            }
+        }
+        // 2. 拼接href
+        var href = '/search?' + param + "placeId:" + placeId;
+        // 3. 访问
+        window.location.href = href;
+    });
 </script>
+<script src="/js/index.js"></script>
 </body>
 </html>

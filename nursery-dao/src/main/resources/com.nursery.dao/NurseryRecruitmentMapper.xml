@@ -99,6 +99,19 @@
         FROM tb_nursery_recruitinfo
         ORDER BY tb_nursery_recruitinfo.`recruitstarttime` DESC LIMIT 12
     </select>
+    <select id="selectRecruitInfoByParams" resultMap="recruitment" parameterType="com.nursery.beans.DBDataParam">
+        select * from  tb_nursery_recruitinfo
+        WHERE 1 = 1
+        <if test="search != null and search != ''">
+            AND recruittablename like #{search}
+        </if>
+        <if test="type != null and type != ''">
+            AND recruitclassify = #{type}
+        </if>
+        <if test="placeId != null and placeId != ''">
+            AND recruitplace like #{placeId}
+        </if>
+    </select>
 
     <insert id="insert" parameterType="com.nursery.beans.RecruitmentDO">
         insert into tb_nursery_recruitinfo (id, recruittablename, recruitclassify, recruitpay, recruitstarttime,

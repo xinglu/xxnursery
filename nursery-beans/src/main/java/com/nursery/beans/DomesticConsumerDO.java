@@ -1,5 +1,6 @@
 package com.nursery.beans;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,9 +33,12 @@ public class DomesticConsumerDO {
     private String consumerEduBgGrade;//教学背景-成绩
     private String consumerEduBgCourse;//教学背景-课程
     private String consumerStatus;//省份
+    @ApiModelProperty("头像:外键id")
     private String consumerURL;//头像
     private String consumerBirthday;//生日
     private String consumerJoinDay;//加入时间
     private Integer resumeISNOT;//简历是否上传 默认0 没有, 1 已经上传
-
+    @ApiModelProperty("简历:外键id")
+    private String resumeId;//简历:外键id
+    private DomesticConsumerResumeDO consumerResume;
 }

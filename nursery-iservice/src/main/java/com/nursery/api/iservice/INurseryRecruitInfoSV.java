@@ -74,4 +74,8 @@ public interface INurseryRecruitInfoSV {
 
     //根据erid删除招牌信息
     int deleteRecruitById(String erId);
+
+    //搜索框
+    List<RecruitmentDO> selectRecruitInfoByParams(String dataParam) throws SQLException;
+
 }

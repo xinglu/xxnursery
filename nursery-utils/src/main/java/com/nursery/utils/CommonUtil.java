@@ -74,4 +74,41 @@ public class CommonUtil {
         }
         return referer.substring(22,referer.length());
     }
+
+    public static String getIntroduce(String id) {
+        return "其他职业者";
+    }
+
+    public static String getPlace(String placeId) {
+        String number = placeId.substring(13,placeId.length());
+        switch(number){
+            case "0" :
+                return "金水";
+            case "1" :
+                return "管城回族";
+            case "2" :
+                return "中原";
+            case "3" :
+                return "二七";
+            case "4" :
+                return "新郑";
+            case "5" :
+                return "惠济";
+            case "6" :
+                return "中牟";
+            case "7" :
+                return "荥阳";
+            case "8" :
+                return "新密";
+            case "9" :
+                return "巩义";
+            case "10" :
+                return "上街";
+            case "11" :
+                return "登封";
+            case "12" :
+                return "不限";
+        }
+        return "";
+    }
 }

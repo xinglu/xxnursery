@@ -3,6 +3,7 @@ package com.nursery.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.nursery.api.iservice.IHotTopicSV;
 import com.nursery.beans.HotTopicDO;
+import com.nursery.dao.CommentMapper;
 import com.nursery.dao.HotTopicMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author:MeiShiQiang
@@ -24,6 +26,10 @@ public class HotTopicImpl implements IHotTopicSV {
     @SuppressWarnings("all")
     private HotTopicMapper hotTopicMapper;
 
+    @Autowired
+    @SuppressWarnings("all")
+    private CommentMapper commentMapper;
+
     @Override
     public List<HotTopicDO> getTopicRandom() throws SQLException {
         List<HotTopicDO> topicDOList = hotTopicMapper.selectTopicRandom();
@@ -36,5 +42,10 @@ public class HotTopicImpl implements IHotTopicSV {
     @Override
     public HotTopicDO getTopic(String tableid) throws SQLException {
         return hotTopicMapper.selectTopic(tableid);
+    }
+
+    @Override
+    public void insertTopicComment(Map<String, String> map) throws SQLException {
+        commentMapper.insertTopicComment(map);
     }
 }

@@ -20,6 +20,8 @@ public class ConsumerBO {
     private String id;
     @ApiModelProperty("用户")
     private String yhu;//用户
+    @ApiModelProperty("用户介绍")
+    private String introduce;
     private String mail;//邮箱账号
     private String cell;//手机账号
     @ApiModelProperty("验证码")

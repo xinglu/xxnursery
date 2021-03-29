@@ -1,41 +1,166 @@
 package com.nursery.cmsweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.nursery.api.iservice.IConsumerResumeSV;
+import com.nursery.api.iservice.IDomesticConsumerSV;
 import com.nursery.api.iweb.ResumeApi;
-import com.nursery.beans.vo.PeoRecruitSendVO;
+import com.nursery.beans.DomesticConsumerDO;
+import com.nursery.beans.DomesticConsumerResumeDO;
+import com.nursery.beans.bo.ConsumerBO;
+import com.nursery.common.model.CommonAttrs;
 import com.nursery.common.model.response.QueryResponseResult;
 import com.nursery.common.web.BaseController;
+import com.nursery.utils.CommonUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * 简历上传下载
  */
 
-@RestController
+@Controller
 public class ConsumerResumeController extends BaseController implements ResumeApi {
 
+    private Logger logger = LoggerFactory.getLogger(ConsumerResumeController.class);
+    @Autowired
+    private IConsumerResumeSV consumerResumeSV;
+    @Autowired
+    private IDomesticConsumerSV consumerSV;
+
+    //访问简历页面
+    @RequestMapping(value = "/consumer/resume/{param}", method = RequestMethod.GET)
+    @Override
+    public String visitResume(@PathVariable(value = "param", required = false) String param) {
+        String consumerId = "";
+        if (!StringUtils.isEmpty(param)){
+            ConsumerBO consumerBO = (ConsumerBO) session.getAttribute(param);
+            try {
+                consumerId = consumerBO.getId();
+            }catch (NullPointerException e){
+                logger.error("获取不到用户，null异常");
+                return "500";
+            }
+            try {
+                DomesticConsumerDO consumerDO = consumerSV.selectConsumerResumeByConsumerID(consumerId);
+                request.setAttribute("consumer",consumerDO);
+            } catch (SQLException e) {
+                logger.error("数据库查询异常/语句出错");
+                return "500";
+            }
+        }
+        return "resume";
+    }
 
     /**
-     * 访问个人简历界面
-     * @param consumerId 用户id
-     * @param model 返回值
-     * @return
+     * 上传简历
+     * 1. 比对简历信息,是否符合要求
+     * 2. 判断文件夹是否存在,下载到本地,不存在就创建mkdirs
+     * 3. 下载成功,则返回url信息,并将简历信息存入到数据库中.
+     *
+     * @param file 简历信息
+     * @return 固定返回参数信息
      */
-    @RequestMapping(value = "/consumer/resume/{consumerId}",method = RequestMethod.GET)
-    public ModelAndView visitConsumerResume(@PathVariable("consumerId") String consumerId, ModelAndView model){
-        model.setViewName("resume");
-        return model;
+    @RequestMapping(value = {"/consumer/resume/upload/{param}"})
+    @ResponseBody
+    @Override
+    public JSONObject uploadResume(@RequestParam(value = "resumeFile", required = true) MultipartFile file, @PathVariable(value = "param",required = false) String liushui) {
+        JSONObject responseResult = new JSONObject();
+        String param = liushui;     //流水号
+        String consumerId = "";     //用户id
+        String path = "";           //文件的真实路径
+        String realFileName = "";   //简历名称
+        String suffix = "";         //简历后缀/类型
+        String sqlFileUrl = "";     //简历url地址
+        String resumeId = "";       //简历id
+        long size = 0;              //文件大小
+        String fileName = "";       //随机生成的文件名称
+        File targetFile = null;
+        //从cookie中获取用户id;
+        /*Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            String name = cookie.getName();
+            if ("number".equals(name)) {
+                consumerId = cookie.getValue();
+                break;
+            }
+        }*/
+        ConsumerBO attribute = (ConsumerBO) session.getAttribute(param);
+        consumerId = attribute.getId();
+        try {
+            realFileName = file.getOriginalFilename();//获取文件名称
+            suffix = realFileName.substring(realFileName.lastIndexOf("."));//获取后缀
+            size = file.getSize();
+            if (!CommonAttrs.WORD_TYPE.contains(suffix)) {
+                responseResult.put("success", 0);//格式不正确
+                responseResult.put("message", "简历格式不正确：{doc, docx}");
+                return responseResult;
+            }
+            if (size > CommonAttrs.IMG_MAX_SIZE) {
+                responseResult.put("success", 0);//文件过大
+                responseResult.put("message", "最大长度为!2MB");
+                return responseResult;
+            }
+            resumeId = CommonUtil.getUUID() + CommonUtil.getRandomNum(100, 200);
+            fileName = resumeId + suffix;
+            //获取真实路径
+            path = ResourceUtils.getURL("xxnursery/").getPath() + "word/upload";
+            String realPath = path.replace('/', '\\').substring(1, path.length());
+            targetFile = new File(realPath, fileName);
+            if (!targetFile.exists()) {
+                targetFile.mkdirs();
+            }
+            try {
+                file.transferTo(targetFile);//保存
+            } catch (Exception e) {
+                responseResult.put("success", 0);
+                responseResult.put("message", "上传失败 !");
+                return responseResult;
+            }
+        } catch (Exception e) {
+            responseResult.put("success", 0);
+            responseResult.put("message", "上传失败 !");
+            return responseResult;
+        }
+        //如果上传成功,则将该地址返回,并存入数据库中
+        sqlFileUrl = request.getContextPath() + "/upload/word/" + fileName;
+        //数据库操作
+        try {
+            DomesticConsumerResumeDO consumerResumeDO = new DomesticConsumerResumeDO();
+            consumerResumeDO.setId(resumeId);
+            consumerResumeDO.setName(realFileName);
+            consumerResumeDO.setType(suffix);
+            consumerResumeDO.setUrl(sqlFileUrl);
+            consumerResumeDO.setSize(size + "");
+            //保存信息
+            consumerResumeSV.insertResume(consumerResumeDO);
+            DomesticConsumerDO consumerDO = new DomesticConsumerDO();
+            consumerDO.setConsumerID(consumerId);
+            consumerDO.setResumeISNOT(1);
+            consumerDO.setResumeId(resumeId);
+            consumerSV.updateConsumerResume(consumerDO);
+        } catch (Exception e) {
+            responseResult.put("success", 0);
+            responseResult.put("message", "上传失败!");
+            //删除文件;
+            targetFile.delete();
+            return responseResult;
+        }
+        responseResult.put("url", sqlFileUrl);
+        responseResult.put("success", 1);
+        responseResult.put("message", "上传成功!");
+        return responseResult;
     }
 
-    @Override
-    public List<PeoRecruitSendVO> showRecruitSend(String consumerID) {
-        return null;
-    }
 
     @PostMapping("/resumeUploadIng")
     @Override
@@ -116,5 +241,6 @@ public class ConsumerResumeController extends BaseController implements ResumeAp
     public QueryResponseResult resumeOnlineReading() {
         return null;
     }
+
 
 }

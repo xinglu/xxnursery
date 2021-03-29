@@ -1,5 +1,7 @@
 package com.nursery.api.iweb;
 
+import com.nursery.beans.DBDataParam;
+import com.nursery.common.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,4 +19,7 @@ public interface DiscoverApi {
 
     @ApiOperation("问题跳转")
     ModelAndView visitWenti(String tableid, String param, RedirectAttributes attr);
+
+    @ApiOperation("发表言论")
+    public ResponseResult publishDiscoverAnswer(DBDataParam dataParam);
 }

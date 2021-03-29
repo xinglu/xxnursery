@@ -53,6 +53,7 @@ public class JobDetailController extends BaseController implements JobDetailApi 
         return modelAndView;
     }
 
+
     @Override
     @RequestMapping(value = "/job_detail/{id}.html")
     public ModelAndView clickDetailPage(@PathVariable(value = "id", required = true) String recruitId, ModelAndView model) {

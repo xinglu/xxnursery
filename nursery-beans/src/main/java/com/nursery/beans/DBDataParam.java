@@ -1,5 +1,6 @@
 package com.nursery.beans;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DBDataParam {
-    String table_flag;//表名
-    String param1;
-    String param2;
+    private String table_flag;//表名
+    @ApiModelProperty("搜索关键字")
+    private String search;
+    @ApiModelProperty("类型")
+    private String type;
+    @ApiModelProperty("地点")
+    private String placeId;
+    private String param1;
+    private String param2;
+    private String param3;
 }

@@ -1,11 +1,14 @@
 package com.nursery.dao;
 
 import com.nursery.beans.TopicCommentDO;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author:MeiShiQiang
@@ -26,4 +29,7 @@ public interface CommentMapper {
     @Select("select * from tb_comment where topic_id = #{topicId}")
     List<TopicCommentDO> commentDos(String topicId);
 
+    @Insert("insert into tb_comment (id,t_content,topic_id,consumer_id_i,t_consumer_name,t_consumer_introduce,t_date)" +
+            "values (#{id},#{content},#{tableId},#{consumer_id},#{consumer_name},#{consumer_introduce},#{date})")
+    void insertTopicComment(Map<String, String> map) throws SQLException;
 }

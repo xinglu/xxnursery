@@ -1,12 +1,10 @@
 package com.nursery.api.iweb;
 
-import com.nursery.beans.vo.PeoRecruitSendVO;
+import com.alibaba.fastjson.JSONObject;
 import com.nursery.common.model.response.QueryResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 /**
  * 简历上传 下载api
@@ -14,8 +12,14 @@ import java.util.List;
 @Api(value = "/resume",description = "专门提供简历上传 下载的api")
 public interface ResumeApi {
 
-    @ApiOperation("根据id查询投递信息,并展显示到前端页面")
-    List<PeoRecruitSendVO> showRecruitSend(String consumerID);
+    /**
+     * 跳转到上传简历的页面
+     * @param param 流水号
+     */
+    @ApiOperation("访问上传简历")
+    public String visitResume(String param);
+
+    public JSONObject uploadResume(MultipartFile file,String liushui);
 
     @ApiOperation("简历上传")
     QueryResponseResult resumeUpload(String strDocument, MultipartFile file);

@@ -60,4 +60,10 @@ public interface NurseryRecruitmentMapper {
      * @return 影响行数
      */
     int deleteRecruitById(String erId);
+
+    /**
+     * 搜索框
+     * @param dataParam    参数
+     */
+    List<RecruitmentDO> selectRecruitInfoByParams(DBDataParam dataParam) throws SQLException;
 }

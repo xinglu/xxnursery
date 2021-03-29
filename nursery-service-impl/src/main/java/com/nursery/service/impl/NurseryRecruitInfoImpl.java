@@ -6,6 +6,7 @@ import com.nursery.api.iservice.INurseryRecruitInfoSV;
 import com.nursery.beans.DBDataParam;
 import com.nursery.beans.RecruitmentDO;
 import com.nursery.dao.NurseryRecruitmentMapper;
+import com.nursery.utils.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
     }
 
     @Override
-    public int updateRecruitInfo(RecruitmentDO recruitmentDO){
+    public int updateRecruitInfo(RecruitmentDO recruitmentDO) {
         int i = 0;
         try {
             i = mapper.updateRecruitInfo(recruitmentDO);
@@ -90,7 +91,7 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
 
     @Override
     public List<RecruitmentDO> getRecruitByType(String type) throws SQLException {
-        type = "%"+type+"%";
+        type = "%" + type + "%";
         return mapper.selectRecruitinfoByType(type);
     }
 
@@ -104,7 +105,7 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
     @Override
     public List<RecruitmentDO> getRecruitByTypeId(String typeId) throws SQLException {
         if (!StringUtils.isEmpty(typeId)) {
-            typeId = "%"+typeId+"%";
+            typeId = "%" + typeId + "%";
         }
         List<RecruitmentDO> hotDate = mapper.selectRecruitinfoByType(typeId);
         logger.info("热门职位:" + JSONObject.toJSONString(hotDate));
@@ -113,14 +114,52 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
 
     @Transactional
     @Override
-    public void insertRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException{
-            mapper.insertRecruitInfo(recruitmentDO);
-            mapper.insertRecruitMeddleEr(recruitmentDO);
+    public void insertRecruitInfo(RecruitmentDO recruitmentDO) throws SQLException {
+        mapper.insertRecruitInfo(recruitmentDO);
+        mapper.insertRecruitMeddleEr(recruitmentDO);
     }
 
     @Override
     public int deleteRecruitById(String erId) {
         int num = mapper.deleteRecruitById(erId);
         return 0;
+    }
+
+    @Override
+    public List<RecruitmentDO> selectRecruitInfoByParams(String signParam) throws SQLException {
+        String search = "";
+        String type = "";
+        String placeId = "";
+        if (signParam.contains("search:")) {
+            String substring = signParam.substring(7);
+            String[] split = substring.split("type:");
+            search = split[0];
+            String param = split[1];
+            String[] split1 = param.split("placeId:");
+            type = split1[0];
+            try {
+                placeId = split1[1];
+            }catch (ArrayIndexOutOfBoundsException exception){
+                placeId = "";
+            }
+        }
+        DBDataParam dataParam = new DBDataParam();
+        if (!StringUtils.isEmpty(search)) {
+            search = "%" + search + "%";
+            dataParam.setSearch(search);
+        }
+        if (!StringUtils.isEmpty(type) && !"0".equals(type)) {
+            dataParam.setType(type);
+        }
+        if (!StringUtils.isEmpty(placeId)) {
+            String place = CommonUtil.getPlace(placeId);
+            if (place.equals("") || place.equals("不限")){
+                place = "";
+            }else {
+                place = "%" + place + "%";
+            }
+            dataParam.setPlaceId(place);
+        }
+        return mapper.selectRecruitInfoByParams(dataParam);
     }
 }

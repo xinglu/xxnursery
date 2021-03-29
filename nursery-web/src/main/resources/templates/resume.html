@@ -11,6 +11,8 @@
     <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/bootstrap-fileinput/css/fileinput.css"/><!--fileinput文件上传-->
 </head>
 <body>
 <section id="container" class="">
@@ -44,50 +46,8 @@
                 </div>
             </div>
         </div>
-        <!--搜索框-->
-        <div class="row inner search-inner">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-lg dropdown-toggle " data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">职位类型 <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">教师</a></li>
-                            <li><a href="#">职工</a></li>
-                            <li><a href="#">门卫</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">院长</a></li>
-                        </ul>
-                    </div><!-- /btn-group -->
-                    <input type="text" class="form-control input-lg" placeholder="搜索职位"
-                           aria-describedby="sizing-addon1">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success btn-lg" type="button">搜索框</button>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <!--热门职位-->
-        <div class="row inner">
-            <div class="navbar navbar-inner btn-group">
-                <ol class="breadcrumb" style="background-color: rgba(0,0,0,0)">
-                    <b>热门职位 : &nbsp;&nbsp;&nbsp;&nbsp;</b>
 
-                    <li th:if="${sordStr!=null}" th:each="str: ${sordStr}"><a href="#" th:text="${str}"></a></li>
-                    <th:block th:unless="${sordStr!=null}">
-                        <li><a href="#">音乐</a></li>
-                        <li><a href="#">舞蹈</a></li>
-                        <li><a href="#">门卫</a></li>
-                        <li><a href="#">后台管理员</a></li>
-                        <li><a href="#">院长</a></li>
-                        <li><a href="#">院长</a></li>
-                    </th:block>
-                    <li>......</li>
-                </ol>
-            </div>
-        </div>
-        <!--分类导航-->
-        <div class="row">
+        <div style="height: 100px">
 
         </div>
     </header>
@@ -96,178 +56,440 @@
     <!--正文-->
     <section>
         <section>
-            <div class="container">
-                <div class="row position">
-                    <div >
-                        <!--个人 侧标栏-->
-                        <aside class="profile-nav col-lg-3">
-                            <section class="panel" th:object="${data.queryResult.object}">
-                                <div class="user-heading round">
-                                    <a href="#">
-                                        <th:block th:if="*{consumerURL== null}">
-                                            <img src="/img/profile-avatar.jpg" alt="头像">
-                                        </th:block>
-                                        <th:block th:if="*{consumerURL!= null}">
-                                            <img th:src="*{consumerURL}" alt="头像">
-                                        </th:block>
-                                    </a>
-                                    <h1 th:text="*{consumerName}">meishiqiang</h1>
-                                    <p th:text="*{consumerEmail}== null?'':*{consumerEmail}">13243038531@163.com</p>
-                                    <p th:text="*{consumerCellPhone}== null?'':*{consumerCellPhone}">13243038531</p>
-                                </div>
+            <div class="container" th:object="${consumer}">
+                <th:block th:if="*{resumeISNOT == 1}">
+                    <div class="row position">
+                        <div class="col-md-9">
+                            <div class="头部">
 
-                                <ul class="nav nav-pills nav-stacked">
-                                    <li class="active"><a th:href="'/consumer/personal/1'"> <i class="fa fa-user"></i> 个人资料</a></li>
-                                    <li><a th:href="'/consumer/personalEdit/1'"> <i class="fa fa-edit"></i> 编辑个人资料</a></li>
-                                </ul>
-                            </section>
-                        </aside>
-                        <!--个人 侧标栏-->
-                        <!--个人资料-->
-                        <aside class="profile-info col-lg-9">
-                            <section class="panel" th:object="${data.queryResult.object}">
-                                <div class="bio-graph-heading">
-                            <span th:text="*{consumerSignature}==null?'这家伙很懒，什么都没有留下！！！！！！':*{consumerSignature}">
-                            </span>
+                            </div>
+                            <div class="简历正文">
+                                <style type="text/css">.b1{white-space-collapsing:preserve;}
+                                .b2{margin: 1.0in 1.25in 1.0in 1.25in;}
+                                .s1{font-weight:bold;color:black;}
+                                .s2{color:black;}
+                                .s3{font-weight:bold;}
+                                .p1{text-align:center;hyphenate:auto;font-family:华文楷体;font-size:20pt;}
+                                .p2{text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:14pt;}
+                                .p3{text-indent:0.15277778in;text-align:center;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p4{text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p5{text-indent:0.15277778in;text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p6{text-indent:0.22430556in;text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p7{text-align:start;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p8{text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:16pt;}
+                                .p9{text-align:start;hyphenate:auto;font-family:华文楷体;font-size:12pt;}
+                                .p10{text-indent:0.30555555in;text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p11{margin-left:0.16875in;margin-top:0.16458334in;text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p12{text-indent:0.30555555in;text-align:start;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p13{margin-left:0.16875in;margin-top:0.060416665in;text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:11pt;}
+                                .p14{text-indent:0.083333336in;text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:12pt;}
+                                .p15{text-align:justify;hyphenate:auto;font-family:华文楷体;font-size:10pt;}
+                                .td1{width:6.2777777in;padding-start:0.0in;padding-end:0.0in;border-bottom:thin solid black;border-left:thin solid black;border-right:thin solid black;border-top:thin solid black;}
+                                .td2{width:1.1819445in;padding-start:0.0in;padding-end:0.0in;border-bottom:thin solid black;border-left:thin solid black;border-right:thin solid black;border-top:thin solid black;}
+                                .td3{width:1.4777777in;padding-start:0.0in;padding-end:0.0in;border-bottom:thin solid black;border-left:thin solid black;border-right:thin solid black;border-top:thin solid black;}
+                                .td4{width:1.25in;padding-start:0.0in;padding-end:0.0in;border-bottom:thin solid black;border-left:thin solid black;border-right:thin solid black;border-top:thin solid black;}
+                                .td5{width:2.3680556in;padding-start:0.0in;padding-end:0.0in;border-bottom:thin solid black;border-left:thin solid black;border-right:thin solid black;border-top:thin solid black;}
+                                .td6{width:3.6180556in;padding-start:0.0in;padding-end:0.0in;border-bottom:thin solid black;border-left:thin solid black;border-right:thin solid black;border-top:thin solid black;}
+                                .td7{width:5.0958333in;padding-start:0.0in;padding-end:0.0in;border-bottom:thin solid black;border-left:thin solid black;border-right:thin solid black;border-top:thin solid black;}
+                                .r1{height:0.0625in;keep-together:always;}
+                                .r2{height:0.0625in;}
+                                .r3{height:0.094444446in;}
+                                .r4{height:0.38472223in;}
+                                .r5{height:0.9451389in;}
+                                .r6{height:1.1263889in;}
+                                .r7{height:0.10763889in;}
+                                .t1{table-layout:fixed;border-collapse:collapse;border-spacing:0;}
+                                </style>
+                                <table class="t1">
+                                    <tbody>
+                                    <tr class="r1">
+                                        <td class="td1" colspan="4">
+                                            <p class="p1">
+                                                <span class="s1">个 人 简 历</span><a name="_GoBack"></a><a name="_GoBack"></a>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td1" colspan="4">
+                                            <p class="p2">
+                                                <span class="s1">【个人信息】</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r3">
+                                        <td class="td2">
+                                            <p class="p3">
+                                                <span>姓    名</span>
+                                            </p>
+                                        </td><td class="td3">
+                                        <p class="p4">
+                                            <span>梅士强</span>
+                                        </p>
+                                    </td><td class="td4">
+                                        <p class="p5">
+                                            <span>性   别</span>
+                                        </p>
+                                    </td><td class="td5">
+                                        <p class="p4">
+                                            <span>男</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r3">
+                                        <td class="td2">
+                                            <p class="p3">
+                                                <span>出    生</span>
+                                            </p>
+                                        </td><td class="td3">
+                                        <p class="p4">
+                                            <span>1997-07</span>
+                                        </p>
+                                    </td><td class="td4">
+                                        <p class="p5">
+                                            <span>年   龄</span>
+                                        </p>
+                                    </td><td class="td5">
+                                        <p class="p4">
+                                            <span>23</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r3">
+                                        <td class="td2">
+                                            <p class="p3">
+                                                <span>院    校</span>
+                                            </p>
+                                        </td><td class="td3">
+                                        <p class="p4">
+                                            <span class="s2">新乡学院</span>
+                                        </p>
+                                    </td><td class="td4">
+                                        <p class="p5">
+                                            <span>专   业</span>
+                                        </p>
+                                    </td><td class="td5">
+                                        <p class="p4">
+                                            <span>软件工程	</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r4">
+                                        <td class="td2">
+                                            <p class="p3">
+                                                <span>学    历</span>
+                                            </p>
+                                        </td><td class="td3">
+                                        <p class="p4">
+                                            <span class="s2">本科</span>
+                                        </p>
+                                    </td><td class="td4">
+                                        <p class="p5">
+                                            <span>电子邮箱</span>
+                                        </p>
+                                    </td><td class="td5">
+                                        <p class="p4">
+                                            <span>13243038531@163.com</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r3">
+                                        <td class="td2">
+                                            <p class="p6">
+                                                <span>联系电话</span>
+                                            </p>
+                                        </td><td class="td3">
+                                        <p class="p4">
+                                            <span class="s2">13243038531</span>
+                                        </p>
+                                    </td><td class="td6" colspan="2">
+                                        <p class="p4"></p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td1" colspan="4">
+                                            <p class="p2">
+                                                <span class="s1">【求职意向】</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td2">
+                                            <p class="p7">
+                                                <span>工作性质</span>
+                                            </p>
+                                        </td><td class="td3">
+                                        <p class="p7">
+                                            <span>全职</span>
+                                        </p>
+                                    </td><td class="td4">
+                                        <p class="p7">
+                                            <span>工作地点</span>
+                                        </p>
+                                    </td><td class="td5">
+                                        <p class="p7">
+                                            <span>郑州</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td2">
+                                            <p class="p7">
+                                                <span>目标职能</span>
+                                            </p>
+                                        </td><td class="td3">
+                                        <p class="p7">
+                                            <span>JAVA软件工程师</span>
+                                        </p>
+                                    </td><td class="td4">
+                                        <p class="p7">
+                                            <span>期望薪资</span>
+                                        </p>
+                                    </td><td class="td5">
+                                        <p class="p7">
+                                            <span>面议</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td1" colspan="4">
+                                            <p class="p2">
+                                                <span class="s3">【教育背景】</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td1" colspan="4">
+                                            <p class="p5">
+                                                <span>主修课程： Java语言程序设计，JavaWeb程序开发入门，SSH框架整合实战教程，Spring Boot企业级开发教程。HTML5项目设计，</span><a href="https://mooc1-1.chaoxing.com/visit/stucoursemiddle?courseid=204963859&amp;clazzid=9982724&amp;vc=1&amp;cpi=98006668%22 \o %22JS%E5%92%8CjQuery%E5%BC%80%E5%8F%91%22 \t %22http://mooc1-1.chaoxing.com/visit/_blank"><span>JS和jQuery开发</span></a><span>，</span><a href="https://mooc1-1.chaoxing.com/visit/stucoursemiddle?courseid=206038698&amp;clazzid=13317046&amp;vc=1&amp;cpi=98006668%22 \o %22Web%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF%22 \t %22http://mooc1-1.chaoxing.com/visit/_blank"><span>Web前端框架技术</span></a><span>，移动应用开发-微信小程序开发 。</span><a href="https://mooc1-1.chaoxing.com/visit/stucoursemiddle?courseid=203585152&amp;clazzid=14136748&amp;vc=1&amp;cpi=98006668%22 \o %22%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E4%BF%9D%E8%AF%81%E4%B8%8E%E6%B5%8B%E8%AF%95%22 \t %22http://mooc1-1.chaoxing.com/visit/_blank"><span>软件质量保证与测试</span></a><span>，</span><a href="https://mooc1-1.chaoxing.com/visit/stucoursemiddle?courseid=206516005&amp;clazzid=13143178&amp;vc=1&amp;cpi=98006668%22 \o %22%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%22 \t %22http://mooc1-1.chaoxing.com/visit/_blank"><span>软件项目管理</span></a><span>。</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td1" colspan="4">
+                                            <p class="p2">
+                                                <span class="s3">【综合技能】</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r1">
+                                        <td class="td1" colspan="4">
+                                            <p class="p5">
+                                                <span> 在实训中熟练掌握了Java, 有良好的编程习惯</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span> 熟悉SSM原理和运用。</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span> 熟悉运用SpringBoot、和SpringDate</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span> 熟悉MySQL数据库。</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span> 熟悉Html、CSS、JQuery、BootStrap、Ajax等前端开发技术。</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span> 熟练使用SVN,Maven等项目开发及管理工具。</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span> 了解 非关系数据库 Redis、mongodb。</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span> 了解 </span><a href="https://spring.io/projects/spring-cloud-netflix"><span>Spring Cloud Netflix</span></a><span>微服务</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span> 了解 ElasticSearch , Lucene 全文检索技术</span>
+                                            </p>
+                                            <p class="p5">
+                                                <span>了解 RabbitMQ 消息队列服务 和 FastDFS 图片服务器</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td1" colspan="4">
+                                            <p class="p8">
+                                                <span class="s3">【项目经验】</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td2">
+                                            <p class="p9">
+                                                <span class="s3">项目名称</span>
+                                            </p>
+                                        </td><td class="td7" colspan="3">
+                                        <p class="p9">
+                                            <span class="s3">新闻头条平台</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td2">
+                                            <p class="p4"></p>
+                                            <p class="p4">
+                                                <span>开发环境和工具</span>
+                                            </p>
+                                        </td><td class="td7" colspan="3">
+                                        <p class="p4"></p>
+                                        <p class="p10">
+                                            <span>SpringBoot（web+datajpa+thymeleaf+security+mail+dataRedis+mybatis）  +MySQL+ Maven+es+ mongodb+ redis</span>
+                                        </p>
+                                        <p class="p4"></p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r5">
+                                        <td class="td2">
+                                            <p class="p9"></p>
+                                            <p class="p9">
+                                                <span>项目描述</span>
+                                            </p>
+                                        </td><td class="td7" colspan="3">
+                                        <p class="p10">
+                                            <span>采用B2B2C业务模式，发布方入住平台，用户在线观看新闻，发表评论，实现在线新闻平台，足不出户了解新闻大事，主要功能由后台管理，商家管理, 用户管理，实现了,日志,发布新闻,搜素，评论热门推荐等功能。</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r6">
+                                        <td class="td2">
+                                            <p class="p9">
+                                                <span class="s2">项目技术</span>
+                                            </p>
+                                        </td><td class="td7" colspan="3">
+                                        <p class="p11">
+                                            <span>1.使用mail 发送邮件</span>
+                                        </p>
+                                        <p class="p11">
+                                            <span>2.使用springdata操作数据</span>
+                                        </p>
+                                        <p class="p11">
+                                            <span>3.使用thymeleaf模板管理</span>
+                                        </p>
+                                        <p class="p11">
+                                            <span>4.使用redis缓存数据</span>
+                                        </p>
+                                        <p class="p11">
+                                            <span>5.flexmark转换markdown为html</span>
+                                        </p>
+                                        <p class="p11"></p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r7">
+                                        <td class="td2">
+                                            <p class="p9">
+                                                <span class="s3">项目名称</span>
+                                            </p>
+                                        </td><td class="td7" colspan="3">
+                                        <p class="p9">
+                                            <span class="s3">小风车旅游网</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td2">
+                                            <p class="p4">
+                                                <span>开发环境和工具</span>
+                                            </p>
+                                        </td><td class="td7" colspan="3">
+                                        <p class="p10">
+                                            <span>SpringMVC + Spring + MyBatis + SpringSecurity + PageHelper + mysql+ Tomcat 7+ Maven</span>
+                                        </p>
+                                        <p class="p4"></p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td2">
+                                            <p class="p9"></p>
+                                            <p class="p9">
+                                                <span>项目描述</span>
+                                            </p>
+                                        </td><td class="td7" colspan="3">
+                                        <p class="p12"></p>
+                                        <p class="p12">
+                                            <span>小风车旅游网是根据旅客在线预订出游信息等开发的系统。实现了旅游信息管理，旅客信息管理，用户权限分层等模块，旅游信息可以通过数据库查询展示给旅客看，旅客挑选合适的行程生成订单，实现了对用户权限的分级，提高了业务效率。轻量级旅游网站，功能包括 查看旅游线路详情，后台管理，路线管理， 用户登录登录与授权.</span>
+                                        </p>
+                                        <p class="p12"></p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r2">
+                                        <td class="td2">
+                                            <p class="p9">
+                                                <span class="s2">项目技术</span>
+                                            </p>
+                                        </td><td class="td7" colspan="3">
+                                        <p class="p11">
+                                            <span>1. 基于SSM构建项目</span>
+                                        </p>
+                                        <p class="p13">
+                                            <span>2. 使用 Mybatis 的 PageHepler 完成分页</span>
+                                        </p>
+                                        <p class="p13">
+                                            <span>3. 使用 SpringSecurity 完成 用户权限的校验和认证</span>
+                                        </p>
+                                        <p class="p13">
+                                            <span>4. 使用 AOP 设计记录浏览日志</span>
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr class="r1">
+                                        <td class="td1" colspan="4">
+                                            <p class="p8">
+                                                <span class="s1">【自我描述】</span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="r1">
+                                        <td class="td1" colspan="4">
+                                            <p class="p4"></p>
+                                            <p class="p4">
+                                                <span>本人思维敏捷，逻辑分析能力强，工作认真、负责，能承受一定工作压力。</span>
+                                            </p>
+                                            <p class="p4">
+                                                <span>活泼开朗、乐观向上、适应力强、上手快、勤奋好学、脚踏实地。</span>
+                                            </p>
+                                            <p class="p4">
+                                                <span>对工作尽职尽责，乐于接受挑战性的工作。</span>
+                                            </p>
+                                            <p class="p4">
+                                                <span>具有优秀的学习能力和强烈的学习意识，善于分析解决问题。</span>
+                                            </p>
+                                            <p class="p4">
+                                                <span>善于交流与沟通，能以较强的团队合作精神，快速的融入开发团队。</span>
+                                            </p>
+                                            <p class="p14"></p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-3" >
+                            <h4>简历管理</h4>
+                            <div class="简历的操作">
+                                <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><b>某某莫的简历名称</b></a>
+                                <div style="margin: 10px 0">
+                                    <button class="btn btn-info col-md-12">下&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;载</button>
                                 </div>
-                                <div class="panel-body bio-graph-info">
-                                    <h1>资料信息</h1>
-                                    <div class="row">
-                                        <div class="bio-row">
-                                            <p><span>名字 </span>: <span th:if="*{consumerName != null}" th:text="*{consumerName}">梅士强</span></p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>昵称 </span>: <span th:if="*{consumerNickname != null}" th:text="*{consumerNickname}">梅小二</span></p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>现居地址 </span>: <span th:if="*{consumerAddress != null}" th:text="*{consumerAddress}">河南省郑州市管城回族区南三环道路</span></p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>生日</span>: <span th:if="*{consumerBirthday != null}" th:text="*{consumerBirthday}">1997-07-03 04:06</span></p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>邮箱 </span>: <span th:if="*{consumerEmail != null}" th:text="*{consumerEmail}">13243038531@163.com</span></p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>手机号 </span>: <span th:if="*{consumerCellPhone != null}" th:text="*{consumerCellPhone}">13243038531</span></p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>身份 </span>: <span th:if="*{consumerStatus != null}" th:text="*{consumerStatus}">学生</span></p>
-                                        </div>
-                                        <div class="bio-row">
-                                            <p><span>加入日期 </span>: <span th:if="*{consumerJoinDay != null}" th:text="*{consumerJoinDay}">2021-02-08 16:32:53</span></p>
-                                        </div>
-                                    </div>
+                                <div>
+                                    <button class="btn btn-success col-md-12">更&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新</button>
                                 </div>
-                            </section>
-                            <section>
-                                <div class="bio-graph-heading">
-                            <span th:text="*{consumerSignature}==null?'这家伙很懒，什么都没有留下！！！！！！':*{consumerSignature}">
-                            </span>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="panel">
-                                            <div class="panel-body">
-                                                <div class="bio-chart">
-                                                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true  data-thickness=".2" value="35" data-fgColor="#e06b7d" data-bgColor="#e8e8e8">
-                                                </div>
-                                                <div class="bio-desk">
-                                                    <h4 class="red">Envato Website</h4>
-                                                    <p>Started : 15 July</p>
-                                                    <p>Deadline : 15 August</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="panel">
-                                            <div class="panel-body">
-                                                <div class="bio-chart">
-                                                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true  data-thickness=".2" value="63" data-fgColor="#4CC5CD" data-bgColor="#e8e8e8">
-                                                </div>
-                                                <div class="bio-desk">
-                                                    <h4 class="terques">ThemeForest CMS </h4>
-                                                    <p>Started : 15 July</p>
-                                                    <p>Deadline : 15 August</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="panel">
-                                            <div class="panel-body">
-                                                <div class="bio-chart">
-                                                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true  data-thickness=".2" value="75" data-fgColor="#96be4b" data-bgColor="#e8e8e8">
-                                                </div>
-                                                <div class="bio-desk">
-                                                    <h4 class="green">VectorLab Portfolio</h4>
-                                                    <p>Started : 15 July</p>
-                                                    <p>Deadline : 15 August</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="panel">
-                                            <div class="panel-body">
-                                                <div class="bio-chart">
-                                                    <input class="knob" data-width="100" data-height="100" data-displayPrevious=true  data-thickness=".2" value="50" data-fgColor="#cba4db" data-bgColor="#e8e8e8">
-                                                </div>
-                                                <div class="bio-desk">
-                                                    <h4 class="purple">Adobe Muse Template</h4>
-                                                    <p>Started : 15 July</p>
-                                                    <p>Deadline : 15 August</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            <section class="panel">
-                                <header class="panel-heading summary-head">
-                                    <h4>Day summary</h4>
-                                    <p>12 August 2013</p>
-                                </header>
-                                <div class="panel-body">
-                                    <ul class="summary-list">
-                                        <li>
-                                            <a href="javascript:;">
-                                                <i class=" fa fa-shopping-cart text-primary"></i>
-                                                1 Purchase
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <i class="fa fa-envelope text-info"></i>
-                                                15 Emails
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <i class="fa fa-picture-o text-muted"></i>
-                                                2 Photo Upload
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <i class="fa fa-tags text-success"></i>
-                                                19 Sales
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <i class="fa fa-microphone text-danger"></i>
-                                                4 Audio
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </section>
-                        </aside>
-                        <!--个人资料-->
+                            </div>
+                            <div class="简历的设置">
+
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </th:block>
+                <th:block th:if="*{resumeISNOT == 0}">
+                    <div class="row">
+                        <div class="如果没有则上传">
+                            <form enctype="multipart/form-data">
+                                <div class="file-loading">
+                                    <input id="kv-explorer"  name="resumeFile" type="file" multiple>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </th:block>
             </div>
 
         </section>
@@ -295,14 +517,35 @@
 <script src="/assets/jquery-knob/js/jquery.knob.js"></script>
 <script src="/js/respond.min.js" ></script>
 <script src="/js/common-scripts.js"></script>
-
+<script src="/assets/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script><!--上传文件::插件-->
 <script>
-
     //knob
     $(".knob").knob();
-
+    //fileinput
+    $(function () {
+        var pathname = window.location.pathname;
+        var index = pathname.lastIndexOf("/");
+        var param = pathname.substring(index);
+        /*上传个人简历 word*/
+        $("#kv-explorer").fileinput({
+            language: 'zh', //设置语言
+            textEncoding: "UTF-8",//文本编码
+            uploadUrl: "/consumer/resume/upload/"+param, //上传的地址
+            allowedFileExtensions: ["doc", "docx"], //接收的文件后缀
+            browseClass: "btn btn-primary", //按钮样式
+            enctype: 'multipart/form-data',//类型
+            validateInitialCount: false
+        }).on('filepreupload', function (event, data, previewId, index) {
+            console.log("上传之前调用该方法");
+        }).on('fileuploaded', function (event, data, previewId, index) {
+            console.log("上传之后调用该方法");
+            if (data.response.success == 1) {
+                if(confirm(data.response.message)+",是否刷新"){
+                    window.location.reload();
+                }
+            }
+        });
+    });
 </script>
-
-
 </body>
 </html>

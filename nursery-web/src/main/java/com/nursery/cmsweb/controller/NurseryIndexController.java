@@ -74,6 +74,7 @@ public class NurseryIndexController extends BaseController implements NurseryInd
             modelAndView.addObject("classStr",recruitmentTypesDOList);
             if (!StringUtils.isEmpty(param)){
                 ConsumerBO attribute = (ConsumerBO) session.getAttribute(param);
+//                if (attribute)
                 modelAndView.addObject("consuerBO",attribute);
             }
         } catch (Exception e) {

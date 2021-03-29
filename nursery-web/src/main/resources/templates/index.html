@@ -86,6 +86,19 @@
     }
 </style>
 <body class="mega-nav">
+<th:block th:if="${param.error != null}">
+    <script>
+        var loca_path = window.location.href;
+        var pathArr = loca_path.split('?')[0];
+        var pathLen = pathArr.length;
+        var tableId = pathArr.substring((pathLen-1),(pathLen));
+        if (confirm("登录已经失效，请重新登录！！")){
+            window.location.href = '/login';
+        }else {
+            window.location.href = '/index';
+        }
+    </script>
+</th:block>
 <section id="container">
     <!--头部-->
     <header class="">
@@ -112,8 +125,8 @@
                             <li><a href="/information" th:href="'/information?number='+${param.number}">咨询</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right hidden-sm">
-                            <li><a href="/resume">简历</a></li>
                             <span th:text="${param.number}" hidden></span>
+                            <li><a href="/consumer/resume/" th:href="'/consumer/resume/'+${param.number}">简历</a></li>
                             <li><a href="/consumer/personal/1" th:href="'/logout/'+${param.number}">退出</a></li>
                             <li><a href="/consumer/personal/1"
                                    th:href="'/consumer/personal/'+${param.number}">
@@ -143,7 +156,6 @@
                             <li><a href="/information" th:href="'/information'">咨询</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right hidden-sm">
-                            <li><a href="/resume">简历</a></li>
                             <li><a th:href="'/login.html'">用户！请登录</a></li>
                             <li><a th:href="'/register.html'">快捷注册</a></li>
                         </ul>
@@ -155,21 +167,10 @@
         <div class="row inner search-inner">
             <div class="col-md-12">
                 <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-lg dropdown-toggle " data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">职位类型 <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">教师</a></li>
-                            <li><a href="#">职工</a></li>
-                            <li><a href="#">门卫</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">院长</a></li>
-                        </ul>
-                    </div><!-- /btn-group -->
                     <input type="text" class="form-control input-lg" placeholder="搜索职位"
-                           aria-describedby="sizing-addon1">
+                           aria-describedby="sizing-addon1" id="input_search_content" required>
                     <span class="input-group-btn">
-                        <button class="btn btn-success btn-lg" type="button">搜索框</button>
+                        <button class="btn btn-success btn-lg" type="button" id="btn_search">搜索框</button>
                     </span>
                 </div>
             </div>

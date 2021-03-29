@@ -10,7 +10,7 @@ function hotJob(hotId, hotname) {
         for (var i = 0; i < data.length; i++) {
             var RecruitmentDO = data[i];
             var requireEduDB = RecruitmentDO.requireEduDB;
-            requireEduDB  = requireEduDB=='0' ? '不限':requireEduDB=='1' ?'大专':requireEduDB=='2'?'本科':requireEduDB=='3'?'硕士':'博士';
+            requireEduDB = requireEduDB == '0' ? '不限' : requireEduDB == '1' ? '大专' : requireEduDB == '2' ? '本科' : requireEduDB == '3' ? '硕士' : '博士';
             var li = '<div class="col-sm-6 col-md-4  job_block">\n' +
                 '\t<div class="position-thumbnail">\n' +
                 '\t\t<div class="row">\n' +
@@ -29,7 +29,14 @@ function hotJob(hotId, hotname) {
 
             RecruitmentDO_lis += li;
         }
-        RecruitmentDO_lis +='</div>';
+        RecruitmentDO_lis += '</div>';
         $("#" + hotId).html(RecruitmentDO_lis);
     });
 }
+
+$("#btn_search").click(function () {
+    var search_content = $("#input_search_content").val();
+    var type = "0";
+    var sign = "search:" + search_content + "type:" + type;
+    window.location.href = "/search?sign=" + sign;
+})

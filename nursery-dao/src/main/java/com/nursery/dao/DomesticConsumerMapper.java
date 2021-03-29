@@ -139,4 +139,19 @@ public interface DomesticConsumerMapper {
     @Select("select * from tb_consumer where consumer_cellphone = #{param1}")
     @ResultMap("domesticConsumer")
     List<DomesticConsumerDO> findByCellAndPass(String cellPhone, String pass) throws SQLException;
+
+    //更新resume简历相关字段
+    @Update("update tb_consumer set resumeISNOT = #{resumeISNOT}," +
+            "resume_waijian_id = #{resumeId} " +
+            "where consumer_id = #{consumerID}")
+    int updateConsumerResume(DomesticConsumerDO consumerDO);
+
+    //查询resume简历相关字段
+    @Select("select * from tb_consumer where consumer_id = #{consumerId}")
+    @Results(
+            value = {
+                    @Result(column = "resumeISNOT",property = "resumeISNOT"),
+                    @Result(column = "resume_waijian_id",property = "consumerResume",one = @One(select = "com.nursery.dao.DomesticConsumerResumeMapper.selectConsumerResumeByResumeId"))
+            })
+    DomesticConsumerDO selectConsumerResumeByConsumerID(String consumerId);
 }

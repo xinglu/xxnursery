@@ -37,9 +37,9 @@ public class UserCenterController extends BaseController implements UserCenterAp
     @Autowired
     IDomesticConsumerSV domesticConsumerSV;
 
+    //用户中心
     @RequestMapping(value = "/personal/{param}",method = RequestMethod.GET)
     public ModelAndView visitUserInfoPage(@PathVariable(value = "param",required = true) String param, ModelAndView modelAndView) {
-
         QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
         String liushui = param;
         String userid = "";
@@ -74,6 +74,7 @@ public class UserCenterController extends BaseController implements UserCenterAp
         return modelAndView;
     }
 
+    //用户编辑
     @RequestMapping(value = "/personalEdit/{param}",method = RequestMethod.GET)
     public ModelAndView visitUserEditByID(@PathVariable(value = "param",required = true) String param, ModelAndView modelAndView) {
         QueryResponseResult data = new QueryResponseResult(CommonCode.FAIL, null);
@@ -108,6 +109,7 @@ public class UserCenterController extends BaseController implements UserCenterAp
         modelAndView.setViewName("userEdit");
         return modelAndView;
     }
+
 
     /**
      * generalContent
@@ -162,9 +164,8 @@ public class UserCenterController extends BaseController implements UserCenterAp
 
     /**
      * 比对密码正确
-     * @param consumerID
-     * @param password
-     * @return
+     * @param consumerID    用户id
+     * @param password  密码
      */
     @PostMapping("/consultingcode")
     @Override

@@ -2,16 +2,22 @@ package com.nursery.service.impl;
 
 import com.nursery.api.iservice.IDomesticConsumerSV;
 import com.nursery.beans.DomesticConsumerDO;
+import com.nursery.beans.DomesticConsumerResumeDO;
 import com.nursery.beans.bo.ConsumerBO;
 import com.nursery.beans.vo.MailVo;
 import com.nursery.dao.DomesticConsumerMapper;
 import com.nursery.utils.EmailUtils;
+import com.nursery.utils.POIUtils;
 import org.junit.platform.commons.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -175,6 +181,7 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
             if (consumerDO.getConsumerPass().equals(pass)){
                 consumerBO.setId(consumerDO.getConsumerID());
                 consumerBO.setYhu(consumerDO.getConsumerNickname());
+                consumerBO.setIntroduce("其他技术职业.1年");
                 return consumerBO;
             }
         }
@@ -195,6 +202,42 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
         }
         return null;
     }
+
+    @Override
+    public int updateConsumerResume(DomesticConsumerDO consumerDO) {
+        return mapper.updateConsumerResume(consumerDO);
+    }
+
+
+    @Override
+    public DomesticConsumerDO selectConsumerResumeByConsumerID(String consumerId) throws SQLException{
+        DomesticConsumerDO consumerDO = mapper.selectConsumerResumeByConsumerID(consumerId);
+        DomesticConsumerResumeDO resume = consumerDO.getConsumerResume();
+        String url = resume.getUrl();
+        String type = resume.getType();
+        if (type.equals(".doc")){
+            try {
+                String imgpath = ResourceUtils.getURL("xxnursery/").getPath() + "word/upload/image";
+                String filepath = ResourceUtils.getURL("xxnursery/").getPath() + "word/upload";
+                String imagePath = imgpath.replace('/', '\\').substring(1, imgpath.length());
+                String filePath = filepath.replace('/', '\\').substring(1, filepath.length());
+                filepath = filePath+"\\"+resume.getId()+resume.getType();
+                String content = POIUtils.docHtmlContent(filepath, imagePath);
+                resume.setHtmlContent(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+        }
+        if (type.equals(".docx")) {
+//            POIUtils.docxToHtml();
+        }
+        return consumerDO;
+    }
+
 
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){
