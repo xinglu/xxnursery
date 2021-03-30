@@ -135,6 +135,13 @@ public class ConsumerResumeController extends BaseController implements ResumeAp
         sqlFileUrl = request.getContextPath() + "/upload/word/" + fileName;
         //数据库操作
         try {
+
+            //更新操作，判断是否
+            String consumerResumeId = consumerSV.selectResumeIdByConsumerID(consumerId);
+            if (!StringUtils.isEmpty(consumerResumeId)){
+                //如果存在就删除简历
+                consumerResumeSV.delectByid(consumerResumeId);
+            }
             DomesticConsumerResumeDO consumerResumeDO = new DomesticConsumerResumeDO();
             consumerResumeDO.setId(resumeId);
             consumerResumeDO.setName(realFileName);

@@ -1,10 +1,7 @@
 package com.nursery.dao;
 
 import com.nursery.beans.DomesticConsumerResumeDO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.sql.SQLException;
 
@@ -32,4 +29,7 @@ public interface DomesticConsumerResumeMapper {
             }
     )
     DomesticConsumerResumeDO selectConsumerResumeByResumeId(String resumeId);
+
+    @Delete("DELETE FROM tb_consumer_resume WHERE id = #{consumerResumeId}")
+    void delectById(String consumerResumeId);
 }

@@ -238,11 +238,14 @@ public class DomesticConsumerImpl implements IDomesticConsumerSV {
         return consumerDO;
     }
 
+    @Override
+    public String selectResumeIdByConsumerID(String consumerId){
+        return mapper.selectResumeIdByConsumerID(consumerId);
+    }
 
     //校验手机号
     private boolean checkCellphone(String consumerCellPhone){
         boolean flag = false;
-
         return true;
     }
 }

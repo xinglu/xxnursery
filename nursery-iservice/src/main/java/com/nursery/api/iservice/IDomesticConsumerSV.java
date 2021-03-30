@@ -42,4 +42,6 @@ public interface IDomesticConsumerSV {
     int updateConsumerResume(DomesticConsumerDO consumerDO);
     //获取简历resume的相关字段
     DomesticConsumerDO selectConsumerResumeByConsumerID(String consumerId) throws SQLException;
+    //根据id获取简历id
+    String selectResumeIdByConsumerID(String consumerId);
 }

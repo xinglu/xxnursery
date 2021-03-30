@@ -13,4 +13,5 @@ public interface IConsumerResumeSV {
     //保存简历信息
     void insertResume(DomesticConsumerResumeDO consumerResumeDO) throws SQLException;
 
+    void delectByid(String consumerResumeId);
 }

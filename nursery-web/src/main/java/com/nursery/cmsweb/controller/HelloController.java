@@ -15,4 +15,8 @@ public class HelloController extends BaseController {
     public String login(){
         return "login";
     }
+    @RequestMapping(value = {"/in/test"})
+    public String testMethod(){
+        return "dd";
+    }
 }

@@ -154,4 +154,8 @@ public interface DomesticConsumerMapper {
                     @Result(column = "resume_waijian_id",property = "consumerResume",one = @One(select = "com.nursery.dao.DomesticConsumerResumeMapper.selectConsumerResumeByResumeId"))
             })
     DomesticConsumerDO selectConsumerResumeByConsumerID(String consumerId);
+
+    //根据用户id查询简历id
+    @Select("select resume_waijian_id from tb_consumer where consumer_id = #{consumerId}")
+    String selectResumeIdByConsumerID(String consumerId);
 }

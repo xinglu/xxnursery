@@ -23,4 +23,9 @@ public class ConsumerResumeImpl implements IConsumerResumeSV {
     public void insertResume(DomesticConsumerResumeDO consumerResumeDO) throws SQLException {
         resumeMapper.insertResume(consumerResumeDO);
     }
+
+    @Override
+    public void delectByid(String consumerResumeId) {
+        resumeMapper.delectById(consumerResumeId);
+    }
 }
