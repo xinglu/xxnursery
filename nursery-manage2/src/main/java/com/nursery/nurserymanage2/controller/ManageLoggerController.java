@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class ManageLoggerController {
 
     @Autowired
     private ILoggerManageSV loggerManageSV;
-
+//    http://localhost:32227/manage/consumer/log.html
     @RequestMapping(value = {"/manage/consumer/log.html"},method = RequestMethod.GET)
     public ModelAndView consumerLog(){
         ModelAndView modelAndView = new ModelAndView();
@@ -37,8 +38,8 @@ public class ManageLoggerController {
     }
 
 
-    @RequestMapping(value = {"/manage/consumer/log.html"},method = RequestMethod.POST)
-    public ModelAndView consumerLog(LogDO logDO){
+    @RequestMapping(value = {"/manage/consumer/log"},method = RequestMethod.POST)
+    public ModelAndView consumerLog(LogDO logDO, RedirectAttributes attr){
         ModelAndView modelAndView = new ModelAndView();
         List<LogDO> logDOS = loggerManageSV.selectConsumerLogs(logDO);
         modelAndView.addObject("logDOS",logDOS);
@@ -46,12 +47,12 @@ public class ManageLoggerController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/manage/admin/log.html"},method = RequestMethod.POST)
+    @RequestMapping(value = {"/manage/admin/log"},method = RequestMethod.POST)
     public ModelAndView adminLog(LogDO logDO){
         ModelAndView modelAndView = new ModelAndView();
         List<LogDO> logDOS = loggerManageSV.selectAdminLogs(logDO);
         modelAndView.addObject("logDOS",logDOS);
-        modelAndView.setViewName("loggerConsumerPage");
+        modelAndView.setViewName("loggerAdminPage");
         return modelAndView;
     }
 

@@ -246,7 +246,7 @@
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <img alt="" src="/img/avatar1_small.jpg">
-                        <span class="username">Jhon Doue</span>
+                        <span class="username">梅士强</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
@@ -272,7 +272,7 @@
             <!-- 侧边栏菜单 start-->
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a href="index.html">
+                    <a href="index.html" th:href="'/index'">
                         <i class="fa fa-university"></i>
                         <span>新星</span>
                     </a>
@@ -337,22 +337,22 @@
                     日志
                 </header>
                 <div class="panel-body">
-                    <form class="form-horizontal search-result" method="post" th:action="'/manage/consumer/log.html'">
+                    <form class="form-horizontal search-result" method="post" th:action="'/manage/consumer/log'">
                         <div class="form-group">
                             <label class="col-lg-1 col-sm-1 control-label">姓名</label>
                             <div class="col-lg-8 col-sm-8">
-                                <input type="text" class="form-control input-xxlarge" name="name">
+                                <input type="text" class="form-control input-xxlarge" name="consumerName">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-1 col-sm-1 control-label">日期</label>
                             <div class="col-lg-4 col-sm-4">
-                                <input size="16" type="text" id="starttime" name="starttime"
+                                <input size="16" type="text" id="starttime" name="startDate"
                                        placeholder="2021-03-01 12:00"
                                        class="form_datetime form-control">
                             </div>
                             <div class="col-lg-4 col-sm-4">
-                                <input size="16" type="text" id="endtime" name="endtime"
+                                <input size="16" type="text" id="endtime" name="endDate"
                                        placeholder="2021-03-01 12:00"
                                        class="form_datetime form-control">
                             </div>
@@ -361,9 +361,37 @@
                             </div>
                         </div>
                     </form>
+                    <div class="panel-body">
+                        <div class="adv-table">
+                            <table class="display table table-bordered table-striped" id="dynamic-table">
+                                <thead>
+                                <tr>
+                                    <th>姓名</th>
+                                    <th>手机号</th>
+                                    <th>时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="gradeX" th:each="demo,stat:${logDOS}">
+                                    <td th:text="${demo.consumerName}"></td>
+                                    <td th:text="${demo.consumerCell}"></td>
+                                    <td th:text="${demo.date}"></td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>姓名</th>
+                                    <th>手机号</th>
+                                    <th>时间</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
                     <div class="classic-search">
-                        <h4><a href="#">Vector Lab launched their admin control dashboard- Flat Lab</a></h4>
-                        <p>Flat Lab is a responsive admin dashboard template built with Twitter Bootstrap Framework and it has a huge collection of reusable UI components and integrated with jQuery plugins also. </p>
+                        <hr/>
+                        <h4><a href="#">管理人员日志查询</a></h4>
+                        <p>请根据上述表单描述指引，操作，如有疑问或者错误情况咨询 人员：梅士强；电话 13243038531。 </p>
                     </div>
                 </div>
             </section>
@@ -376,7 +404,7 @@
     <!--footer start-->
     <footer class="site-footer">
         <div class="text-center">
-            2013 &copy; FlatLab by VectorLab.
+            2021 &copy; 新星幼儿园教师招聘网-管理界面。
             <a href="#" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>

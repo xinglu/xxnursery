@@ -38,7 +38,7 @@ public class LoggerManageImpl implements ILoggerManageSV {
             //2021-03-09 16:36:37'
             logDO.setEndDate("2099-00-00 00:00:00");
         }
-        return loggerManageMapper.selectLogs(logDO);
+        return loggerManageMapper.selectConsumerLogs(logDO);
     }
 
     @Override

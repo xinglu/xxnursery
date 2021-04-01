@@ -6,11 +6,15 @@
     <resultMap id="logMap1" type="com.nursery.beans.LogDO">
         <id column="ID" property="logId" jdbcType="VARCHAR"/>
         <result column="CLASSIFY" property="classify" jdbcType="VARCHAR"/>
-        <result column="CAOZUOTYPE" property="type" jdbcType="VARCHAR"/>
-        <result column="CAOZUODATE" property="date" jdbcType="VARCHAR"/>
+        <result column="CAOZUOTYPE" property="type" jdbcType="VARCHAR"/><!--类性-->
+        <result column="CAOZUODATE" property="date" jdbcType="VARCHAR"/><!--时间-->
         <result column="ADMINERID" property="erId" jdbcType="VARCHAR"/>
-        <result column="SQLID" property="id" jdbcType="VARCHAR"/>
-        <result column="DOTHING" property="dothing" jdbcType="VARCHAR"/>
+        <result column="ADMINNAME" property="adminName" jdbcType="VARCHAR"/><!--admin 姓名-->
+        <result column="SQLID" property="id" jdbcType="VARCHAR"/><!--被修改id-->
+        <result column="DOTHING" property="dothing" jdbcType="VARCHAR"/><!--类型（1:删除：delete，2：更改:update，3：新增:insert）-->
+        <result column="CONSUMERID" property="consumerId" jdbcType="VARCHAR"/><!--用户id-->
+        <result column="CONSUMERNAME" property="consumerName" jdbcType="VARCHAR"/><!--用户name-->
+        <result column="CONSUMERCELL" property="consumerCell" jdbcType="VARCHAR"/><!--用户cell-->
     </resultMap>
 
    <sql id="cloumn_list">
@@ -20,11 +24,18 @@
     <insert id="insertLog">
         INSERT INTO tb_log_manage_${tableFlag} (ID,CLASSIFY,CAOZUOTYPE,CAOZUODATE,ADMINERID,SQLID,DOTHING) VALUE (#{logId},#{classify},#{type},#{date},#{erId},#{id},#{dothing})
     </insert>
-    <select id="selectLogs" resultType="com.nursery.beans.LogDO">
-        SELECT * FROM tb_log_manage_${tableFlag} WHERE `CLASSIFY` LIKE #{consumerName} AND `CAOZUODATE`  BETWEEN  #{startDate}  AND #{endDate};
-    </select>
-    <select id="selectAdminLogs" resultType="com.nursery.beans.LogDO">
 
+    <select id="selectConsumerLogs" resultType="com.nursery.beans.LogDO">
+        SELECT * FROM tb_log_manage_2021_1 WHERE `CLASSIFY` LIKE #{consumerName} AND `CAOZUODATE`  BETWEEN  #{startDate}  AND #{endDate};
+    </select>
+
+    <select id="selectAdminLogs" resultMap="logMap1">
+        SELECT * FROM tb_log_manage_2021_1
+        WHERE 1=1
+        <if test="adminName != null and adminName != ''"> AND `ADMINNAME` LIKE #{adminName}  </if>
+        <if test="startDate != null and startDate != '' or endDate != null and endDate != '' "> AND `CAOZUODATE`  BETWEEN  #{startDate}  AND #{endDate} </if>
+        <if test="type != null and type != ''"> AND `CAOZUOTYPE` =  #{type}  </if>
+        <if test="dothing != null and dothing != ''"> AND `DOTHING` =  #{dothing}  </if>
     </select>
 
 </mapper>

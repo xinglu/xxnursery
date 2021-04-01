@@ -34,6 +34,10 @@ public class ManageConsumerController implements ManageConsumerApi {
     @Autowired
     private IDomesticConsumerSV domesticConsumerSV;
 
+    /**
+     * 更新用户
+     * @param consumerDO 参数
+     */
     @RequestMapping(value = "/putConsumer", method = RequestMethod.POST)
     @Override
     public ResponseResult putConsumer(DomesticConsumerDO consumerDO) {
@@ -102,6 +106,13 @@ public class ManageConsumerController implements ManageConsumerApi {
         }
         return responseResult;
     }
+
+
+    /**
+     * 更新用户的密码和照片
+     * @param consumerDO
+     * @return
+     */
     @RequestMapping(value = "/putConsumerPassAndImg", method = RequestMethod.POST)
     @Override
     public ResponseResult putConsumerPassAndImg(DomesticConsumerDO consumerDO) {

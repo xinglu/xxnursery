@@ -14,7 +14,7 @@ public interface LoggerManageMapper {
 
     void insertLog(LogDO logDO) throws SQLException;
 
-    List<LogDO> selectLogs(LogDO logDO);
+    List<LogDO> selectConsumerLogs(LogDO logDO);
 
     List<LogDO> selectAdminLogs(LogDO logDO);
 }
