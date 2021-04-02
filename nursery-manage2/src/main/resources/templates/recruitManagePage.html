@@ -304,6 +304,7 @@
                     </a>
                     <ul class="sub">
                         <li><a th:href="@{/manage/recruit/pull?erId=1}">发布招聘</a></li>
+                        <li><a href="#" th:href="@{/manage/recruit/audit?param=1}">招聘审核</a></li>
                         <li class="active"><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
                         <li><a href="" th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
                     </ul>
@@ -365,6 +366,8 @@
                                         <th>招聘人数</th>
                                         <th>地点</th>
                                         <th>是否过期</th>
+                                        <th>审核评语</th>
+                                        <th>审核结果</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -376,9 +379,17 @@
                                             <td th:text="${demo.manNumbers}"></td>
                                             <td th:text="${demo.place}"></td>
                                             <td th:text="(${demo.isNotStaleDated} == 'true')? '过期' : '可投递'"></td>
-                                            <td>
+                                            <td><p th:text="(${demo.auditState} == 'yes')? '审核通过' : ${demo.auditResult}" class="" th:classappend="(${demo.auditState} == 'yes')? 'text-success' : 'text-danger'"></p></td>
+                                            <td><p th:text="(${demo.isActivate} == 'yes')? '已审核' : '未审核'" class="" th:classappend="(${demo.isActivate} == 'yes')? 'text-success' : 'text-danger'"></p></td>
+                                            <td th:if="${demo.auditState} == 'yes'">
                                                 <div class="pull-left hidden-phone">
                                                     <a th:href="'/manage/recruit/getRecruitInfo/' + ${demo.id}" class="btn btn-success btn-xs"><i class=" fa fa-check"></i></a>
+                                                    <a th:href="'/manage/recruit/modify/page/' + ${demo.id}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                                    <a th:href="'/manage/recruit/delete/1/'+${demo.id}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                                </div>
+                                            </td>
+                                            <td th:if="${demo.auditState} == 'no'">
+                                                <div class="pull-left hidden-phone">
                                                     <a th:href="'/manage/recruit/modify/page/' + ${demo.id}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                                     <a th:href="'/manage/recruit/delete/1/'+${demo.id}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
                                                 </div>
@@ -393,6 +404,8 @@
                                         <th>招聘人数</th>
                                         <th>地点</th>
                                         <th>是否过期</th>
+                                        <th>审核评语</th>
+                                        <th>审核结果</th>
                                         <th>操作</th>
                                     </tr>
                                     </tfoot>

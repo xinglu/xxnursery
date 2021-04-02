@@ -2,6 +2,7 @@ package com.nursery.api.iservice;
 
 import com.nursery.beans.DBDataParam;
 import com.nursery.beans.RecruitmentDO;
+import com.nursery.common.model.response.ResponseResult;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -78,4 +79,15 @@ public interface INurseryRecruitInfoSV {
     //搜索框
     List<RecruitmentDO> selectRecruitInfoByParams(String dataParam) throws SQLException;
 
+    /**
+     * 更具审核结果查询
+     * @param is 是否审核通过 'yes' , 'no'
+     */
+    List<RecruitmentDO> selectRecruitByIsActivate(String is) throws SQLException;
+
+    /**
+     * 改变简历的审核状态  yes,no
+     * @param param  id|yes,no
+     */
+    ResponseResult updateRecruitSetAudit(String param);
 }

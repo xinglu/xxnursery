@@ -66,4 +66,18 @@ public interface NurseryRecruitmentMapper {
      * @param dataParam    参数
      */
     List<RecruitmentDO> selectRecruitInfoByParams(DBDataParam dataParam) throws SQLException;
+
+    /**
+     * 更具审核结果查询
+     * @param is 是否审核通过 'yes' , 'no'
+     */
+    List<RecruitmentDO> selectRecruitByIsActivate(String is) throws SQLException;
+
+    /**
+     *
+     * @param id 招聘id
+     * @param audit 审核结果
+     * @return 影响行数
+     */
+    int updateRecruitSetAudit(RecruitmentDO recruitmentDO) throws SQLException;
 }

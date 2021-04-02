@@ -8,7 +8,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="/img/favicon.png">
 
-    <title>招聘详细内容</title>
+    <title>招聘审核</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -16,15 +16,12 @@
     <!--external css-->
     <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 
-    <link rel="stylesheet" type="text/css" href="/assets/bootstrap-fileupload/bootstrap-fileupload.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/summernote/dist/summernote.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/bootstrap-datepicker/css/datepicker.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/bootstrap-timepicker/compiled/timepicker.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/bootstrap-datetimepicker/css/datetimepicker.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/jquery-multi-select/css/multi-select.css"/>
-
+    <!--dynamic table-->
+    <link href="/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet"/>
+    <link href="/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/assets/data-tables/DT_bootstrap.css"/>
+    <!--right slidebar-->
+    <link href="/css/slidebars.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet"/>
@@ -39,7 +36,7 @@
 <body>
 
 <section id="container" class="">
-    <!--头部-导航栏-->
+    <!--header start-->
     <header class="header white-bg">
         <div class="sidebar-toggle-box">
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
@@ -164,7 +161,7 @@
                             <a href="#">
                                 <span class="photo"><img alt="avatar" src="/img/avatar-mini2.jpg"></span>
                                 <span class="subject">
-                                    <span class="from">Jhon Doe</span>
+                                    <span class="from">梅士强</span>
                                     <span class="time">10 mins</span>
                                     </span>
                                 <span class="message">
@@ -262,13 +259,13 @@
             <!--search & user info start-->
             <ul class="nav pull-right top-menu">
                 <li>
-                    <input type="text" class="form-control search" placeholder="Search">
+                    <input type="text" class="form-control search" placeholder="搜索">
                 </li>
                 <!-- user login dropdown start-->
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <img alt="" src="/img/avatar1_small.jpg">
-                        <span class="username">Jhon Doue</span>
+                        <span class="username">梅士强</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
@@ -287,9 +284,8 @@
             <!--search & user info end-->
         </div>
     </header>
-    <!--头部-导航栏-->
-
-    <!--左侧侧边栏-->
+    <!--header end-->
+    <!--sidebar start-->
     <aside>
         <div id="sidebar" class="nav-collapse ">
             <!-- 侧边栏菜单 start-->
@@ -308,7 +304,9 @@
                     </a>
                     <ul class="sub">
                         <li><a th:href="@{/manage/recruit/pull?erId=1}">发布招聘</a></li>
-                        <li class="active"><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a></li>
+                        <li class="active"><a href="#" th:href="@{/manage/recruit/audit?param=1}">招聘审核</a></li>
+                        <li><a href="#" th:href="@{/manage/recruit/getRecruitManage?param=1}">招聘管理</a>
+                        </li>
                         <li><a href="" th:href="@{/manage/recruit/getRecruitManages}">所有招聘</a></li>
                     </ul>
                 </li>
@@ -346,189 +344,122 @@
             </ul>
         </div>
     </aside>
-    <!--左侧侧边栏-->
-
-    <!--文本内容-->
+    <!--sidebar end-->
+    <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
+            <!-- page start-->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-sm-12">
                     <section class="panel">
+                        <header class="panel-heading">
+                            <h3>招聘管理中心</h3>
+                            <span class="tools pull-right"></span>
+                        </header>
                         <div class="panel-body">
-                            <form action="" class="form-horizontal tasi-form"
-                                  th:object="${data.queryResult.object}" id="recruitForm"
-                                  method="post" accept-charset="utf-8">
-<!--                                <input type="hidden" name="_method" value="put"/>-->
-                                <input type="hidden" name="id" th:value="*{id}"/>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">职位名称 </label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" type="text"
-                                               id="employment"
-                                               name="employment"
-                                               th:value="*{recruittablename}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">类型 </label>
-                                    <div class="col-sm-6">
-                                        <input class="tagsinput form-control" type="text"
-                                               name="type" id="type"
-                                               th:value="*{classify}"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">地点 </label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control"  type="text"
-                                               id="workPlace" name="workPlace"
-                                               th:value="*{place}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2">人数 </label>
-                                    <div class="col-md-2">
-                                        <div id="spinner1">
-                                            <div class="input-group input-small">
-                                                <input type="text" id="needNumber" name="needNumber"
-                                                       class="spinner-input form-control" maxlength="3"
-                                                       readonly th:value="*{manNumbers}">
-                                                <div class="spinner-buttons input-group-btn btn-group-vertical">
-                                                    <button type="button" class="btn spinner-up btn-xs btn-default">
-                                                        <i class="fa fa-angle-up"></i>
-                                                    </button>
-                                                    <button type="button"
-                                                            class="btn spinner-down btn-xs btn-default">
-                                                        <i class="fa fa-angle-down"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">开始时间</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form_datetime form-control"
-                                               size="16" id="starttime"
-                                               th:value="*{#dates.format(startTime,'yyyy-MM-dd HH:mm')}"
-                                               readonly disabled>
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">结束时间</label>
-                                    <div class="col-md-4">
-                                        <input type="text" size="16" class="form_datetime form-control"
-                                               id="endTime" name="endTime"
-                                               th:value="*{#dates.format(endTime,'yyyy-MM-dd HH:mm')}"
-                                               readonly required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2  control-label">薪资 </label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control"
-                                               id="pay" name="pay" th:value="*{pay}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="requireEduDB">学历要求</label>
-                                    <div class="col-md-4">
-                                        <select class="form-control m-bot15"
-                                                id="requireEduDB"
-                                                name="requireEduDB">
-                                            <option th:selected="*{requireEduDB == '0'}" value="0">不限</option>
-                                            <option th:selected="*{requireEduDB == '1'}" value="1">大专</option>
-                                            <option th:selected="*{requireEduDB == '2'}" value="2">本科</option>
-                                            <option th:selected="*{requireEduDB == '3'}" value="3">硕士</option>
-                                            <option th:selected="*{requireEduDB == '4'}" value="4">博士</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-2" for="requireExperience">工作经验</label>
-                                    <div class="col-md-4">
-                                        <select class="form-control m-bot15"
-                                                id="requireExperience"
-                                                name="requireExperience">
-                                            <option th:selected="*{requireExperience == '0'}" value="0" selected>不限</option>
-                                            <option th:selected="*{requireExperience == '1'}" value="1">在校生</option>
-                                            <option th:selected="*{requireExperience == '2'}" value="2">应届生</option>
-                                            <option th:selected="*{requireExperience == '3'}" value="3">1年以内</option>
-                                            <option th:selected="*{requireExperience == '4'}" value="4">1-3年</option>
-                                            <option th:selected="*{requireExperience == '5'}" value="5">3-5年</option>
-                                            <option th:selected="*{requireExperience == '6'}" value="6">5-10年</option>
-                                            <option th:selected="*{requireExperience == '7'}" value="7">10年以上</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2 ">职责描述</label>
-                                    <div class="col-lg-6">
-                                        <section class="panel">
-                                            <div class="panel-body">
-                                                <div class="panel-body">
-                                                    <textarea class="responsibility" id="responsibility" name="responsibility" th:utext="*{responsibility}">
-                                                        职责描述。。。。。。
-                                                    </textarea>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2 ">职位要求</label>
-                                    <div class="col-lg-6">
-                                        <section class="panel">
-                                            <div class="panel-body">
-                                                <div class="panel-body">
-                                                    <textarea class="require" id="require" name="require" th:utext="*{require}">职位要求。。。。。。</textarea>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2 ">福利待遇</label>
-                                    <div class="col-lg-6">
-                                        <section class="panel">
-                                            <div class="panel-body">
-                                                <div class="panel-body">
-                                                    <textarea class="treatment" id="treatment" name="treatment" th:utext="*{treatment}">福利待遇。。。。。。</textarea>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-offset-2 col-lg-10">
-                                        <button class="btn btn-danger" type="button" id="btn_sub"> 重新发布</button>
-                                        <button class="btn btn-default" type="button"
-                                                onclick="javascript:window.history.go(-1);"> 返回
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                            <div class="adv-table">
+                                <table class="display table table-bordered table-striped" id="dynamic-table">
+                                    <thead>
+                                    <tr>
+                                        <th>招聘职位</th>
+                                        <th>学历要求</th>
+                                        <th>结束时间</th>
+                                        <th>招聘人数</th>
+                                        <th>是否过期</th>
+                                        <th>审核</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeX" th:each="demo,stat:${data.queryResult.list}">
+                                        <td th:text="${demo.recruittablename}"></td>
+                                        <td th:text="${demo.requireEduDB=='0' ? '不限':demo.requireEduDB=='1' ?'大专':demo.requireEduDB=='2'?'本科':demo.requireEduDB=='3'?'硕士':'博士'}"></td>
+                                        <td th:text="${#dates.format(demo.endTime,'yyyy年MM月dd日 HH:mm')}"></td>
+                                        <td th:text="${demo.manNumbers}"></td>
+                                        <td th:text="(${demo.isNotStaleDated} == 'true')? '过期' : '可投递'"></td>
+                                        <td>
+                                            <button class="btn btn-danger" data-toggle="modal"
+                                                    th:attrappend="data-target=${'#' + demo.id}">
+                                                审核
+                                            </button>
+                                            <!-- 审核信息 -->
+                                            <div class="modal fade" th:id="${demo.id}" tabindex="-1" role="dialog"
+                                                 aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-hidden="true">×
+                                                            </button>
+                                                            <h4 class="modal-title" id="myModalLabel"
+                                                                th:text="${demo.recruittablename}"> 招聘标题 </h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <b>招聘标题</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:text="${demo.recruittablename}"></span><br/>
+                                                            <b>工作地点</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:text="${demo.place}"></span><br/>
+                                                            <b>工作经验</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:text="${demo.requireExperience=='0' ? '不限' : demo.requireExperience=='1' ?  '在校生' :demo.requireExperience=='2'? '应届生' :demo.requireExperience=='3'? '1年以内' :demo.requireExperience=='4'? '1-3年' : demo.requireExperience=='5'? '3-5年' : demo.requireExperience=='6'? '5-10年' : '10年以上'}"></span><br/>
+                                                            <b>学历</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:text="${demo.requireEduDB=='0' ? '不限':demo.requireEduDB=='1' ?'大专':demo.requireEduDB=='2'?'本科':demo.requireEduDB=='3'?'硕士':'博士'}"></span><br/>
+                                                            <b>薪资</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:text="${demo.pay}"></span>薪<br/>
+                                                            <b>招聘人数</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:text="${demo.manNumbers}"></span><br/>
+                                                            <b>招聘结束时间</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:text="${demo.endtime}"></span><br/>
+                                                            <hr/>
+                                                            <b>职责描述</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:utext="${demo.responsibility}"></span><br/>
+                                                            <b>职位要求</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:utext="${demo.require}"></span><br/>
+                                                            <b>职位待遇</b>:&nbsp;&nbsp;&nbsp;<span
+                                                                th:utext="${demo.treatment}"></span><br/>
+                                                        </div>
+                                                        <div>
+                                                            <input type="text" name="auditResult"
+                                                                   th:id="${demo.id+'auditResult'}">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal"
+                                                                    th:onclick="pass([[${demo.id}]],'no')">不通过
+                                                            </button>
+                                                            <button type="button" class="btn btn-primary"
+                                                                    th:onclick="pass([[${demo.id}]],'yes')">
+                                                                通过
+                                                            </button>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>招聘职位</th>
+                                        <th>学习要求</th>
+                                        <th>结束时间</th>
+                                        <th>招聘人数</th>
+                                        <th>是否过期</th>
+                                        <th>审核</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </section>
                 </div>
             </div>
-
+            <!-- page end-->
         </section>
     </section>
-    <!--文本内容-->
-
-    <!--页脚-->
+    <!--main content end-->
+    <!--footer start-->
     <footer class="site-footer">
         <div class="text-center">
-            2021 &copy; FlatLab by VectorLab.
+            2021 &copy; 新星幼儿园教师招聘网-管理界面.
             <a href="#" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>
@@ -537,111 +468,42 @@
     <!--footer end-->
 </section>
 
-<!-- js placed at the end of the document so the pages load faster -->
+<!-- js -->
 <script src="/js/jquery.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script class="include" type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="/js/jquery.scrollTo.min.js"></script>
 <script src="/js/jquery.nicescroll.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript"
+        src="/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/assets/data-tables/DT_bootstrap.js"></script>
 <script src="/js/respond.min.js"></script>
-<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script class="include" type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
-
-<!--custom switch-->
-<script src="/js/bootstrap-switch.js"></script>
-<!--custom tagsinput-->
-<script src="/js/jquery.tagsinput.js"></script>
-<!--custom checkbox & radio-->
-<script type="text/javascript" src="/js/ga.js"></script>
-
-<!--this page plugins-->
-<script src="/assets/summernote/dist/summernote.min.js" type="text/javascript"></script><!--富文本编辑框-->
-<script type="text/javascript" src="/assets/fuelux/js/spinner.min.js"></script>
-<script type="text/javascript" src="/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-<script type="text/javascript" src="/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-<script type="text/javascript" src="/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-<script type="text/javascript" src="/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript" src="/assets/bootstrap-daterangepicker/moment.min.js"></script>
-<script type="text/javascript" src="/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript" src="/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-<script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.multi-select.js"></script>
-<script type="text/javascript" src="/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
 
 <!--right slidebar-->
 <script src="/js/slidebars.min.js"></script>
+<!--dynamic table initialization -->
+<script src="/js/dynamic_table_init.js"></script>
 <!--common script for all pages-->
 <script src="/js/common-scripts.js"></script>
-<!--this page script only-->
-<script src="/js/advanced-form-components.js"></script>
-<!--script for this page-->
-<script src="/js/form-component.js"></script>
 <script>
-    jQuery(document).ready(function () {
-        // Switch
-        $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
-        $(".form_datetime").datetimepicker({
-            format: 'yyyy-mm-dd hh:ii',
-            autoclose: true,
-            todayBtn: true,
-            pickerPosition: "bottom-left"
-        });
-        //summernote
-        $('.responsibility').summernote({
-            disableDragAndDrop: true,
-            height: 200,
-            minHeight: 200,
-            maxHeight: 200,
-            focus: true,
-            title: false,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']]
-            ]
-        });
-        $('.require').summernote({
-            disableDragAndDrop: true,//禁用拉动状态
-            height: 200,
-            minHeight: 200,
-            maxHeight: 200,
-            focus: true,
-            title: false,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']]
-            ]
-        });
-        $('.treatment').summernote({
-            disableDragAndDrop: true, //禁用拉动状态
-            height: 200,
-            minHeight: 200,
-            maxHeight: 200,
-            focus: true,
-            title: false,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']]
-            ]
-        });
-
-        // http://localhost:32227/manage/recruit/pull?erId=1
-        $("#btn_sub").click(function () {
-            $.post("/manage/recruit/update", $("#recruitForm").serialize(), function (data) {
-                if (data.success) {
-                    alert(data.message + "");
+    function pass(id, pass) {
+        var result = $("#" + id + "auditResult").val();
+        var param = id + "\|" + pass + "\|" + result;
+        $.get("/manage/recruit/audit/result", {param: param},
+            function (data) {
+                //成功，刷新页面。
+                if (data.success){
+                    alert("success")
                     window.location.reload();
                 }else {
-                    alert(data.message + "");
+                    // 失败，给出提示信息
+                    alert(data.message);
                 }
             });
-        });
-    });
+    }
 </script>
+
 </body>
 </html>

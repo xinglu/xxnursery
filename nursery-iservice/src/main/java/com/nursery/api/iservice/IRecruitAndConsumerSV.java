@@ -13,8 +13,8 @@ import java.util.List;
  */
 public interface IRecruitAndConsumerSV {
     /**
-     * 根据招聘信息id
-     * @param id
+     * 获取招聘下的 简历信息
+     * @param id 根据招聘信息id
      * @return
      */
     List<RecruitAndConsumerDO> getDOsByRecruitId(String id) throws SQLException;

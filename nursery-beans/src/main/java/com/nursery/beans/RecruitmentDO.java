@@ -17,6 +17,7 @@ import java.util.Date;
 public class RecruitmentDO {
 
     private String id;
+    private String authorId;//招聘发布人员
     private String recruittablename;//招聘标题
     private String classify;//招聘分类信息
     private String pay;//招聘待遇--薪资
@@ -40,7 +41,25 @@ public class RecruitmentDO {
     private int applynum;//报名人数
     private String cutoff;//报名是否过期
     private String enrollFull;//报名人数已满
-    private String authorId;//招聘发布人员
+    private String isActivate;//是否审核 yes,no
+    private String auditState;//审核状态    yes,no
+    private String auditResult;//审核结果、反馈
+
+    public String getAuditState() {
+        return auditState;
+    }
+
+    public void setAuditState(String auditState) {
+        this.auditState = auditState;
+    }
+
+    public String getAuditResult() {
+        return auditResult;
+    }
+
+    public void setAuditResult(String auditResult) {
+        this.auditResult = auditResult;
+    }
 
     public String getExperience() {
         return experience;
@@ -175,6 +194,14 @@ public class RecruitmentDO {
 
     public void setRequireExperience(String requireExperience) {
         this.requireExperience = requireExperience;
+    }
+
+    public String getIsActivate() {
+        return isActivate;
+    }
+
+    public void setIsActivate(String isActivate) {
+        this.isActivate = isActivate;
     }
 
     public String getRequireEduDB() {

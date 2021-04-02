@@ -27,4 +27,7 @@ public interface ManageRecruitApi {
     @ApiOperation(value = "查询简历表")
     public ModelAndView lookResume(String consumerId,String recruitId);
 
+    @ApiOperation(value = "审核招聘")
+    public ResponseResult auditRecruit(String param);
+
 }

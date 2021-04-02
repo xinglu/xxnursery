@@ -5,6 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.nursery.api.iservice.INurseryRecruitInfoSV;
 import com.nursery.beans.DBDataParam;
 import com.nursery.beans.RecruitmentDO;
+import com.nursery.common.model.CommonAttrs;
+import com.nursery.common.model.response.CommonCode;
+import com.nursery.common.model.response.ResponseResult;
 import com.nursery.dao.NurseryRecruitmentMapper;
 import com.nursery.utils.CommonUtil;
 import org.slf4j.Logger;
@@ -26,7 +29,7 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
 
     @Autowired
     @SuppressWarnings("all")
-    NurseryRecruitmentMapper mapper;
+    private NurseryRecruitmentMapper mapper;
 
     @Override
     public List<RecruitmentDO> recruitList(DBDataParam dbDataParam) throws NullPointerException, SQLException {
@@ -161,5 +164,53 @@ public class NurseryRecruitInfoImpl implements INurseryRecruitInfoSV {
             dataParam.setPlaceId(place);
         }
         return mapper.selectRecruitInfoByParams(dataParam);
+    }
+
+    @Override
+    public List<RecruitmentDO> selectRecruitByIsActivate(String is) throws SQLException {
+        //判断is
+        if (!StringUtils.isEmpty(is)){
+            return mapper.selectRecruitByIsActivate(is);
+        }
+        return null;
+    }
+
+    @Override
+    public ResponseResult updateRecruitSetAudit(String param){
+        String audit = "";
+        String result = "";
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCommonCode(CommonCode.AUDIT_PASS_RESULT_NOT);
+        if (!StringUtils.isEmpty(param)){
+            RecruitmentDO recruitmentDO = new RecruitmentDO();
+            String[] params = param.split("\\|");
+            try {
+                recruitmentDO.setId(params[0]);
+                // 需求变更
+                // 招聘审核后状态改为yes‘全部’
+                audit = params[1];
+                recruitmentDO.setAuditState(audit);
+                recruitmentDO.setIsActivate("yes");
+                result = params[2];
+                recruitmentDO.setAuditResult(result);
+            }catch (ArrayIndexOutOfBoundsException e){
+                if (audit.equals("no")){
+                    result = CommonAttrs.NOTAUDITSTR;
+                }
+                if (audit.equals("yes")){
+                    result = CommonAttrs.YESAUDITSTR;
+                }
+                recruitmentDO.setAuditResult(result);
+            }
+
+            try {
+                if (mapper.updateRecruitSetAudit(recruitmentDO)>0){
+                    responseResult.setCommonCode(CommonCode.AUDIT_PASS_RESULT_YES);
+                }
+            }catch (SQLException throwables){
+                responseResult.setCommonCode(CommonCode.SQL_YJ_ISNOT);
+            }
+        }
+        return responseResult;
     }
 }

@@ -38,5 +38,16 @@ public class RecruitBO {
     private String educationBg;
     @ApiModelProperty("标签")
     private String label;
+    @ApiModelProperty("职责描述")
+    private String responsibility;
+    @ApiModelProperty("职位要求")
+    private String require;
+    @ApiModelProperty("福利待遇")
+    private String treatment;
+    @ApiModelProperty("工作经验")
+    private String requireExperience;
+    @ApiModelProperty("学历要求")
+    private String requireEduDB;
+
 
 }

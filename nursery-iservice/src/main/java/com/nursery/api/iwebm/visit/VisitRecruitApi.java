@@ -23,9 +23,6 @@ public interface VisitRecruitApi {
     @ApiOperation("获取单个详细招聘信息")
     ModelAndView getRecruitInfoByid(String recruitid);
 
-    @ApiOperation("跳转到招聘详情页")
-    ModelAndView getRecruitDetails(String paramID,ModelAndView modelAndView);
-
     @ApiOperation("访问-发布招聘")
     ModelAndView visitPullRecruitPage(String paramID,ModelAndView modelAndView);
 

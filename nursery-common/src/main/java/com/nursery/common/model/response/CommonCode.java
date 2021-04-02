@@ -15,6 +15,9 @@ public enum CommonCode implements ResultCode{
     PASSWORDISEQUALITY(false,11113,"密码不能喝原密码相同！"),
     PASSWORDISNOTFORMAT(false,11114,"密码格式不正确！"),
     SELECTISFAIL(false,11115,"查询失败！"),
+    AUDIT_PASS_RESULT_NOT(true,11116,"审核结果不通过！"),
+    AUDIT_PASS_RESULT_YES(true,11117,"审核结果通过！"),
+    SQL_YJ_ISNOT(false,11118,"数据库语句出错！"),
     SERVER_ERROR(false,99999,"抱歉，系统繁忙，请稍后重试！");
 //    private static ImmutableMap<Integer, CommonCode> codes ;
     //操作是否成功

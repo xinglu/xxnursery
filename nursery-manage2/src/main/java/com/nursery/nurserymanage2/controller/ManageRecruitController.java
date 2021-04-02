@@ -9,6 +9,7 @@ import com.nursery.beans.bo.RecruitBO;
 import com.nursery.beans.code.RecruitCode;
 import com.nursery.common.model.response.ResponseResult;
 import com.nursery.common.web.BaseController;
+import com.nursery.nurserymanage2.controller.async.LogAsyncComponent;
 import com.nursery.utils.CommonUtil;
 import com.nursery.utils.DateUtils;
 import com.nursery.utils.RSAUtils;
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * author:MeiShiQiang
@@ -35,6 +38,9 @@ public class ManageRecruitController extends BaseController implements ManageRec
     @Autowired
     private INurseryRecruitInfoSV nurseryRecruitInfoSV;
 
+    @Autowired
+    private LogAsyncComponent logAsyncComponent;
+    private String NOWDATE_YYYYMMDDHHMMSS = "yyyy-MM-dd HH:mm:ss";
     /**
      * 获取公钥
      * @return
@@ -66,26 +72,26 @@ public class ManageRecruitController extends BaseController implements ManageRec
 
     /**
      * 更新招聘内容
-     *
      * @param recruitBO 招聘内容
      * @return 提示信息
      */
-    @RequestMapping(value = "/recruit/recruitInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/recruit/update", method = RequestMethod.POST)
     @ResponseBody
     @Override
     public ResponseResult putRecruitInfo(RecruitBO recruitBO) {
         //初始化返回值
         ResponseResult responseResult = ResponseResult.FAIL();
-        String employment = recruitBO.getEmployment();
-        String educationBg = recruitBO.getEducationBg();
-        String companyProfile = recruitBO.getCompanyProfile();
-        String endTime = recruitBO.getEndTime();
-        String label = recruitBO.getLabel();
-        String jobDescription = recruitBO.getJobDescription();
-        Integer needNumber = Integer.parseInt(recruitBO.getNeedNumber());
-        String workPlace = recruitBO.getWorkPlace();
-        String type = recruitBO.getType();
-        String pay = recruitBO.getPay();
+        String employment = recruitBO.getEmployment();//职位名称
+        String type = recruitBO.getType();//类型
+        String workPlace = recruitBO.getWorkPlace();//地点
+        Integer needNumber = Integer.parseInt(recruitBO.getNeedNumber());//人数
+        String endTime = recruitBO.getEndTime();//结束时间
+        String pay = recruitBO.getPay();//薪资
+        String requireEduDB = recruitBO.getRequireEduDB();//学历要求
+        String requireExperience = recruitBO.getRequireExperience();//工作经验
+        String responsibility = recruitBO.getResponsibility();//职责描述
+        String require = recruitBO.getRequire();//职位要求
+        String treatment = recruitBO.getTreatment();//福利待遇
         logger.info("putRecruitInfo：RecruitBO==> " + recruitBO);
         //判断是否参数有误
         if (StringUtils.isEmpty(recruitBO.getId())) {
@@ -96,17 +102,19 @@ public class ManageRecruitController extends BaseController implements ManageRec
         try {
             RecruitmentDO recruitmentDO = new RecruitmentDO();
             recruitmentDO.setId(recruitBO.getId());
-            recruitmentDO.setClassify(type);
-            recruitmentDO.setId(recruitBO.getId());
-            recruitmentDO.setCompanyresume(companyProfile);
-            recruitmentDO.setEndtime(endTime);
             recruitmentDO.setRecruittablename(employment);
-            recruitmentDO.setJobdesciption(jobDescription);
-            recruitmentDO.setManNumbers(needNumber);
-            recruitmentDO.setRequireEduDB(educationBg);
-            recruitmentDO.setRequireExperience(label);
+            recruitmentDO.setClassify(type);
             recruitmentDO.setPlace(workPlace);
+            recruitmentDO.setManNumbers(needNumber);
+            recruitmentDO.setEndtime(endTime);
             recruitmentDO.setPay(pay);
+            recruitmentDO.setRequireEduDB(requireEduDB);
+            recruitmentDO.setRequireExperience(requireExperience);
+            recruitmentDO.setResponsibility(responsibility);
+            recruitmentDO.setRequire(require);
+            recruitmentDO.setTreatment(treatment);
+            //4.2 更新后重新提交审核
+            recruitmentDO.setIsActivate("no");
             logger.warn("putRecruitInfo: RecruitmentDO==>" + JSON.toJSONString(recruitmentDO));
             int i = nurseryRecruitInfoSV.updateRecruitInfo(recruitmentDO);
             //判断更新是否成功
@@ -116,7 +124,8 @@ public class ManageRecruitController extends BaseController implements ManageRec
                 return responseResult;
             }
         } catch (Exception e) {
-            logger.error("putRecruitInfo： 更新失败");
+            logger.info("putRecruitInfo： 更新失败");
+            logger.error(e.getMessage());
             responseResult.setCommonCode(RecruitCode.RECRUIT_SQL_FAIL);
             return responseResult;
         }
@@ -207,16 +216,41 @@ public class ManageRecruitController extends BaseController implements ManageRec
     @RequestMapping(value = {"/recruit/resume/look/{consumerId}/{recruitId}"})
     @Override
     public ModelAndView lookResume(String consumerId, String recruitId) {
-
         return null;
     }
 
 
-
-
+    /**
+     * 删除招聘信息
+     * @param erId
+     * @param recruitId
+     * @return
+     */
     @RequestMapping(value = "/recruit/delete/{erId}/{recruitId}")
     public ResponseResult deleteRecruit(@PathVariable(value = "erId",required = true) String erId,@PathVariable(value = "recruitId",required = true) String recruitId){
         int i = nurseryRecruitInfoSV.deleteRecruitById(erId);
         return null;
     }
+
+    /**
+     * 审核反馈
+     * @param param id|yes,no|result
+     */
+    @RequestMapping(value = "/recruit/audit/result",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseResult auditRecruit(String param){
+        String[] params = param.split("\\|");
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("classify",ManageAnnunceController.class.getName() + ".auditRecruit");
+        resultMap.put("type","audit");
+        resultMap.put("date",DateUtils.getNowDate(NOWDATE_YYYYMMDDHHMMSS));
+        resultMap.put("id",params[0]);
+        resultMap.put("erId","123456");
+        resultMap.put("dothing","2");
+        ResponseResult responseResult = nurseryRecruitInfoSV.updateRecruitSetAudit(param);
+        resultMap.put("resultCode", "0");
+        logAsyncComponent.logAnnounce(resultMap);
+        return responseResult;
+    }
+
 }

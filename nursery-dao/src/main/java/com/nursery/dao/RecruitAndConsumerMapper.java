@@ -11,5 +11,11 @@ import java.util.List;
  *
  */
 public interface RecruitAndConsumerMapper {
+
+    /**
+     * 根据招聘id，从中间表中获取简历信息
+     * @param id 招聘id
+     * @throws SQLException
+     */
     List<RecruitAndConsumerDO> selectDomeByRecruitId(String id) throws SQLException;
 }

@@ -22,9 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.NoSuchAlgorithmException;
@@ -94,8 +92,54 @@ public class VisitRecruitController extends BaseController implements VisitRecru
     }
 
     /**
-     * 根据内容id 获取招聘的详细信息
-     *
+     * 获取当前用户发布的招聘信息
+     * http://localhost:32227/manage/recruit/getRecruitManage?param=1
+     * @param param 包含 用户id、ip地址、当前所在地
+     * @return
+     */
+    @GetMapping("/manage/recruit/getRecruitManage")
+    @ResponseBody
+    @Override
+    public ModelAndView getRecruitManage(String param) {
+        Map<String, String> returnMap = new HashMap<>();
+        QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
+        QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.FAIL, queryResult);
+        ModelAndView modelAndView = new ModelAndView();
+
+        try {
+            //String rsa_param = RSAUtils.decrypt(param);//解密
+            String userId = param;
+            if (!StringUtils.isEmpty(userId)) {
+                List<RecruitmentDO> recruitmentDOList = null;
+                if (!StringUtils.isEmpty(userId)) {
+                    recruitmentDOList = nurseryRecruitInfoSV.selectRecruitinfoByerid(userId);
+                    if (recruitmentDOList != null && !recruitmentDOList.isEmpty()) {
+                        queryResult.setList(recruitmentDOList);
+                        queryResult.setTotal(recruitmentDOList.size());
+                    }
+                }
+            } else {
+                logger.error("userid不能为空");
+                queryResponseResult.setCommonCode(CommonCode.FAIL);
+            }
+        } catch (Exception e) {
+            logger.error("rsa解密出错");
+            try {
+                //如果解密失败，则随机生成密钥对；返回
+                RSAUtils.genKeyPair();
+            } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+                noSuchAlgorithmException.printStackTrace();
+            }
+        }
+        queryResponseResult.setCommonCode(CommonCode.SUCCESS);
+        modelAndView.addObject("data", queryResponseResult);
+        modelAndView.setViewName("recruitManagePage");
+        logger.info(JSON.toJSONString(queryResponseResult));
+        return modelAndView;
+    }
+
+    /**
+     * 详细信息
      * @param recruitid 招聘内容id
      * @return 招聘详情页面、招聘更新页面
      */
@@ -182,54 +226,6 @@ public class VisitRecruitController extends BaseController implements VisitRecru
 
 
     /**
-     * 获取当前用户发布的招聘信息
-     *
-     * @param param 包含 用户id、ip地址、当前所在地
-     * @return
-     */
-    @GetMapping("/manage/recruit/getRecruitManage")
-    @ResponseBody
-    @Override
-    public ModelAndView getRecruitManage(String param) {
-        Map<String, String> returnMap = new HashMap<>();
-        QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
-        QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.FAIL, queryResult);
-        ModelAndView modelAndView = new ModelAndView();
-
-        try {
-            //String rsa_param = RSAUtils.decrypt(param);//解密
-            String userId = param;
-            if (!StringUtils.isEmpty(userId)) {
-                List<RecruitmentDO> recruitmentDOList = null;
-                if (!StringUtils.isEmpty(userId)) {
-                    recruitmentDOList = nurseryRecruitInfoSV.selectRecruitinfoByerid(userId);
-                    if (recruitmentDOList != null && !recruitmentDOList.isEmpty()) {
-                        queryResult.setList(recruitmentDOList);
-                        queryResult.setTotal(recruitmentDOList.size());
-                    }
-                }
-            } else {
-                logger.error("userid不能为空");
-                queryResponseResult.setCommonCode(CommonCode.FAIL);
-            }
-        } catch (Exception e) {
-            logger.error("rsa解密出错");
-            try {
-                //如果解密失败，则随机生成密钥对；返回
-                RSAUtils.genKeyPair();
-            } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-                noSuchAlgorithmException.printStackTrace();
-            }
-        }
-        queryResponseResult.setCommonCode(CommonCode.SUCCESS);
-        modelAndView.addObject("data", queryResponseResult);
-        modelAndView.setViewName("recruitManagePage");
-        logger.info(JSON.toJSONString(queryResponseResult));
-        return modelAndView;
-    }
-
-
-    /**
      * 根据内容id 获取招聘的详细信息
      *
      * @param recruitid 招聘内容id
@@ -261,24 +257,37 @@ public class VisitRecruitController extends BaseController implements VisitRecru
         return modelAndView;
     }
 
-    /**
-     * 访问招聘详情页面
-     *
-     * @param paramId
-     * @return
-     */
-    @GetMapping("/details/page/{paramId}")
-    @Override
-    public ModelAndView getRecruitDetails(@PathVariable("paramId") String paramId, ModelAndView modelAndView) {
-//        modelAndView.addObject("data", queryResponseResult);
-        modelAndView.setViewName("recruitDetailsPage");
-        return modelAndView;
-    }
 
     @GetMapping("/manage/recruit/pull")
     @Override
     public ModelAndView visitPullRecruitPage(@Param(value = "erId") String paramID, ModelAndView modelAndView) {
         modelAndView.setViewName("pullRecruitPage");
+        return modelAndView;
+    }
+
+    /**
+     * http://localhost:32227/manage/recruit/audit?param=1
+     * @param paramID
+     * @param modelAndView
+     * @return
+     */
+    @RequestMapping(value = {"manage/recruit/audit"},method = RequestMethod.GET)
+    public ModelAndView visitAuditPage(@RequestParam("param")String paramID,ModelAndView modelAndView){
+        String is = "no";
+        QueryResult<RecruitmentDO> queryResult = new QueryResult<RecruitmentDO>();
+        QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.FAIL, queryResult);
+        try {
+            List<RecruitmentDO> recruits = nurseryRecruitInfoSV.selectRecruitByIsActivate(is);
+            if (recruits != null && !recruits.isEmpty()) {
+                queryResult.setList(recruits);
+                queryResult.setTotal(recruits.size());
+                queryResponseResult.setCommonCode(CommonCode.SUCCESS);
+            }
+        }catch (SQLException throwables){
+            logger.error(throwables.getSQLState());
+        }
+        modelAndView.addObject("data",queryResponseResult);
+        modelAndView.setViewName("recruitAuditPage");
         return modelAndView;
     }
 }
